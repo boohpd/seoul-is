@@ -1,0 +1,252 @@
+---
+/**
+ * CategorySection — Magazine grid layout for a category
+ *
+ * Layout: 1 large card (left, ~60%) + 2 stacked small cards (right, ~40%) on desktop
+ * Mobile: horizontal scroll cards
+ */
+
+import ContentCard from './ContentCard.astro';
+import { CATEGORIES } from '../lib/categories.js';
+
+const { categoryId, items = [] } = Astro.props;
+const cat = CATEGORIES[categoryId];
+if (!cat || items.length === 0) return;
+
+const mainItem = items[0];
+const sideItems = items.slice(1, 3);
+const extraItems = items.slice(3, 7);
+---
+
+<section id={categoryId} class="cat-section">
+  <!-- Section header -->
+  <div class="cat-header">
+    <div class="cat-header-left">
+      <div class="cat-accent" style={`--accent: ${cat.color};`}>
+        <span class="cat-emoji">{cat.emoji}</span>
+      </div>
+      <div class="cat-info">
+        <h2 class="cat-name" style={`color: ${cat.color};`}>{cat.name}</h2>
+        <p class="cat-desc">{cat.desc}</p>
+      </div>
+    </div>
+    <a href={`/category/${categoryId}`} class="view-all-btn" style={`--accent: ${cat.color};`}>
+      View All
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Desktop: Magazine grid -->
+  <div class="magazine-grid">
+    <!-- Large feature card -->
+    <div class="magazine-main">
+      <ContentCard item={mainItem} size="large" />
+    </div>
+
+    <!-- Side stack: 2 small cards -->
+    {sideItems.length > 0 && (
+      <div class="magazine-side">
+        {sideItems.map(item => (
+          <ContentCard item={item} size="small" />
+        ))}
+      </div>
+    )}
+  </div>
+
+  <!-- Mobile: Horizontal scroll row -->
+  <div class="mobile-scroll scrollbar-hide">
+    {items.slice(0, 6).map(item => (
+      <div class="mobile-scroll-item">
+        <ContentCard item={item} size="small" />
+      </div>
+    ))}
+  </div>
+
+  <!-- Extra row (desktop only) -->
+  {extraItems.length > 0 && (
+    <div class="extra-grid">
+      {extraItems.map(item => (
+        <ContentCard item={item} size="small" />
+      ))}
+    </div>
+  )}
+
+  <!-- Sources line -->
+  <div class="sources-line">
+    <span class="sources-label">Sources</span>
+    {cat.sources.map(s => (
+      <span class="source-tag">{s}</span>
+    ))}
+  </div>
+</section>
+
+<style>
+  .cat-section {
+    scroll-margin-top: 110px;
+  }
+
+  /* ─── Section Header ─── */
+  .cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    gap: 16px;
+  }
+
+  .cat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .cat-accent {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .cat-emoji { font-size: 22px; }
+
+  .cat-name {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+  .cat-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    letter-spacing: 0.1px;
+  }
+
+  .view-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+    letter-spacing: 0.2px;
+  }
+  .view-all-btn:hover {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, transparent);
+    border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .view-all-btn svg {
+    transition: transform var(--transition-fast);
+  }
+  .view-all-btn:hover svg {
+    transform: translateX(2px);
+  }
+
+  /* ─── Magazine Grid (Desktop) ─── */
+  .magazine-grid {
+    display: none;
+    gap: 16px;
+  }
+
+  .magazine-main {
+    min-width: 0;
+  }
+
+  .magazine-side {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  /* ─── Mobile Scroll ─── */
+  .mobile-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .mobile-scroll-item {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+  }
+
+  /* ─── Extra Grid ─── */
+  .extra-grid {
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  /* ─── Sources ─── */
+  .sources-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .sources-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 2px;
+  }
+  .source-tag {
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0.2px;
+  }
+
+  /* ─── Responsive ─── */
+  @media (min-width: 768px) {
+    .cat-name { font-size: 24px; }
+
+    .mobile-scroll { display: none; }
+
+    .magazine-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+    }
+
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .magazine-grid {
+      grid-template-columns: 3fr 2fr;
+      gap: 20px;
+    }
+
+    .extra-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+  }
+</style>

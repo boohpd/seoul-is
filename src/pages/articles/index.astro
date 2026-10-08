@@ -1,0 +1,127 @@
+---
+import Base from '../../layouts/Base.astro';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
+
+const articlesDir = join(process.cwd(), 'src/data/articles');
+const articles = readdirSync(articlesDir)
+  .filter(f => f.endsWith('.json'))
+  .map(f => JSON.parse(readFileSync(join(articlesDir, f), 'utf-8')))
+  .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+const categoryColors: Record<string, string> = {
+  food: '#FF9500', places: '#30D158', lifestyle: '#BF5AF2',
+  kpop: '#FF2D55', kdrama: '#5856D6', ranking: '#FFD60A',
+};
+---
+
+<Base title="Seoul Travel Articles 2026 — seoul.is" description="In-depth Seoul and Korea travel guides, neighborhood guides, food guides, and cultural explainers. Written for international visitors.">
+  <div class="articles-hero">
+    <div class="hero-inner">
+      <div class="hero-badge">📖 Articles</div>
+      <h1>Seoul Travel Stories</h1>
+      <p>In-depth guides, neighborhood explainers, and local tips — everything to make your Seoul trip legendary.</p>
+    </div>
+  </div>
+
+  <div class="articles-body">
+    <div class="articles-grid">
+      {articles.map((a, i) => (
+        <a href={`/article/${a.slug}`} class={`art-card ${i === 0 ? 'art-card--featured' : ''}`}>
+          {a.heroImage && (
+            <div class="art-card-img">
+              <img src={a.heroImage} alt={a.title} loading={i < 3 ? 'eager' : 'lazy'} />
+              <div class="art-card-img-overlay"></div>
+            </div>
+          )}
+          <div class="art-card-body">
+            <div class="art-card-top">
+              <span class="art-card-cat" style={`background:${categoryColors[a.category] || '#FF2D55'}22;color:${categoryColors[a.category] || '#FF2D55'}`}>{a.category}</span>
+              <span class="art-card-time">{a.readTime}</span>
+            </div>
+            <h2 class="art-card-title">{a.emoji} {a.title}</h2>
+            <p class="art-card-desc">{a.description}</p>
+            <div class="art-card-date">{new Date(a.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<style>
+.articles-hero {
+  background: linear-gradient(180deg, #0a0510 0%, #050505 100%);
+  padding: 56px 0 40px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.hero-inner { max-width: 1280px; margin: 0 auto; padding: 0 var(--page-pad); }
+.hero-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  border: 1px solid rgba(255,45,85,0.3);
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.hero-inner h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 900; margin-bottom: 12px; }
+.hero-inner p { color: var(--text-secondary); font-size: 1rem; max-width: 480px; margin: 0 auto; }
+
+.articles-body { max-width: 1280px; margin: 0 auto; padding: 40px var(--page-pad) 80px; }
+
+.articles-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 640px) { .articles-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) {
+  .articles-grid { grid-template-columns: repeat(3, 1fr); }
+  .art-card--featured { grid-column: span 2; }
+}
+
+.art-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--card-border);
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.art-card:hover {
+  border-color: var(--card-border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.art-card-img { position: relative; height: 200px; overflow: hidden; }
+.art-card--featured .art-card-img { height: 260px; }
+.art-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.art-card:hover .art-card-img img { transform: scale(1.05); }
+.art-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15,15,15,0.8) 0%, transparent 60%);
+}
+.art-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.art-card-top { display: flex; align-items: center; justify-content: space-between; }
+.art-card-cat {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.art-card-time { font-size: 11px; color: var(--text-muted); }
+.art-card-title { font-size: 15px; font-weight: 800; color: var(--text); line-height: 1.35; }
+.art-card--featured .art-card-title { font-size: 18px; }
+.art-card-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.55; flex: 1; }
+.art-card-date { font-size: 11px; color: var(--text-muted); margin-top: auto; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.05); }
+</style>

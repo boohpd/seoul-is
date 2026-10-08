@@ -1,0 +1,268 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const guides = [
+  { href: '/guide/tmoney-card-guide', emoji: '🚇', title: 'T-money Card Guide', desc: 'Buy, top up, and use T-money on subway, bus & taxi', tag: 'Essential', color: '#0A84FF', readTime: '5 min' },
+  { href: '/guide/seoul-subway-guide', emoji: '🗺️', title: 'Seoul Subway Guide', desc: 'Navigate 23 lines and 700+ stations like a local', tag: 'Transport', color: '#30D158', readTime: '6 min' },
+  { href: '/guide/korea-esim-guide', emoji: '📱', title: 'Korea eSIM Guide', desc: 'Best eSIM plans for South Korea — stay connected from day one', tag: 'Essential', color: '#5856D6', readTime: '4 min' },
+  { href: '/guide/best-neighborhoods-seoul', emoji: '📍', title: 'Best Neighborhoods', desc: 'Myeongdong, Hongdae, Gangnam, Insadong — where to stay', tag: 'Stay', color: '#FF9500', readTime: '7 min' },
+  { href: '/guide/myeongdong-shopping-guide', emoji: '💄', title: 'Myeongdong Shopping', desc: 'K-beauty, tax refunds, street food and duty free', tag: 'Shopping', color: '#BF5AF2', readTime: '6 min' },
+  { href: '/guide/korean-food-guide', emoji: '🍜', title: 'Korean Food Guide', desc: 'Must-eat dishes: BBQ, bibimbap, chimaek and more', tag: 'Food', color: '#FF9500', readTime: '8 min' },
+  { href: '/guide/dmz-tour-guide', emoji: '🪖', title: 'DMZ Tour Guide', desc: "Visit the world's most fortified border from Seoul", tag: 'Adventure', color: '#FF2D55', readTime: '7 min' },
+  { href: '/guide/han-river-activities', emoji: '🚢', title: 'Han River Activities', desc: 'Cruises, cycling, picnics and the rainbow fountain', tag: 'Outdoor', color: '#30D158', readTime: '5 min' },
+  { href: '/guide/seoul-nightlife-guide', emoji: '🌙', title: 'Seoul Nightlife', desc: 'Hongdae clubs, Itaewon bars, norebang and night markets', tag: 'Nightlife', color: '#FFD60A', readTime: '6 min' },
+  { href: '/guide/tax-refund-korea', emoji: '💸', title: 'Tax Refund Guide', desc: 'Claim up to 10% VAT back on your shopping — complete guide', tag: 'Money', color: '#30D158', readTime: '5 min' },
+];
+---
+
+<Base title="Seoul Travel Guides 2026 — seoul.is" description="Complete travel guides for Seoul and South Korea. T-money, subway, eSIM, neighborhoods, food, DMZ tours and more.">
+  <!-- HERO -->
+  <div class="guides-hero">
+    <div class="guides-hero-inner">
+      <div class="hero-badge">✈️ Travel Guides</div>
+      <h1 class="hero-title">Your Complete Seoul Playbook</h1>
+      <p class="hero-desc">Everything you need to know before, during, and after your trip to Seoul. Written for international visitors.</p>
+      <div class="hero-stats">
+        <div class="stat"><span class="stat-num">10</span><span class="stat-label">Expert Guides</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">50+</span><span class="stat-label">Tips & Tricks</span></div>
+        <div class="stat-div"></div>
+        <div class="stat"><span class="stat-num">Free</span><span class="stat-label">Always</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRID -->
+  <div class="guides-body">
+    <div class="guides-grid">
+      {guides.map((g, i) => (
+        <a href={g.href} class={`guide-card ${i === 0 ? 'guide-card--featured' : ''}`}>
+          <div class="card-emoji-wrap" style={`background: ${g.color}18;`}>
+            <span class="card-emoji">{g.emoji}</span>
+          </div>
+          <div class="card-body">
+            <div class="card-top">
+              <span class="card-tag" style={`background: ${g.color}22; color: ${g.color};`}>{g.tag}</span>
+              <span class="card-read">{g.readTime}</span>
+            </div>
+            <h2 class="card-title">{g.title}</h2>
+            <p class="card-desc">{g.desc}</p>
+          </div>
+          <div class="card-arrow">→</div>
+        </a>
+      ))}
+    </div>
+
+    <!-- AFFILIATE STRIP -->
+    <div class="aff-strip">
+      <h2 class="aff-strip-title">Book Before You Go</h2>
+      <div class="aff-strip-cards">
+        <a href="https://airalo.tpo.li/rmpJe6nd" target="_blank" rel="noopener sponsored" class="aff-item aff-esim">
+          <span class="aff-icon">📱</span>
+          <div>
+            <div class="aff-name">Korea eSIM</div>
+            <div class="aff-sub">From ~$4 · Airalo</div>
+          </div>
+          <span class="aff-cta">Get →</span>
+        </a>
+        <a href="https://www.agoda.com/city/seoul-kr.html?cid=1973066" target="_blank" rel="noopener sponsored" class="aff-item aff-hotel">
+          <span class="aff-icon">🏨</span>
+          <div>
+            <div class="aff-name">Seoul Hotels</div>
+            <div class="aff-sub">Best rates · Agoda</div>
+          </div>
+          <span class="aff-cta">Search →</span>
+        </a>
+        <a href="https://www.klook.com/en-US/city/34-seoul-things-to-do/?aff_adid=1392094&aff_pid=131769" target="_blank" rel="noopener sponsored" class="aff-item aff-tours">
+          <span class="aff-icon">🎫</span>
+          <div>
+            <div class="aff-name">Tours & Activities</div>
+            <div class="aff-sub">DMZ, Han River · Klook</div>
+          </div>
+          <span class="aff-cta">Browse →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+/* HERO */
+.guides-hero {
+  background: linear-gradient(180deg, #0d0008 0%, #050505 100%);
+  padding: 64px 0 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.guides-hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad, 24px);
+  text-align: center;
+}
+.hero-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  border: 1px solid rgba(255,45,85,0.3);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  max-width: 520px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
+}
+.hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.stat { display: flex; flex-direction: column; align-items: center; }
+.stat-num { font-size: 1.5rem; font-weight: 900; color: var(--primary); }
+.stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.stat-div { width: 1px; height: 32px; background: rgba(255,255,255,0.1); }
+
+/* BODY */
+.guides-body {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px var(--page-pad, 24px) 80px;
+}
+
+/* GRID */
+.guides-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 64px;
+}
+@media (min-width: 640px) {
+  .guides-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .guides-grid { grid-template-columns: repeat(3, 1fr); }
+  .guide-card--featured { grid-column: span 2; }
+}
+
+/* CARD */
+.guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  background: var(--card, #0f0f0f);
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid var(--card-border, #1a1a1a);
+  text-decoration: none;
+  transition: all var(--transition-mid, 0.35s);
+  position: relative;
+  overflow: hidden;
+}
+.guide-card:hover {
+  border-color: var(--card-border-hover, #2a2a2a);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.card-emoji-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.card-emoji { font-size: 1.8rem; }
+.card-body { flex: 1; }
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.card-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.card-read { font-size: 11px; color: var(--text-muted); }
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -0.2px;
+}
+.card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.card-arrow {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  transition: transform 0.2s, color 0.2s;
+  align-self: flex-end;
+}
+.guide-card:hover .card-arrow { transform: translateX(4px); color: var(--primary); }
+
+/* AFFILIATE STRIP */
+.aff-strip { }
+.aff-strip-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.aff-strip-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 640px) {
+  .aff-strip-cards { grid-template-columns: repeat(3, 1fr); }
+}
+.aff-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.2s;
+}
+.aff-item:hover { transform: translateY(-1px); }
+.aff-esim { background: rgba(48,209,88,0.05); }
+.aff-hotel { background: rgba(10,132,255,0.05); }
+.aff-tours { background: rgba(255,45,85,0.05); }
+.aff-icon { font-size: 1.6rem; flex-shrink: 0; }
+.aff-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.aff-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.aff-cta {
+  margin-left: auto;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+</style>

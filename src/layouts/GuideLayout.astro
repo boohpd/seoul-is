@@ -1,0 +1,345 @@
+---
+import Base from './Base.astro';
+
+const {
+  title,
+  description,
+  emoji = '📍',
+  category = 'Travel Guide',
+  categoryColor = '#FF2D55',
+  readTime = '6 min read',
+  heroGradient = 'linear-gradient(135deg, #1a0a0f 0%, #0d0d1a 100%)',
+} = Astro.props;
+
+const relatedGuides = [
+  { href: '/guide/tmoney-card-guide', emoji: '🚇', title: 'T-money Card Guide' },
+  { href: '/guide/seoul-subway-guide', emoji: '🗺️', title: 'Seoul Subway Guide' },
+  { href: '/guide/korea-esim-guide', emoji: '📱', title: 'Korea eSIM Guide' },
+  { href: '/guide/best-neighborhoods-seoul', emoji: '📍', title: 'Best Neighborhoods' },
+  { href: '/guide/myeongdong-shopping-guide', emoji: '💄', title: 'Myeongdong Shopping' },
+  { href: '/guide/korean-food-guide', emoji: '🍜', title: 'Korean Food Guide' },
+  { href: '/guide/dmz-tour-guide', emoji: '🪖', title: 'DMZ Tour Guide' },
+  { href: '/guide/han-river-activities', emoji: '🚢', title: 'Han River Activities' },
+  { href: '/guide/seoul-nightlife-guide', emoji: '🌙', title: 'Seoul Nightlife' },
+  { href: '/guide/tax-refund-korea', emoji: '💸', title: 'Tax Refund Guide' },
+];
+---
+
+<Base title={`${title} — seoul.is`} description={description}>
+  <!-- HERO -->
+  <div class="guide-hero" style={`background: ${heroGradient};`}>
+    <div class="guide-hero-inner">
+      <nav class="breadcrumb">
+        <a href="/">Home</a>
+        <span>›</span>
+        <a href="/guide">Guides</a>
+        <span>›</span>
+        <span class="breadcrumb-current">{title}</span>
+      </nav>
+      <div class="guide-hero-content">
+        <div class="guide-emoji-badge">{emoji}</div>
+        <div class="guide-cat-tag" style={`background: ${categoryColor}22; color: ${categoryColor}; border-color: ${categoryColor}44;`}>{category}</div>
+        <h1 class="guide-title">{title}</h1>
+        <p class="guide-desc">{description}</p>
+        <div class="guide-meta">
+          <span>⏱ {readTime}</span>
+          <span>·</span>
+          <span>🇰🇷 Seoul, Korea</span>
+          <span>·</span>
+          <span>Updated 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="guide-body">
+    <div class="guide-layout">
+      <!-- ARTICLE -->
+      <article class="guide-article">
+        <slot />
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="guide-sidebar">
+        <!-- eSIM CTA -->
+        <div class="sidebar-card sidebar-esim">
+          <div class="sidebar-card-emoji">📱</div>
+          <h3>Korea eSIM</h3>
+          <p>Stay connected from ₩3,000/day. Order before you fly.</p>
+          <a href="https://airalo.tpo.li/rmpJe6nd" target="_blank" rel="noopener sponsored" class="sidebar-btn esim-btn">Get eSIM →</a>
+        </div>
+
+        <!-- Hotel CTA -->
+        <div class="sidebar-card sidebar-hotel">
+          <div class="sidebar-card-emoji">🏨</div>
+          <h3>Seoul Hotels</h3>
+          <p>Best deals on Agoda — trusted by millions in Asia.</p>
+          <a href="https://www.agoda.com/city/seoul-kr.html?cid=1973066" target="_blank" rel="noopener sponsored" class="sidebar-btn hotel-btn">Find Hotels →</a>
+        </div>
+
+        <!-- Tours CTA -->
+        <div class="sidebar-card sidebar-tours">
+          <div class="sidebar-card-emoji">🎫</div>
+          <h3>Seoul Tours</h3>
+          <p>DMZ, Han River, K-beauty and more on Klook.</p>
+          <a href="https://www.klook.com/en-US/city/34-seoul-things-to-do/?aff_adid=1392094&aff_pid=131769" target="_blank" rel="noopener sponsored" class="sidebar-btn tours-btn">Browse Tours →</a>
+        </div>
+
+        <!-- Airport Pickup CTA -->
+        <div class="sidebar-card sidebar-pickup">
+          <div class="sidebar-card-emoji">🚗</div>
+          <h3>Airport Transfer</h3>
+          <p>Private car from Incheon Airport to Seoul. Pre-book for peace of mind.</p>
+          <a href="https://tpo.li/KvaMrbC9" target="_blank" rel="noopener sponsored" class="sidebar-btn pickup-btn">Book Transfer →</a>
+        </div>
+
+        <!-- Travel Insurance CTA -->
+        <div class="sidebar-card sidebar-insurance">
+          <div class="sidebar-card-emoji">🛡️</div>
+          <h3>Travel Insurance</h3>
+          <p>Cover medical, cancellation & luggage. From $2/day.</p>
+          <a href="https://ektatraveling.tpo.li/nTbwSd7a" target="_blank" rel="noopener sponsored" class="sidebar-btn insurance-btn">Get Insured →</a>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="sidebar-related">
+          <h3 class="related-title">More Guides</h3>
+          <nav class="related-list">
+            {relatedGuides.filter(g => !g.href.includes(Astro.url?.pathname || '')).slice(0, 6).map(g => (
+              <a href={g.href} class="related-item">
+                <span class="related-emoji">{g.emoji}</span>
+                <span>{g.title}</span>
+              </a>
+            ))}
+          </nav>
+        </div>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+/* ── HERO ── */
+.guide-hero {
+  position: relative;
+  padding: 64px 0 48px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.guide-hero-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad, 24px);
+}
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--primary); }
+.breadcrumb-current { color: var(--text-secondary); }
+
+.guide-hero-content { max-width: 720px; }
+.guide-emoji-badge {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+  display: block;
+  filter: drop-shadow(0 0 24px rgba(255,45,85,0.3));
+}
+.guide-cat-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid;
+  margin-bottom: 16px;
+}
+.guide-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.guide-desc {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.guide-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+/* ── BODY ── */
+.guide-body {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px var(--page-pad, 24px) 80px;
+}
+.guide-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+@media (min-width: 1024px) {
+  .guide-layout {
+    grid-template-columns: 1fr 320px;
+    gap: 56px;
+  }
+}
+
+/* ── ARTICLE ── */
+.guide-article {
+  min-width: 0;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+.guide-article :global(h2) {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 48px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  letter-spacing: -0.3px;
+}
+.guide-article :global(h3) {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 32px 0 12px;
+}
+.guide-article :global(p) { margin-bottom: 20px; }
+.guide-article :global(ul), .guide-article :global(ol) {
+  padding-left: 24px;
+  margin: 16px 0 24px;
+}
+.guide-article :global(li) { margin-bottom: 10px; }
+.guide-article :global(strong) { color: var(--text); font-weight: 700; }
+.guide-article :global(.affiliate-card) {
+  margin: 40px 0;
+  padding: 28px;
+  background: rgba(255,255,255,0.03);
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.guide-article :global(.affiliate-card .aff-emoji) { font-size: 2rem; }
+.guide-article :global(.affiliate-card h4) {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+.guide-article :global(.affiliate-card p) { margin: 0; font-size: 0.95rem; }
+.guide-article :global(.affiliate-card .aff-btn) {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.2s;
+  align-self: flex-start;
+}
+.guide-article :global(.affiliate-card .aff-btn:hover) { opacity: 0.85; }
+.guide-article :global(.tip-box) {
+  margin: 32px 0;
+  padding: 20px 24px;
+  background: rgba(255,149,0,0.06);
+  border-left: 3px solid #FF9500;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.95rem;
+}
+
+/* ── SIDEBAR ── */
+.guide-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: sticky;
+  top: 24px;
+  align-self: start;
+}
+.sidebar-card {
+  padding: 24px;
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.sidebar-esim { background: rgba(48,209,88,0.06); border-color: rgba(48,209,88,0.2); }
+.sidebar-hotel { background: rgba(10,132,255,0.06); border-color: rgba(10,132,255,0.2); }
+.sidebar-tours { background: rgba(255,45,85,0.06); border-color: rgba(255,45,85,0.2); }
+.sidebar-pickup { background: rgba(255,149,0,0.06); border-color: rgba(255,149,0,0.2); }
+.sidebar-insurance { background: rgba(191,90,242,0.06); border-color: rgba(191,90,242,0.2); }
+
+.sidebar-card-emoji { font-size: 2rem; margin-bottom: 10px; }
+.sidebar-card h3 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.sidebar-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px; }
+
+.sidebar-btn {
+  display: block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+.sidebar-btn:hover { opacity: 0.85; }
+.esim-btn { background: #30D158; color: #000; }
+.hotel-btn { background: #0A84FF; color: #fff; }
+.tours-btn { background: var(--primary); color: #fff; }
+.pickup-btn { background: #FF9500; color: #000; }
+.insurance-btn { background: #BF5AF2; color: #fff; }
+
+.sidebar-related {
+  padding: 24px;
+  background: var(--card, #0f0f0f);
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.related-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.related-list { display: flex; flex-direction: column; gap: 4px; }
+.related-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.related-item:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+.related-emoji { width: 20px; text-align: center; font-size: 15px; }
+</style>

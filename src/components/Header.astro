@@ -1,0 +1,396 @@
+---
+import { CATEGORIES, LANGUAGES, CAT_ORDER } from '../lib/categories.js';
+---
+
+<header class="header">
+  <div class="header-inner">
+    <!-- Logo -->
+    <a href="/" class="logo" aria-label="seoul.is home">
+      <span class="logo-text">seoul</span><span class="logo-dot">.</span><span class="logo-is">is</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <nav class="nav-desktop" aria-label="Category navigation">
+      {CAT_ORDER.map(id => {
+        const c = CATEGORIES[id];
+        return (
+          <a href={`#${id}`} class="nav-link" style={`--cat-color: ${c.color};`}>
+            {c.name}
+          </a>
+        );
+      })}
+    </nav>
+
+    <!-- Right side: Language selector -->
+    <div class="header-actions">
+      <div class="lang-wrapper">
+        <button id="lang-btn" class="lang-btn" aria-expanded="false" aria-haspopup="listbox">
+          <span class="lang-flag">🇺🇸</span>
+          <span class="lang-label">EN</span>
+          <svg class="lang-chevron" width="10" height="10" viewBox="0 0 10 10" fill="none">
+            <path d="M2.5 4L5 6.5L7.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="lang-dropdown" class="lang-dropdown" role="listbox" aria-label="Select language">
+          {LANGUAGES.map(l => (
+            <button class="lang-option" data-code={l.code} data-flag={l.flag} data-name={l.name} role="option">
+              <span class="lang-option-flag">{l.flag}</span>
+              <span class="lang-option-name">{l.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Category Bar -->
+  <div class="cat-bar scrollbar-hide">
+    {CAT_ORDER.map(id => {
+      const c = CATEGORIES[id];
+      return (
+        <a href={`#${id}`} class="cat-pill" style={`--pill-color: ${c.color};`}>
+          <span class="cat-pill-emoji">{c.emoji}</span>
+          <span>{c.name}</span>
+        </a>
+      );
+    })}
+  </div>
+</header>
+
+<!-- Spacer to prevent content from hiding behind sticky header -->
+<div class="header-spacer"></div>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--page-pad);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    flex-shrink: 0;
+    transition: opacity var(--transition-fast);
+  }
+  .logo:hover { opacity: 0.8; }
+
+  .logo-text {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--text);
+  }
+  .logo-dot {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--primary);
+  }
+  .logo-is {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--primary);
+  }
+
+  /* Desktop nav */
+  .nav-desktop {
+    display: none;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    border-radius: 6px;
+    transition: all var(--transition-fast);
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: var(--cat-color, var(--primary));
+    background: color-mix(in srgb, var(--cat-color, var(--primary)) 8%, transparent);
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 16px;
+    height: 2px;
+    background: var(--cat-color, var(--primary));
+    border-radius: 1px;
+    transition: transform var(--transition-fast);
+  }
+
+  .nav-link:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  /* Header actions */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  /* Language selector */
+  .lang-wrapper {
+    position: relative;
+  }
+
+  .lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+  }
+  .lang-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .lang-flag { font-size: 14px; }
+  .lang-label { letter-spacing: 0.5px; }
+  .lang-chevron {
+    color: var(--text-secondary);
+    transition: transform var(--transition-fast);
+  }
+  .lang-btn[aria-expanded="true"] .lang-chevron {
+    transform: rotate(180deg);
+  }
+
+  .lang-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    min-width: 180px;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+    z-index: 200;
+    animation: fadeIn 0.15s var(--ease-out);
+  }
+  .lang-dropdown.open { display: block; }
+
+  .lang-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 13px;
+    text-align: left;
+    transition: all var(--transition-fast);
+  }
+  .lang-option:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+  }
+  .lang-option-flag { font-size: 16px; }
+
+  /* Mobile category bar */
+  .cat-bar {
+    overflow-x: auto;
+    padding: 8px var(--page-pad) 10px;
+    display: flex;
+    gap: 6px;
+    white-space: nowrap;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .cat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--pill-color);
+    background: color-mix(in srgb, var(--pill-color) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--pill-color) 15%, transparent);
+    flex-shrink: 0;
+    transition: all var(--transition-fast);
+    text-transform: uppercase;
+  }
+  .cat-pill:hover {
+    background: color-mix(in srgb, var(--pill-color) 18%, transparent);
+    border-color: color-mix(in srgb, var(--pill-color) 30%, transparent);
+  }
+  .cat-pill-emoji { font-size: 12px; }
+
+  /* Spacer */
+  .header-spacer {
+    height: 96px;
+  }
+
+  /* ─── Responsive ─── */
+  @media (min-width: 768px) {
+    .header-inner { height: 60px; }
+    .header-spacer { height: 100px; }
+  }
+
+  @media (min-width: 1024px) {
+    .nav-desktop { display: flex; }
+    .cat-bar { display: none; }
+    .header-spacer { height: 60px; }
+    .logo-text, .logo-dot, .logo-is { font-size: 28px; }
+  }
+</style>
+
+<script>
+  const langBtn = document.getElementById('lang-btn');
+  const langDropdown = document.getElementById('lang-dropdown');
+
+  langBtn?.addEventListener('click', () => {
+    const isOpen = langDropdown.classList.toggle('open');
+    langBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!langBtn?.contains(e.target) && !langDropdown?.contains(e.target)) {
+      langDropdown?.classList.remove('open');
+      langBtn?.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ── Google Translate integration ──
+  function loadGoogleTranslate(langCode) {
+    // Remove existing GT elements to force fresh init
+    const existingScript = document.getElementById('gt-script');
+    if (existingScript) existingScript.remove();
+    const existingWidget = document.getElementById('google_translate_element');
+    if (existingWidget) existingWidget.remove();
+
+    // Create hidden GT container
+    const container = document.createElement('div');
+    container.id = 'google_translate_element';
+    container.style.display = 'none';
+    document.body.appendChild(container);
+
+    // Store target language for callback
+    window._targetLang = langCode;
+
+    window.googleTranslateElementInit = function() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'ko,ja,zh-CN,zh-TW,vi,id,th,en',
+        autoDisplay: false,
+      }, 'google_translate_element');
+
+      // Trigger translation after widget loads
+      setTimeout(() => {
+        triggerGoogleTranslate(window._targetLang);
+      }, 800);
+    };
+
+    const script = document.createElement('script');
+    script.id = 'gt-script';
+    script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    document.body.appendChild(script);
+  }
+
+  function triggerGoogleTranslate(langCode) {
+    if (langCode === 'en') {
+      // Restore original — reload without hash
+      const url = new URL(window.location.href);
+      url.hash = '';
+      // Use Google's restore mechanism
+      const frame = document.querySelector('.goog-te-banner-frame');
+      if (frame) {
+        const restore = frame.contentDocument?.querySelector('.goog-close-link');
+        if (restore) { restore.click(); return; }
+      }
+      // Fallback: reload page
+      window.location.reload();
+      return;
+    }
+
+    // Find the GT select element and change it
+    const select = document.querySelector('.goog-te-combo');
+    if (select) {
+      select.value = langCode;
+      select.dispatchEvent(new Event('change'));
+    } else {
+      // Try cookie approach as fallback
+      document.cookie = `googtrans=/en/${langCode};path=/;domain=${location.hostname}`;
+      document.cookie = `googtrans=/en/${langCode};path=/`;
+      window.location.reload();
+    }
+  }
+
+  document.querySelectorAll('.lang-option').forEach(el => {
+    el.addEventListener('click', () => {
+      const code = el.dataset.code;
+      const flag = el.dataset.flag;
+      const langLabel = langBtn?.querySelector('.lang-label');
+      const langFlag = langBtn?.querySelector('.lang-flag');
+      if (langLabel) langLabel.textContent = code.toUpperCase().split('-')[0];
+      if (langFlag) langFlag.textContent = flag;
+      langDropdown?.classList.remove('open');
+      langBtn?.setAttribute('aria-expanded', 'false');
+
+      // Map our codes to Google Translate codes
+      const gtCodeMap = {
+        'en': 'en',
+        'ko': 'ko',
+        'ja': 'ja',
+        'zh-cn': 'zh-CN',
+        'zh-tw': 'zh-TW',
+        'vi': 'vi',
+        'id': 'id',
+        'th': 'th',
+      };
+      const gtCode = gtCodeMap[code] || code;
+
+      // Check if GT is already loaded
+      if (window.google && window.google.translate) {
+        triggerGoogleTranslate(gtCode);
+      } else {
+        loadGoogleTranslate(gtCode);
+      }
+    });
+  });
+</script>

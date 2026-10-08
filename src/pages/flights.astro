@@ -1,0 +1,261 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Flights to Seoul Korea 2026 — seoul.is" description="Search and compare cheap flights to Seoul Incheon Airport (ICN). Find the best deals from Southeast Asia, Japan, China and worldwide.">
+  <div class="flights-page">
+    <!-- HERO -->
+    <div class="flights-hero">
+      <h1 class="flights-title">✈️ Flights to Seoul</h1>
+      <p class="flights-sub">Search hundreds of airlines. Find the cheapest flight to Incheon (ICN).</p>
+    </div>
+
+    <!-- AVIASALES SEARCH WIDGET (Travelpayouts marker: 564727) -->
+    <div class="widget-wrap">
+      <div class="aviasales-widget-wrap">
+        <script
+          is:inline
+          type="text/javascript"
+          charset="utf-8"
+          src="https://tp.media/content?trs=767524&shmarker=767524&locale=en&curr=USD&powered_by=true&destination=ICN&border_radius=16&plain=true&color_button=%23FF2D55&color_button_text=%23FFFFFF&color_border=%23222222&color_focused_border=%23FF2D55&color_background=%23111111&color_plane_icon=%23FF2D55&color_error=%23FF2D55&color_text=%23FFFFFF&color_secondary_text=%23999999&width=100%25&promo_id=4132&campaign_id=121"
+        ></script>
+      </div>
+    </div>
+
+    <!-- POPULAR ROUTES -->
+    <div class="routes-section">
+      <h2 class="routes-title">Popular Routes to Seoul</h2>
+      <div class="routes-grid">
+        {[
+          { from: "Bangkok (BKK)", price: "from $180", airline: "Korean Air, Asiana, Thai", flag: "🇹🇭" },
+          { from: "Singapore (SIN)", price: "from $220", airline: "Singapore Air, Korean Air", flag: "🇸🇬" },
+          { from: "Tokyo (NRT)", price: "from $130", airline: "Asiana, ANA, Jeju Air", flag: "🇯🇵" },
+          { from: "Osaka (KIX)", price: "from $120", airline: "Jeju Air, Jin Air, Peach", flag: "🇯🇵" },
+          { from: "Taipei (TPE)", price: "from $140", airline: "EVA Air, Korean Air", flag: "🇹🇼" },
+          { from: "Hong Kong (HKG)", price: "from $160", airline: "Cathay Pacific, Asiana", flag: "🇭🇰" },
+          { from: "Kuala Lumpur (KUL)", price: "from $200", airline: "AirAsia X, Korean Air", flag: "🇲🇾" },
+          { from: "Jakarta (CGK)", price: "from $240", airline: "Garuda, Korean Air", flag: "🇮🇩" },
+        ].map(r => (
+          <a href="https://aviasales.tpo.li/empItUCk" target="_blank" rel="noopener sponsored" class="route-card">
+            <span class="route-flag">{r.flag}</span>
+            <div class="route-info">
+              <div class="route-from">{r.from}</div>
+              <div class="route-airline">{r.airline}</div>
+            </div>
+            <div class="route-price">{r.price}</div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- TIPS -->
+    <div class="tips-section">
+      <h2 class="tips-title">✈️ Seoul Flight Tips</h2>
+      <div class="tips-grid">
+        <div class="tip-card">
+          <div class="tip-icon">🛬</div>
+          <h3>Two airports</h3>
+          <p>Most international flights arrive at <strong>Incheon (ICN)</strong>. Gimpo (GMP) handles some short-haul Asian routes. ICN is 60km from central Seoul.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">🚄</div>
+          <h3>AREX from ICN</h3>
+          <p>Direct Express train from Incheon Airport to Seoul Station in 43 minutes. ₩11,000. All-stop train ₩9,500 (66 min). Much faster than taxi.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">📅</div>
+          <h3>Best time to book</h3>
+          <p>Book 6–8 weeks ahead for cheapest fares. Avoid Golden Week (late April–May), Chuseok, and K-POP concert periods — prices spike 40%+.</p>
+        </div>
+        <div class="tip-card">
+          <div class="tip-icon">💳</div>
+          <h3>Budget airlines</h3>
+          <p>Jeju Air, Jin Air, and T'way cover short Asia routes cheaply. For longer hauls, Korean Air and Asiana offer better value + quality than many western carriers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+.flights-page { min-height: 100vh; }
+
+.flights-hero {
+  background: linear-gradient(180deg, #00061a 0%, #050505 100%);
+  padding: 56px var(--page-pad) 40px;
+  text-align: center;
+}
+.flights-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 10px; }
+.flights-sub { color: var(--text-secondary); font-size: 1rem; }
+
+/* WIDGET */
+.widget-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad) 48px;
+}
+.aviasales-widget-wrap {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.trip-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.trip-tab {
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.trip-tab.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.form-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.form-field {
+  flex: 1;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form-field--sm { flex: 0.6; min-width: 110px; }
+.form-field label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+.field-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+.field-input:focus-within { border-color: var(--primary); }
+.field-icon { font-size: 1rem; flex-shrink: 0; }
+.field-input input, .field-input select {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 14px;
+  width: 100%;
+  font-family: inherit;
+}
+.field-input input::placeholder { color: var(--text-muted); }
+.field-input select option { background: #111; }
+
+.swap-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--text-secondary);
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  align-self: flex-end;
+  margin-bottom: 1px;
+}
+.swap-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+.search-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-top: 8px;
+  font-family: inherit;
+}
+.search-btn:hover { opacity: 0.88; }
+
+/* ROUTES */
+.routes-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad) 56px;
+}
+.routes-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+}
+.routes-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 640px) { .routes-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .routes-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.route-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--card);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.route-card:hover { border-color: var(--card-border-hover); transform: translateY(-2px); }
+.route-flag { font-size: 1.8rem; flex-shrink: 0; }
+.route-info { flex: 1; min-width: 0; }
+.route-from { font-size: 13px; font-weight: 700; color: var(--text); }
+.route-airline { font-size: 11px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.route-price { font-size: 13px; font-weight: 800; color: #30D158; flex-shrink: 0; }
+
+/* TIPS */
+.tips-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad) 80px;
+}
+.tips-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; }
+.tips-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 640px) { .tips-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .tips-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.tip-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  padding: 24px;
+}
+.tip-icon { font-size: 2rem; margin-bottom: 12px; }
+.tip-card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.tip-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+.tip-card strong { color: var(--text); }
+</style>
+
+

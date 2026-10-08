@@ -1,0 +1,379 @@
+---
+import Base from '../layouts/Base.astro';
+
+const plans = [
+  {
+    name: "Basic",
+    price: "$99",
+    period: "/month",
+    color: "#30D158",
+    popular: false,
+    features: [
+      "Business listing on seoul.is",
+      "Category page placement",
+      "Phone number & address",
+      "Link to your website",
+      "Google Maps embed",
+    ],
+    link: "https://buy.stripe.com/fZu9AT6mX1O6anyfCdf3a00",
+    cta: "Get Started",
+  },
+  {
+    name: "Pro",
+    price: "$299",
+    period: "/month",
+    color: "#FF2D55",
+    popular: true,
+    features: [
+      "Everything in Basic",
+      "Top of category page placement",
+      "1 sponsored article per month",
+      "QR coupon for your business",
+      "Monthly visitor report",
+      "Instagram story feature",
+    ],
+    link: "https://buy.stripe.com/aFa4gzfXx3We8fq3Tvf3a01",
+    cta: "Most Popular →",
+  },
+  {
+    name: "Premium",
+    price: "$599",
+    period: "/month",
+    color: "#BF5AF2",
+    popular: false,
+    features: [
+      "Everything in Pro",
+      "Homepage banner placement",
+      "2 sponsored articles per month",
+      "Unlimited QR coupons",
+      "Email to our subscriber list",
+      "Priority support",
+      "Custom landing page",
+    ],
+    link: "https://buy.stripe.com/14A9AT5iT50i3Za9dPf3a02",
+    cta: "Go Premium",
+  },
+];
+
+const stats = [
+  { value: "50K+", label: "Monthly Visitors" },
+  { value: "85%", label: "International Travelers" },
+  { value: "20+", label: "Countries Reached" },
+  { value: "4.2min", label: "Avg. Time on Site" },
+];
+
+const categories = [
+  { emoji: "🏥", name: "Clinics & Medical", desc: "Plastic surgery, dermatology, dental" },
+  { emoji: "☕", name: "Cafes & Restaurants", desc: "Korean dining, trendy spots" },
+  { emoji: "🛍️", name: "Shopping & Beauty", desc: "K-beauty, fashion, retail" },
+  { emoji: "🎭", name: "Tours & Activities", desc: "Experiences, day trips, guides" },
+  { emoji: "🏨", name: "Hotels & Stays", desc: "Guesthouses, boutique hotels" },
+  { emoji: "💇", name: "Beauty & Wellness", desc: "Spas, hair salons, jimjilbang" },
+];
+---
+
+<Base title="Advertise on seoul.is — Reach International Visitors to Seoul" description="Put your business in front of thousands of international travelers actively planning their Seoul trip. Sponsored listings, articles, and QR coupons.">
+  <div class="adv-page">
+
+    <!-- HERO -->
+    <div class="adv-hero">
+      <div class="adv-hero-inner">
+        <div class="adv-badge">💼 For Businesses</div>
+        <h1>Reach <span class="highlight">International Visitors</span><br/>Before They Land in Seoul</h1>
+        <p>Thousands of travelers from Japan, Southeast Asia, China, and beyond use seoul.is to plan their trip. Put your business in front of them at the exact moment they're deciding where to go, eat, and spend.</p>
+        <a href="#plans" class="hero-cta">See Advertising Plans →</a>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      {stats.map(s => (
+        <div class="stat-item">
+          <div class="stat-value">{s.value}</div>
+          <div class="stat-label">{s.label}</div>
+        </div>
+      ))}
+    </div>
+
+    <!-- WHO ADVERTISES -->
+    <div class="section">
+      <div class="section-inner">
+        <h2 class="section-title">Perfect for These Businesses</h2>
+        <div class="cat-grid">
+          {categories.map(c => (
+            <div class="cat-card">
+              <span class="cat-emoji">{c.emoji}</span>
+              <div>
+                <div class="cat-name">{c.name}</div>
+                <div class="cat-desc">{c.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- PLANS -->
+    <div class="section" id="plans">
+      <div class="section-inner">
+        <h2 class="section-title">Choose Your Plan</h2>
+        <p class="section-sub">All plans include a dedicated business profile page. Cancel anytime.</p>
+        <div class="plans-grid">
+          {plans.map(p => (
+            <div class={`plan-card ${p.popular ? 'plan-card--popular' : ''}`} style={p.popular ? `border-color:${p.color}44` : ''}>
+              {p.popular && <div class="popular-badge" style={`background:${p.color}`}>⭐ Most Popular</div>}
+              <div class="plan-name" style={`color:${p.color}`}>{p.name}</div>
+              <div class="plan-price">{p.price}<span class="plan-period">{p.period}</span></div>
+              <ul class="plan-features">
+                {p.features.map(f => (
+                  <li><span class="check" style={`color:${p.color}`}>✓</span> {f}</li>
+                ))}
+              </ul>
+              <a href={p.link} target="_blank" rel="noopener" class="plan-btn" style={`background:${p.color};color:${p.color === '#30D158' ? '#000' : '#fff'}`}>
+                {p.cta}
+              </a>
+              <p class="plan-note">Secure checkout via Stripe</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- QR COUPON SECTION -->
+    <div class="section qr-section">
+      <div class="section-inner qr-inner">
+        <div class="qr-text">
+          <div class="qr-badge">🆕 New Feature</div>
+          <h2>QR Coupons for Your Business</h2>
+          <p>Pro and Premium advertisers get a custom QR coupon published on seoul.is. International visitors scan the QR code on their phone and walk into your store with a digital coupon — no app download required.</p>
+          <ul class="qr-list">
+            <li>✓ Discount coupons (e.g. "10% off for international visitors")</li>
+            <li>✓ Special offers (e.g. "Free consultation at clinic")</li>
+            <li>✓ Tracked scans — see how many visitors came from seoul.is</li>
+          </ul>
+        </div>
+        <div class="qr-visual">
+          <div class="qr-mock">
+            <div class="qr-mock-icon">📱</div>
+            <div class="qr-mock-title">Scan for 10% Off</div>
+            <div class="qr-mock-name">Gangnam Skin Clinic</div>
+            <div class="qr-mock-sub">Valid for international visitors · Show at reception</div>
+            <div class="qr-mock-code">seoul.is/coupon/GANGNAM10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="section contact-section">
+      <div class="section-inner contact-inner">
+        <h2>Questions? Contact Us</h2>
+        <p>We work with businesses across Seoul to create custom packages. Email us and we'll get back within 24 hours.</p>
+        <a href="mailto:hello@seoul.is" class="contact-btn">hello@seoul.is →</a>
+      </div>
+    </div>
+
+  </div>
+</Base>
+
+<style>
+.adv-page { min-height: 100vh; }
+
+/* HERO */
+.adv-hero {
+  background: linear-gradient(135deg, #0a0010 0%, #050505 60%);
+  padding: 72px 0 56px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.adv-hero-inner { max-width: 720px; margin: 0 auto; padding: 0 var(--page-pad); }
+.adv-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--primary);
+  border: 1px solid rgba(255,45,85,0.3);
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+.adv-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+.highlight { color: var(--primary); }
+.adv-hero p { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; max-width: 560px; margin: 0 auto 32px; }
+.hero-cta {
+  display: inline-block;
+  padding: 14px 32px;
+  background: var(--primary);
+  color: white;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.hero-cta:hover { opacity: 0.85; }
+
+/* STATS */
+.stats-bar {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-wrap: wrap;
+}
+.stat-item {
+  padding: 28px 40px;
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+.stat-item:last-child { border-right: none; }
+.stat-value { font-size: 2rem; font-weight: 900; color: var(--text); }
+.stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.8px; }
+
+/* SECTIONS */
+.section { padding: 64px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.section-inner { max-width: 1100px; margin: 0 auto; padding: 0 var(--page-pad); }
+.section-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 900; text-align: center; margin-bottom: 12px; }
+.section-sub { text-align: center; color: var(--text-secondary); margin-bottom: 40px; }
+
+/* CATEGORIES */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+@media (min-width: 768px) { .cat-grid { grid-template-columns: repeat(3, 1fr); } }
+.cat-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+}
+.cat-emoji { font-size: 2rem; flex-shrink: 0; }
+.cat-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.cat-desc { font-size: 12px; color: var(--text-muted); }
+
+/* PLANS */
+.plans-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 768px) { .plans-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.plan-card {
+  position: relative;
+  padding: 32px 28px;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.plan-card--popular { background: rgba(255,45,85,0.04); }
+.popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: 20px;
+  color: white;
+  white-space: nowrap;
+}
+.plan-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.plan-price { font-size: 2.5rem; font-weight: 900; color: var(--text); }
+.plan-period { font-size: 14px; font-weight: 400; color: var(--text-muted); }
+.plan-features { list-style: none; padding: 0; margin: 8px 0; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.plan-features li { font-size: 14px; color: var(--text-secondary); display: flex; gap: 8px; align-items: flex-start; }
+.check { font-weight: 700; flex-shrink: 0; }
+.plan-btn {
+  display: block;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 8px;
+  transition: opacity 0.2s;
+}
+.plan-btn:hover { opacity: 0.85; }
+.plan-note { font-size: 11px; color: var(--text-muted); text-align: center; }
+
+/* QR SECTION */
+.qr-section { background: rgba(191,90,242,0.03); }
+.qr-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (min-width: 768px) { .qr-inner { grid-template-columns: 1fr 1fr; } }
+.qr-badge {
+  display: inline-block;
+  background: rgba(191,90,242,0.15);
+  color: #BF5AF2;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.qr-text h2 { font-size: 1.6rem; font-weight: 900; margin-bottom: 14px; }
+.qr-text p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+.qr-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.qr-list li { font-size: 14px; color: var(--text-secondary); }
+
+.qr-mock {
+  background: var(--card);
+  border: 1px solid rgba(191,90,242,0.3);
+  border-radius: 20px;
+  padding: 32px;
+  text-align: center;
+}
+.qr-mock-icon { font-size: 3rem; margin-bottom: 12px; }
+.qr-mock-title { font-size: 1.2rem; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.qr-mock-name { font-size: 14px; color: #BF5AF2; font-weight: 700; margin-bottom: 8px; }
+.qr-mock-sub { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
+.qr-mock-code {
+  font-size: 12px;
+  font-family: monospace;
+  background: rgba(191,90,242,0.1);
+  color: #BF5AF2;
+  padding: 8px 14px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+/* CONTACT */
+.contact-section { text-align: center; }
+.contact-inner { max-width: 500px; }
+.contact-section h2 { font-size: 1.5rem; font-weight: 900; margin-bottom: 12px; }
+.contact-section p { color: var(--text-secondary); margin-bottom: 24px; }
+.contact-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.contact-btn:hover { border-color: var(--primary); color: var(--primary); }
+</style>

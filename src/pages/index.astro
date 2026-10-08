@@ -1,0 +1,586 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import ContentCard from '../components/ContentCard.astro';
+import CategorySection from '../components/CategorySection.astro';
+import Footer from '../components/Footer.astro';
+import { getAllContent, getFeatured, getMeta } from '../lib/content.js';
+import { CATEGORIES, CAT_ORDER } from '../lib/categories.js';
+
+const content = getAllContent();
+const meta = getMeta();
+
+// Pick hero article: newest travel guide with image, then kpop, then any
+const heroItem =
+  content.travel?.find(i => i.image) ||
+  content.kpop?.find(i => i.image) ||
+  Object.values(content).flat().find(i => i.image) ||
+  content.travel?.[0] ||
+  content.kpop?.[0];
+
+// Trending pills — collect unique sources across all categories
+const trendingTopics = [
+  { label: '🔥 BTS Arirang', tag: 'kpop' },
+  { label: '📺 April K-Dramas', tag: 'kdrama' },
+  { label: '⭐ Michelin 2026', tag: 'food' },
+  { label: '📍 Seongsu-dong', tag: 'places' },
+  { label: '🏆 Box Office', tag: 'ranking' },
+  { label: '💄 K-Beauty', tag: 'lifestyle' },
+  { label: '🎤 IVE Comeback', tag: 'kpop' },
+  { label: '🍜 Seoul Eats', tag: 'food' },
+  { label: '🎬 Netflix Top 10', tag: 'kdrama' },
+  { label: '🏠 Seoul Real Estate', tag: 'kproperty' },
+  { label: '✈️ Travel Seoul', tag: 'places' },
+];
+---
+
+<Base>
+  <Header />
+
+  <main class="main-content">
+
+    <!-- ═══ HERO SECTION ═══ -->
+    {heroItem && (
+      <section class="hero animate-fade-in">
+        <a href={heroItem.slug ? `/article/${heroItem.slug}` : heroItem.url}
+         target={heroItem.slug ? undefined : "_blank"}
+         rel={heroItem.slug ? undefined : "noopener noreferrer"}
+         class="hero-link">
+          <div class="hero-image">
+            {heroItem.image && (
+              <img src={heroItem.image.replace('w=600&h=400', 'w=1400&h=800')} alt={heroItem.title} loading="eager" />
+            )}
+            <div class="hero-gradient"></div>
+            <div class="hero-overlay">
+              <span class="hero-badge">
+                {CATEGORIES[heroItem.category]?.emoji} {CATEGORIES[heroItem.category]?.name || 'TRENDING'}
+              </span>
+              <h1 class="hero-title">
+                {heroItem.title?.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')}
+              </h1>
+              <div class="hero-meta">
+                <span class="hero-source">{heroItem.source}</span>
+                {heroItem.date && (
+                  <>
+                    <span class="hero-dot">·</span>
+                    <span>{new Date(heroItem.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </a>
+      </section>
+    )}
+
+    <!-- ═══ TRENDING STRIP ═══ -->
+    <section class="trending-section animate-fade-in delay-2">
+      <div class="trending-header">
+        <span class="trending-label">🔥 Trending Now</span>
+      </div>
+      <div class="trending-strip scrollbar-hide">
+        {trendingTopics.map(t => (
+          <a href={`#${t.tag}`} class="trending-pill" style={`--pill-color: ${CATEGORIES[t.tag]?.color || '#FF2D55'};`}>
+            {t.label}
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- ═══ TOP AD SLOT ═══ -->
+    <div class="ad-slot ad-leaderboard animate-fade-in delay-3">Advertisement</div>
+
+    <!-- ═══ CATEGORY SECTIONS ═══ -->
+    <div class="sections-wrapper">
+      {CAT_ORDER.map((catId, index) => (
+        <div class="section-block">
+          <CategorySection categoryId={catId} items={content[catId] || []} />
+
+          {/* Ad slot after every 2nd section */}
+          {(index + 1) % 2 === 0 && index < CAT_ORDER.length - 1 && (
+            <div class="ad-slot ad-mid" style="margin-top: 48px;">Advertisement</div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- ═══ TRAVEL CTA ═══ -->
+    <section class="travel-cta">
+      <div class="travel-cta-bg"></div>
+      <div class="travel-cta-content">
+        <span class="travel-cta-flag">🇰🇷</span>
+        <h2 class="travel-cta-title">Planning a trip to Seoul?</h2>
+        <p class="travel-cta-desc">
+          Find the best hotels, tours, and experiences curated for Korea lovers.
+        </p>
+        <div class="travel-cta-links">
+          <a href="https://aviasales.tpo.li/empItUCk" target="_blank" rel="noopener sponsored" class="travel-btn travel-btn--flights">
+            <span>✈️</span> Cheap Flights to Seoul
+          </a>
+          <a href="https://www.agoda.com/city/seoul-kr.html?cid=1973066" target="_blank" rel="noopener sponsored" class="travel-btn travel-btn--agoda">
+            <span>🏨</span> Hotels on Agoda
+          </a>
+          <a href="https://www.klook.com/en-US/city/34-seoul-things-to-do/?aff_adid=1392094&aff_pid=131769" target="_blank" rel="noopener sponsored" class="travel-btn travel-btn--klook">
+            <span>🎫</span> Tours on Klook
+          </a>
+          <a href="https://airalo.tpo.li/rmpJe6nd" target="_blank" rel="noopener sponsored" class="travel-btn travel-btn--esim">
+            <span>📱</span> Korea eSIM
+          </a>
+          <a href="https://tpo.li/KvaMrbC9" target="_blank" rel="noopener sponsored" class="travel-btn travel-btn--pickup">
+            <span>🚗</span> Airport Transfer
+          </a>
+          <a href="https://ektatraveling.tpo.li/nTbwSd7a" target="_blank" rel="noopener sponsored" class="travel-btn travel-btn--insurance">
+            <span>🛡️</span> Travel Insurance
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ TELEGRAM CTA BANNER ═══ -->
+    <section class="telegram-cta">
+      <div class="telegram-cta-bg"></div>
+      <div class="telegram-cta-glow"></div>
+      <div class="telegram-cta-content">
+        <div class="telegram-cta-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="white">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+          </svg>
+        </div>
+        <div class="telegram-cta-text">
+          <h2 class="telegram-cta-title">Join Seoul Prime Club</h2>
+          <p class="telegram-cta-desc">
+            Get real-time Seoul insights, exclusive deals, and connect with Korea lovers worldwide.
+          </p>
+        </div>
+        <a href="https://t.me/SeoulPrimeClub_Chat" target="_blank" rel="noopener noreferrer" class="telegram-cta-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+          </svg>
+          Join on Telegram
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══ BOTTOM AD ═══ -->
+    <div class="ad-slot ad-leaderboard" style="margin-top: 48px;">Advertisement</div>
+
+    <!-- ═══ LAST UPDATED ═══ -->
+    {meta.lastUpdated && (
+      <div class="last-updated">
+        <span class="last-updated-dot"></span>
+        Last updated: {new Date(meta.lastUpdated).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
+      </div>
+    )}
+
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  /* ─── Main content ─── */
+  .main-content {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--page-pad);
+  }
+
+  /* ═══════════════════════════
+     HERO SECTION
+     ═══════════════════════════ */
+  .hero {
+    margin-bottom: 32px;
+  }
+
+  .hero-link {
+    display: block;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    position: relative;
+    transition: all var(--transition-mid);
+  }
+  .hero-link:hover {
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(255, 45, 85, 0.15);
+  }
+
+  .hero-image {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s var(--ease-out);
+  }
+  .hero-link:hover .hero-image img {
+    transform: scale(1.04);
+  }
+
+  .hero-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(5, 5, 5, 0.95) 0%,
+      rgba(5, 5, 5, 0.7) 30%,
+      rgba(5, 5, 5, 0.2) 60%,
+      transparent 100%
+    );
+  }
+
+  .hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 32px 24px 28px;
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 6px;
+    background: rgba(255, 45, 85, 0.15);
+    border: 1px solid rgba(255, 45, 85, 0.25);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hero-title {
+    font-size: clamp(24px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    max-width: 800px;
+  }
+  .hero-link:hover .hero-title {
+    color: #ffe0e8;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .hero-source {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+  }
+  .hero-dot { opacity: 0.3; }
+
+  /* ═══════════════════════════
+     TRENDING STRIP
+     ═══════════════════════════ */
+  .trending-section {
+    margin-bottom: 32px;
+  }
+
+  .trending-header {
+    margin-bottom: 12px;
+  }
+  .trending-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .trending-strip {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .trending-pill {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+    letter-spacing: 0.1px;
+  }
+  .trending-pill:hover {
+    color: var(--pill-color);
+    background: color-mix(in srgb, var(--pill-color) 10%, transparent);
+    border-color: color-mix(in srgb, var(--pill-color) 25%, transparent);
+    transform: translateY(-1px);
+  }
+
+  /* ═══════════════════════════
+     AD SLOTS
+     ═══════════════════════════ */
+  .ad-leaderboard {
+    max-width: 728px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 48px;
+  }
+  .ad-mid {
+    max-width: 336px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 280px;
+  }
+
+  /* ═══════════════════════════
+     SECTIONS
+     ═══════════════════════════ */
+  .sections-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--section-gap);
+  }
+
+  /* ═══════════════════════════
+     TRAVEL CTA
+     ═══════════════════════════ */
+  .travel-cta {
+    margin-top: 72px;
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .travel-cta-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(48, 209, 88, 0.08) 0%,
+      rgba(255, 149, 0, 0.08) 50%,
+      rgba(255, 45, 85, 0.05) 100%
+    );
+  }
+
+  .travel-cta-content {
+    position: relative;
+    padding: 40px 28px;
+    text-align: center;
+  }
+
+  .travel-cta-flag {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .travel-cta-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+
+  .travel-cta-desc {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  .travel-cta-links {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .travel-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    transition: all var(--transition-fast);
+    letter-spacing: 0.1px;
+  }
+  .travel-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .travel-btn--booking { background: #003580; }
+  .travel-btn--booking:hover { background: #004cb3; }
+  .travel-btn--klook { background: #FF5722; }
+  .travel-btn--klook:hover { background: #ff6d3d; }
+  .travel-btn--flights { background: #FF2D55; }
+  .travel-btn--flights:hover { background: #e0263d; }
+  .travel-btn--agoda { background: #5C2D91; }
+  .travel-btn--pickup { background: #FF9500; color: #000; }
+  .travel-btn--pickup:hover { background: #e68600; }
+  .travel-btn--insurance { background: #BF5AF2; }
+  .travel-btn--insurance:hover { background: #a84de0; }
+  .travel-btn--agoda:hover { background: #7339b5; }
+
+  /* ═══════════════════════════
+     TELEGRAM CTA
+     ═══════════════════════════ */
+  .telegram-cta {
+    margin-top: 72px;
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid rgba(0, 136, 204, 0.2);
+  }
+
+  .telegram-cta-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(0, 136, 204, 0.12) 0%,
+      rgba(41, 171, 226, 0.08) 50%,
+      rgba(0, 136, 204, 0.04) 100%
+    );
+  }
+
+  .telegram-cta-glow {
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(0, 136, 204, 0.1);
+    filter: blur(60px);
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+
+  .telegram-cta-content {
+    position: relative;
+    padding: 40px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .telegram-cta-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #0088CC, #29ABE2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 32px rgba(0, 136, 204, 0.3);
+  }
+
+  .telegram-cta-title {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: white;
+  }
+
+  .telegram-cta-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 440px;
+    line-height: 1.6;
+  }
+
+  .telegram-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 32px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, #0088CC, #29ABE2);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    transition: all var(--transition-fast);
+    box-shadow: 0 4px 20px rgba(0, 136, 204, 0.3);
+  }
+  .telegram-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 136, 204, 0.45);
+    background: linear-gradient(135deg, #0099DD, #3BBEF0);
+  }
+
+  @media (min-width: 768px) {
+    .telegram-cta-content {
+      flex-direction: row;
+      text-align: left;
+      padding: 48px 40px;
+      gap: 28px;
+    }
+    .telegram-cta-text { flex: 1; }
+    .telegram-cta-btn { flex-shrink: 0; }
+  }
+
+  /* ═══════════════════════════
+     LAST UPDATED
+     ═══════════════════════════ */
+  .last-updated {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.3px;
+  }
+  .last-updated-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #30D158;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  /* ═══════════════════════════
+     RESPONSIVE
+     ═══════════════════════════ */
+  @media (min-width: 768px) {
+    .hero-image { height: 480px; }
+    .hero-overlay { padding: 48px 40px 36px; }
+    .travel-cta-content { padding: 56px 40px; }
+    .travel-cta-title { font-size: 34px; }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-image { height: 560px; }
+    .hero-overlay { padding: 56px 48px 40px; }
+    .hero-title { letter-spacing: -1px; }
+  }
+</style>

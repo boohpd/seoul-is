@@ -1,0 +1,102 @@
+---
+const { emoji, title, desc, href, btnText, color = '#FF2D55' } = Astro.props;
+---
+
+<a href={href} target="_blank" rel="noopener sponsored" class="affiliate-card">
+  <div class="aff-glow" style={`background: ${color};`}></div>
+  <div class="aff-inner">
+    <div class="aff-icon" style={`background: color-mix(in srgb, ${color} 15%, transparent); border-color: color-mix(in srgb, ${color} 25%, transparent);`}>
+      <span class="aff-emoji">{emoji}</span>
+    </div>
+    <div class="aff-body">
+      <p class="aff-title">{title}</p>
+      <p class="aff-desc">{desc}</p>
+    </div>
+    <div class="aff-btn" style={`background: ${color};`}>
+      {btnText} →
+    </div>
+  </div>
+</a>
+
+<style>
+  .affiliate-card {
+    display: block;
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-mid);
+    text-decoration: none;
+    margin: 28px 0;
+  }
+  .affiliate-card:hover {
+    border-color: var(--card-border-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  }
+  .aff-glow {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    opacity: 0.08;
+    filter: blur(40px);
+    pointer-events: none;
+  }
+  .aff-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+  }
+  @media (min-width: 640px) {
+    .aff-inner {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  .aff-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: var(--radius-md);
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .aff-emoji {
+    font-size: 24px;
+  }
+  .aff-body {
+    flex: 1;
+  }
+  .aff-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .aff-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .aff-btn {
+    flex-shrink: 0;
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+    transition: filter var(--transition-fast);
+  }
+  .affiliate-card:hover .aff-btn {
+    filter: brightness(1.1);
+  }
+</style>

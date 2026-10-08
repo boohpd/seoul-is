@@ -1,0 +1,365 @@
+---
+import Base from '../layouts/Base.astro';
+
+const hotels = [
+  {
+    name: "Lotte Hotel Seoul",
+    area: "Myeongdong",
+    stars: 5,
+    rating: 9.1,
+    reviews: 4820,
+    price: "$189",
+    tag: "Luxury",
+    tagColor: "#FFD60A",
+    img: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop",
+    href: "https://www.agoda.com/lotte-hotel-seoul/hotel/seoul-kr.html?cid=1973066"
+  },
+  {
+    name: "Hotel Naru Seoul MGallery",
+    area: "Mapo / Hongdae",
+    stars: 5,
+    rating: 8.8,
+    reviews: 2341,
+    price: "$142",
+    tag: "Boutique",
+    tagColor: "#BF5AF2",
+    img: "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=400&fit=crop",
+    href: "https://www.agoda.com/hotel-naru-seoul-mgallery/hotel/seoul-kr.html?cid=1973066"
+  },
+  {
+    name: "Shilla Stay Mapo",
+    area: "Mapo / Itaewon",
+    stars: 4,
+    rating: 8.5,
+    reviews: 1892,
+    price: "$98",
+    tag: "Popular",
+    tagColor: "#30D158",
+    img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop",
+    href: "https://www.agoda.com/shilla-stay-mapo/hotel/seoul-kr.html?cid=1973066"
+  },
+  {
+    name: "Ibis Styles Ambassador Seoul Myeongdong",
+    area: "Myeongdong",
+    stars: 3,
+    rating: 8.2,
+    reviews: 6710,
+    price: "$65",
+    tag: "Best Value",
+    tagColor: "#0A84FF",
+    img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&h=400&fit=crop",
+    href: "https://www.agoda.com/ibis-styles-ambassador-seoul/hotel/seoul-kr.html?cid=1973066"
+  },
+  {
+    name: "Park Hyatt Seoul",
+    area: "Gangnam",
+    stars: 5,
+    rating: 9.3,
+    reviews: 3102,
+    price: "$320",
+    tag: "Luxury",
+    tagColor: "#FFD60A",
+    img: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600&h=400&fit=crop",
+    href: "https://www.agoda.com/park-hyatt-seoul/hotel/seoul-kr.html?cid=1973066"
+  },
+  {
+    name: "The Westin Josun Seoul",
+    area: "Gangnam",
+    stars: 5,
+    rating: 9.0,
+    reviews: 2890,
+    price: "$240",
+    tag: "Luxury",
+    tagColor: "#FFD60A",
+    img: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&h=400&fit=crop",
+    href: "https://www.agoda.com/the-westin-josun-seoul/hotel/seoul-kr.html?cid=1973066"
+  },
+];
+
+const areas = ["All", "Myeongdong", "Hongdae", "Gangnam", "Itaewon", "Insadong"];
+---
+
+<Base title="Seoul Hotels & Stays 2026 — seoul.is" description="Best hotels in Seoul for every budget. Myeongdong, Hongdae, Gangnam and more — curated picks with real reviews.">
+  <div class="stays-page">
+    <!-- HERO SEARCH -->
+    <div class="stays-hero">
+      <h1 class="stays-title">🏨 Seoul Hotels</h1>
+      <p class="stays-sub">Best picks for every budget — curated for international visitors</p>
+
+      <div class="search-bar">
+        <div class="search-field">
+          <span class="search-icon">📍</span>
+          <span class="search-val">Seoul, South Korea</span>
+        </div>
+        <div class="search-divider"></div>
+        <div class="search-field">
+          <span class="search-icon">📅</span>
+          <span class="search-val search-placeholder">Check-in</span>
+        </div>
+        <div class="search-divider"></div>
+        <div class="search-field">
+          <span class="search-icon">📅</span>
+          <span class="search-val search-placeholder">Check-out</span>
+        </div>
+        <a href="https://www.agoda.com/city/seoul-kr.html?cid=1973066" target="_blank" rel="noopener sponsored" class="search-btn">Search</a>
+      </div>
+
+      <!-- Area filter tabs -->
+      <div class="area-tabs">
+        {areas.map((area, i) => (
+          <button class={`area-tab ${i === 0 ? 'active' : ''}`}>{area}</button>
+        ))}
+      </div>
+    </div>
+
+    <!-- AGODA SEARCH WIDGET -->
+    <div class="widget-section">
+      <div class="widget-label">🔍 Live Hotel Search — Powered by Agoda</div>
+      <div class="agoda-widget-wrap">
+        <iframe
+          src="https://www.agoda.com/partners/partnersearch.aspx?pcs=1&ats=1973066&city=17254&searchtext=Seoul&LangID=1&currencycode=USD&travellertype=1"
+          width="100%"
+          height="340"
+          frameborder="0"
+          scrolling="no"
+          loading="lazy"
+          title="Agoda Seoul Hotel Search"
+          style="border-radius:16px;overflow:hidden;"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- HOTEL GRID -->
+    <div class="stays-body">
+      <div class="hotel-grid">
+        {hotels.map(h => (
+          <a href={h.href} target="_blank" rel="noopener sponsored" class="hotel-card">
+            <div class="hotel-img-wrap">
+              <img src={h.img} alt={h.name} loading="lazy" />
+              <div class="hotel-tag" style={`background: ${h.tagColor}22; color: ${h.tagColor}; border-color: ${h.tagColor}44;`}>{h.tag}</div>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-area">📍 {h.area}</div>
+              <h3 class="hotel-name">{h.name}</h3>
+              <div class="hotel-stars">{'⭐'.repeat(h.stars)}</div>
+              <div class="hotel-bottom">
+                <div class="hotel-rating">
+                  <span class="rating-num">{h.rating}</span>
+                  <span class="rating-count">({h.reviews.toLocaleString()} reviews)</span>
+                </div>
+                <div class="hotel-price">
+                  <span class="price-from">from</span>
+                  <span class="price-val">{h.price}</span>
+                  <span class="price-night">/night</span>
+                </div>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- Agoda CTA -->
+      <div class="more-cta">
+        <p>Showing 6 of 500+ Seoul hotels</p>
+        <a href="https://www.agoda.com/city/seoul-kr.html?cid=1973066" target="_blank" rel="noopener sponsored" class="more-btn">View All Hotels on Agoda →</a>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+.stays-page { min-height: 100vh; }
+
+.stays-hero {
+  background: linear-gradient(180deg, #0d0510 0%, #050505 100%);
+  padding: 48px var(--page-pad) 0;
+  text-align: center;
+}
+.stays-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; margin-bottom: 8px; }
+.stays-sub { color: var(--text-secondary); font-size: 1rem; margin-bottom: 28px; }
+
+/* SEARCH BAR */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  max-width: 680px;
+  margin: 0 auto 24px;
+  overflow: hidden;
+  gap: 0;
+}
+.search-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  flex: 1;
+  cursor: pointer;
+}
+.search-icon { font-size: 1rem; flex-shrink: 0; }
+.search-val { font-size: 14px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.search-placeholder { color: var(--text-muted); }
+.search-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.08); flex-shrink: 0; }
+.search-btn {
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 14px 24px;
+  white-space: nowrap;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+.search-btn:hover { opacity: 0.85; }
+
+@media (max-width: 600px) {
+  .search-bar { flex-direction: column; border-radius: 16px; }
+  .search-field { width: 100%; justify-content: flex-start; }
+  .search-divider { width: 100%; height: 1px; }
+  .search-btn { width: 100%; text-align: center; }
+}
+
+/* AREA TABS */
+.area-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 0 0 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.area-tab {
+  padding: 7px 18px;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.area-tab.active, .area-tab:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* BODY */
+.stays-body {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 40px var(--page-pad) 80px;
+}
+
+/* HOTEL GRID */
+.hotel-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 48px;
+}
+@media (min-width: 640px) { .hotel-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .hotel-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.hotel-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--card-border);
+  overflow: hidden;
+  text-decoration: none;
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.hotel-card:hover {
+  border-color: var(--card-border-hover);
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+
+.hotel-img-wrap {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+.hotel-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+.hotel-card:hover .hotel-img-wrap img { transform: scale(1.06); }
+
+.hotel-tag {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  letter-spacing: 0.5px;
+}
+
+.hotel-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.hotel-area { font-size: 12px; color: var(--text-muted); }
+.hotel-name { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.35; }
+.hotel-stars { font-size: 12px; }
+.hotel-bottom {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 12px;
+}
+.hotel-rating { display: flex; align-items: center; gap: 5px; }
+.rating-num { font-size: 16px; font-weight: 800; color: #30D158; }
+.rating-count { font-size: 11px; color: var(--text-muted); }
+.hotel-price { text-align: right; }
+.price-from { font-size: 10px; color: var(--text-muted); display: block; }
+.price-val { font-size: 20px; font-weight: 900; color: var(--text); }
+.price-night { font-size: 11px; color: var(--text-muted); }
+
+/* MORE CTA */
+.more-cta { text-align: center; }
+.more-cta p { color: var(--text-muted); font-size: 14px; margin-bottom: 16px; }
+.more-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.more-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* WIDGET */
+.widget-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--page-pad) 40px;
+}
+.widget-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.agoda-widget-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--card);
+  min-height: 340px;
+}
+</style>

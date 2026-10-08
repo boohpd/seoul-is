@@ -1,0 +1,15 @@
+{
+  "name": "seoul-is",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port 3456",
+    "build": "astro build",
+    "preview": "astro preview",
+    "fetch": "node scripts/fetch-content.cjs"
+  },
+  "dependencies": {
+    "astro": "^6.1.5"
+  }
+}

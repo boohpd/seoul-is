@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>seoul.is — Full Technical Specification v1.0</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', 'Noto Sans KR', sans-serif; max-width: 900px; margin: 0 auto; padding: 40px 24px; line-height: 1.7; color: #1a1a1a; background: #fff; font-size: 14px; }
+  h1 { font-size: 28px; font-weight: 800; margin: 48px 0 16px; color: #050505; border-bottom: 3px solid #FF2D55; padding-bottom: 8px; }
+  h2 { font-size: 22px; font-weight: 700; margin: 36px 0 12px; color: #111; border-bottom: 1px solid #eee; padding-bottom: 6px; }
+  h3 { font-size: 18px; font-weight: 600; margin: 24px 0 8px; color: #333; }
+  h4 { font-size: 15px; font-weight: 600; margin: 16px 0 6px; color: #555; }
+  p { margin: 8px 0; }
+  a { color: #FF2D55; }
+  hr { border: none; border-top: 1px solid #ddd; margin: 32px 0; }
+  pre { background: #f5f5f5; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; overflow-x: auto; margin: 12px 0; font-size: 12px; line-height: 1.5; }
+  code { background: #f0f0f0; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+  pre code { background: none; padding: 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  tr { border-bottom: 1px solid #eee; }
+  td, th { padding: 8px 12px; text-align: left; }
+  tr:nth-child(odd) { background: #fafafa; }
+  blockquote { border-left: 4px solid #FF2D55; padding: 12px 16px; margin: 16px 0; background: #fff5f7; color: #555; font-style: italic; }
+  li { margin: 4px 0 4px 24px; }
+  strong { font-weight: 700; }
+  .cover { text-align: center; padding: 80px 0 40px; }
+  .cover h1 { border: none; font-size: 36px; }
+  .cover p { color: #666; font-size: 16px; }
+</style>
+</head>
+<body>
+<div class="cover">
+<h1>🇰🇷 seoul.is</h1>
+<p>Full Technical Specification v1.0</p>
+<p style="margin-top:8px;color:#999;">서울/한국 트렌드 자동 큐레이션 플랫폼 통합 기술 명세서</p>
+<p style="margin-top:24px;color:#aaa;font-size:13px;">작성일: 2026-04-14</p>
+</div>
+<hr>
+<h1>seoul.is — Full Technical Specification v1.0</h1></p><p><blockquote>서울/한국 트렌드 자동 큐레이션 플랫폼 통합 기술 명세서</blockquote>
+<blockquote>작성일: 2026-04-14 | 버전: 1.0</blockquote></p><p><hr></p><p><h2>Table of Contents</h2></p><p>1. <a href="#1-executive-summary">Executive Summary</a>
+2. <a href="#2-user-journey">User Journey</a>
+3. <a href="#3-feature-list">Feature List</a>
+4. <a href="#4-data-structure">Data Structure</a>
+5. <a href="#5-technical-architecture">Technical Architecture</a>
+6. <a href="#6-content-pipeline">Content Pipeline</a>
+7. <a href="#7-internationalization-i18n">Internationalization (i18n)</a>
+8. <a href="#8-revenue-model">Revenue Model</a>
+9. <a href="#9-seo-strategy">SEO Strategy</a>
+10. <a href="#10-deployment--infrastructure">Deployment & Infrastructure</a>
+11. <a href="#11-current-implementation-status">Current Implementation Status</a>
+12. <a href="#12-roadmap">Roadmap</a></p><p><hr></p><p><h2>1. Executive Summary</h2></p><p><h3>비전</h3>
+<strong>seoul.is</strong>는 글로벌 외국인을 위한 서울/한국 트렌드 자동 큐레이션 플랫폼이다. K-POP, K-DRAMA, 맛집, 핫플레이스, 라이프스타일, 부동산 등 한국 관련 콘텐츠를 50개 이상의 프리미엄 소스에서 자동 수집하여 매일 업데이트한다.</p><p><h3>핵심 가치</h3>
+<li><strong>자동화</strong>: 크론 기반 데이터 파이프라인으로 매일 콘텐츠 자동 수집·큐레이션</li>
+<li><strong>다국어</strong>: IP 기반 자동 언어 감지 (영어 기본, 8개 언어 지원)</li>
+<li><strong>모바일 퍼스트</strong>: K-POP 관심 글로벌 유저 (동남아, 일본, 중화권) 타겟</li>
+<li><strong>수익 다각화</strong>: AdSense + 직접 광고 + 여행 제휴 + 쿠폰 플랫폼</li></p><p><h3>타겟 유저</h3>
+<tr><td>세그먼트</td><td>설명</td><td>비중</td></tr></p><p><tr><td>K-Culture 팬</td><td>K-POP, K-DRAMA 팔로워 (동남아, 일본, 중화권)</td><td>50%</td></tr>
+<tr><td>여행자</td><td>서울 방문 계획/진행 중인 외국인</td><td>25%</td></tr>
+<tr><td>거주 외국인</td><td>한국 거주 외국인 (맛집, 라이프스타일, 부동산)</td><td>15%</td></tr>
+<tr><td>비즈니스</td><td>한국 시장 리서치 목적</td><td>10%</td></tr></p><p><h3>도메인 & 계정</h3>
+<li><strong>도메인</strong>: <code>seoul.is</code> (아이슬란드 .is TLD)</li>
+<li><strong>DNS</strong>: Cloudflare</li>
+<li><strong>Gmail</strong>: seoulis.info@gmail.com</li>
+<li><strong>Instagram</strong>: @seoulis_media</li>
+<li><strong>Telegram</strong>: @SeoulPrimeClub_Chat</li>
+<li><strong>Google AdSense</strong>: 연동 대기</li></p><p><hr></p><p><h2>2. User Journey</h2></p><p><h3>2.1 일반 유저 (콘텐츠 소비)</h3></p><p><pre><code class="">┌─────────────────────────────────────────────────────────────────┐
+│ ACQUISITION (유입)                                               │
+│                                                                  │
+│  Google 검색 ──┐                                                 │
+│  SNS 공유 ─────┼──→ [seoul.is 메인 페이지]                        │
+│  직접 방문 ────┘      │                                          │
+│                       ├─ IP 기반 언어 자동 감지                    │
+│                       └─ 모바일 퍼스트 다크 UI 렌더링              │
+├─────────────────────────────────────────────────────────────────┤
+│ ENGAGEMENT (참여)                                                │
+│                                                                  │
+│  [메인 페이지]                                                    │
+│    ├─ Hero 섹션 (오늘의 톱 기사)                                   │
+│    ├─ Trending Strip (인기 토픽 필터)                              │
+│    ├─ 카테고리별 매거진 그리드 (K-POP → K-DRAMA → ... )           │
+│    │   ├─ 대형 카드 1개 + 소형 카드 2개 (데스크탑)                 │
+│    │   └─ 수평 스크롤 카드 (모바일)                                │
+│    └─ 광고 슬롯 (카테고리 2개마다 삽입)                            │
+│                                                                  │
+│  [카테고리 페이지] /category/{id}                                 │
+│    └─ 해당 카테고리 전체 기사 그리드                                │
+│                                                                  │
+│  [아티클 페이지] /article/{slug}                                  │
+│    ├─ 히어로 이미지                                               │
+│    ├─ AI 생성 요약                                                │
+│    ├─ "원문 읽기" CTA 버튼 (외부 링크)                             │
+│    ├─ 광고 슬롯 (상단, 중간, 하단)                                 │
+│    ├─ 소셜 공유 (X, Telegram, Facebook)                           │
+│    └─ 관련 기사 6개                                               │
+├─────────────────────────────────────────────────────────────────┤
+│ MONETIZATION (수익화)                                             │
+│                                                                  │
+│  ┌─ AdSense 자동 광고 (페이지뷰 기반)                              │
+│  ├─ 여행 CTA 섹션 → Booking/Klook/Agoda 어필리에이트 클릭          │
+│  ├─ 협찬 기사 (Featured/Sponsored 태그) → 직접 광고 수익            │
+│  └─ 쿠폰 다운로드 → QR 사용 → 가맹점 과금                         │
+├─────────────────────────────────────────────────────────────────┤
+│ RETENTION (재방문)                                                │
+│                                                                  │
+│  ├─ Telegram 채널 가입 → 실시간 알림                               │
+│  ├─ 매일 갱신되는 콘텐츠 → 습관적 방문                              │
+│  └─ SNS 공유 → 바이럴 루프                                        │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre></p><p><h3>2.2 가맹점 (쿠폰 시스템)</h3></p><p><pre><code class="">가맹점 등록 신청
+  → 관리자 승인
+    → 가맹점 대시보드 접근
+      → 쿠폰 생성 (할인율, 유효기간, 수량)
+        → seoul.is에 쿠폰 노출
+          → 유저 다운로드 (QR 생성)
+            → 현장 방문 → QR 스캔 사용
+              → 가맹점 대시보드에서 사용 현황/유입 트래픽 확인
+                → (트래픽 확보 후) 유료 전환
+</code></pre></p><p><h3>2.3 광고주 (협찬 콘텐츠)</h3></p><p><pre><code class="">광고주 문의 (/advertise 페이지)
+  → 견적/계약
+    → 관리자 패널에서 협찬 게시물 작성
+      → 카테고리 상단 우선 노출 + "Sponsored" 태그
+        → 노출 기간 스케줄링 (시작일~종료일)
+          → 성과 리포트 자동 생성 (조회수/클릭수)
+            → 광고주에게 리포트 전달
+</code></pre></p><p><hr></p><p><h2>3. Feature List</h2></p><p><h3>3.1 Core Features (MVP)</h3></p><p><tr><td>#</td><td>기능</td><td>설명</td><td>우선순위</td><td>상태</td></tr></p><p><tr><td>F01</td><td><strong>자동 콘텐츠 수집</strong></td><td>Google News RSS + 웹 크롤링으로 카테고리별 기사 자동 수집</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F02</td><td><strong>AI 기사 요약</strong></td><td>gsk search를 활용한 기사 enrichment (요약 생성)</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F03</td><td><strong>메인 페이지</strong></td><td>Hero + Trending Strip + 카테고리 매거진 그리드</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F04</td><td><strong>아티클 상세 페이지</strong></td><td>히어로 이미지 + AI 요약 + 원문 링크 + 관련 기사</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F05</td><td><strong>카테고리 페이지</strong></td><td><code>/category/{id}</code> 전체 기사 목록</td><td>P0</td><td>❌ 미구현</td></tr>
+<tr><td>F06</td><td><strong>반응형 디자인</strong></td><td>모바일 퍼스트, 태블릿, 데스크탑 대응</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F07</td><td><strong>다크 모드 UI</strong></td><td>프리미엄 매거진 다크 테마</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F08</td><td><strong>광고 슬롯</strong></td><td>AdSense 자리 (리더보드, 미드, 인아티클)</td><td>P0</td><td>✅ 자리 확보</td></tr>
+<tr><td>F09</td><td><strong>여행 제휴 CTA</strong></td><td>Booking/Klook/Agoda 어필리에이트 링크 섹션</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F10</td><td><strong>Telegram CTA</strong></td><td>Seoul Prime Club 가입 유도 배너</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F11</td><td><strong>소셜 공유</strong></td><td>X, Telegram, Facebook 공유 버튼</td><td>P0</td><td>✅ 구현됨</td></tr>
+<tr><td>F12</td><td><strong>SEO 메타데이터</strong></td><td>OG, Twitter Card, hreflang, JSON-LD</td><td>P0</td><td>✅ 기본 구현</td></tr>
+<tr><td>F13</td><td><strong>SSG 빌드</strong></td><td>Astro Static Site Generation</td><td>P0</td><td>✅ 구현됨</td></tr></p><p><h3>3.2 Phase 2 Features</h3></p><p><tr><td>#</td><td>기능</td><td>설명</td><td>우선순위</td></tr></p><p><tr><td>F14</td><td><strong>다국어 (i18n)</strong></td><td>IP 기반 자동 언어 감지, 8개 언어 라우팅</td><td>P1</td></tr>
+<tr><td>F15</td><td><strong>카테고리 페이지</strong></td><td>View All 클릭 시 전체 기사 그리드</td><td>P1</td></tr>
+<tr><td>F16</td><td><strong>Sitemap/Robots</strong></td><td>SEO용 sitemap.xml, robots.txt 자동 생성</td><td>P1</td></tr>
+<tr><td>F17</td><td><strong>Google Analytics</strong></td><td>GA4 트래킹 설치</td><td>P1</td></tr>
+<tr><td>F18</td><td><strong>Google AdSense</strong></td><td>실제 광고 코드 삽입 및 승인</td><td>P1</td></tr>
+<tr><td>F19</td><td><strong>자동 배포</strong></td><td>Cloudflare Pages + GitHub Actions CI/CD</td><td>P1</td></tr>
+<tr><td>F20</td><td><strong>크론 자동화</strong></td><td>매일 자동 콘텐츠 갱신 + 빌드 + 배포</td><td>P1</td></tr></p><p><h3>3.3 Phase 3 Features</h3></p><p><tr><td>#</td><td>기능</td><td>설명</td><td>우선순위</td></tr></p><p><tr><td>F21</td><td><strong>협찬 콘텐츠 관리</strong></td><td>관리자 패널에서 Sponsored 게시물 CRUD</td><td>P2</td></tr>
+<tr><td>F22</td><td><strong>협찬 스케줄링</strong></td><td>노출 시작/종료일 설정, 자동 게재/해제</td><td>P2</td></tr>
+<tr><td>F23</td><td><strong>성과 리포트</strong></td><td>조회수/클릭수 대시보드 → 광고주 제공</td><td>P2</td></tr>
+<tr><td>F24</td><td><strong>쿠폰 시스템</strong></td><td>가맹점 등록, 쿠폰 생성, QR 다운로드</td><td>P2</td></tr>
+<tr><td>F25</td><td><strong>가맹점 대시보드</strong></td><td>쿠폰 사용 현황, 유입 트래픽 분석</td><td>P2</td></tr>
+<tr><td>F26</td><td><strong>검색 기능</strong></td><td>사이트 내 기사 검색</td><td>P2</td></tr>
+<tr><td>F27</td><td><strong>뉴스레터</strong></td><td>이메일 구독, 주간 다이제스트 자동 발송</td><td>P3</td></tr>
+<tr><td>F28</td><td><strong>PWA</strong></td><td>오프라인 지원, 홈 화면 설치</td><td>P3</td></tr></p><p><hr></p><p><h2>4. Data Structure</h2></p><p><h3>4.1 Article (기사)</h3></p><p><pre><code class="json">{
+  "id": "string (base64url, 24자)",
+  "slug": "string (카테고리-해시8자, 예: kpop-e6ddd81a)",
+  "title": "string (기사 제목)",
+  "description": "string (원문 설명, 200자 이내)",
+  "summary": "string (AI 생성 요약, 최대 600자)",
+  "url": "string (원문 URL)",
+  "image": "string (썸네일 이미지 URL)",
+  "source": "string (출처명, 예: Billboard, Netflix)",
+  "category": "enum (kpop|kdrama|food|places|ranking|lifestyle|kproperty)",
+  "date": "string (ISO 8601 또는 RFC 2822 날짜)",
+  "sponsored": "boolean (협찬 여부)",
+  "sponsor_name": "string? (협찬사명)",
+  "sponsor_start": "string? (협찬 노출 시작일)",
+  "sponsor_end": "string? (협찬 노출 종료일)",
+  "lang": "string? (원문 언어, 기본 en)",
+  "translations": {
+    "ko": { "title": "...", "summary": "..." },
+    "ja": { "title": "...", "summary": "..." },
+    "zh-cn": { "title": "...", "summary": "..." }
+  }
+}
+</code></pre></p><p><h3>4.2 Category (카테고리)</h3></p><p><pre><code class="json">{
+  "id": "string (kpop|kdrama|food|places|ranking|lifestyle|kproperty)",
+  "name": "string (표시명, 예: K-POP)",
+  "emoji": "string (이모지, 예: 🎵)",
+  "color": "string (HEX 색상, 예: #FF2D55)",
+  "desc": "string (짧은 설명)",
+  "sources": ["string (출처 목록)"]
+}
+</code></pre></p><p><strong>카테고리 정의:</strong></p><p><tr><td>ID</td><td>Name</td><td>Emoji</td><td>Color</td><td>설명</td></tr></p><p><tr><td>kpop</td><td>K-POP</td><td>🎵</td><td>#FF2D55</td><td>차트, 뉴스, 트렌딩</td></tr>
+<tr><td>kdrama</td><td>K-DRAMA</td><td>🎬</td><td>#5856D6</td><td>인기 드라마, 스트리밍</td></tr>
+<tr><td>food</td><td>FOOD</td><td>🍜</td><td>#FF9500</td><td>미슐랭, 스트릿푸드</td></tr>
+<tr><td>places</td><td>HOT PLACES</td><td>📍</td><td>#30D158</td><td>핫플, 카페, 히든 젬</td></tr>
+<tr><td>ranking</td><td>RANKING</td><td>🏆</td><td>#FFD60A</td><td>차트, 박스오피스</td></tr>
+<tr><td>lifestyle</td><td>LIFESTYLE</td><td>✨</td><td>#BF5AF2</td><td>K-Beauty, 패션</td></tr>
+<tr><td>kproperty</td><td>K-PROPERTY</td><td>🏠</td><td>#0A84FF</td><td>부동산, 투자, 거주</td></tr></p><p><h3>4.3 Meta (사이트 메타)</h3></p><p><pre><code class="json">{
+  "lastUpdated": "string (ISO 8601)",
+  "counts": {
+    "kpop": "number",
+    "kdrama": "number",
+    "food": "number",
+    "places": "number",
+    "ranking": "number",
+    "lifestyle": "number",
+    "kproperty": "number"
+  }
+}
+</code></pre></p><p><h3>4.4 Featured (에디터 픽)</h3></p><p><pre><code class="json">[
+  {
+    "articleId": "string",
+    "position": "number (노출 순서)",
+    "startDate": "string",
+    "endDate": "string"
+  }
+]
+</code></pre></p><p><h3>4.5 Coupon (쿠폰 — Phase 3)</h3></p><p><pre><code class="json">{
+  "id": "string (UUID)",
+  "merchant_id": "string",
+  "title": "string (쿠폰명)",
+  "description": "string",
+  "discount_type": "enum (percent|fixed|freebie)",
+  "discount_value": "number",
+  "image": "string (쿠폰 이미지 URL)",
+  "category": "enum (cafe|restaurant|activity|shopping)",
+  "location": {
+    "name": "string (매장명)",
+    "address": "string",
+    "lat": "number",
+    "lng": "number",
+    "area": "string (예: Gangnam, Hongdae)"
+  },
+  "valid_from": "string (ISO 8601)",
+  "valid_until": "string (ISO 8601)",
+  "total_quantity": "number",
+  "used_count": "number",
+  "status": "enum (active|expired|paused)",
+  "created_at": "string",
+  "updated_at": "string"
+}
+</code></pre></p><p><h3>4.6 Merchant (가맹점 — Phase 3)</h3></p><p><pre><code class="json">{
+  "id": "string (UUID)",
+  "name": "string (업체명)",
+  "email": "string",
+  "phone": "string",
+  "category": "string",
+  "address": "string",
+  "logo": "string (URL)",
+  "plan": "enum (free|basic|premium)",
+  "status": "enum (pending|approved|suspended)",
+  "dashboard_stats": {
+    "total_coupons": "number",
+    "total_downloads": "number",
+    "total_redemptions": "number",
+    "traffic_referrals": "number"
+  },
+  "created_at": "string",
+  "updated_at": "string"
+}
+</code></pre></p><p><h3>4.7 SponsoredPost (협찬 — Phase 3)</h3></p><p><pre><code class="json">{
+  "id": "string (UUID)",
+  "advertiser_name": "string",
+  "advertiser_email": "string",
+  "article": "Article (위 구조와 동일, sponsored=true)",
+  "schedule": {
+    "start": "string (ISO 8601)",
+    "end": "string (ISO 8601)",
+    "target_categories": ["string (노출 카테고리)"],
+    "position": "enum (top|inline|banner)"
+  },
+  "performance": {
+    "impressions": "number",
+    "clicks": "number",
+    "ctr": "number (클릭률 %)"
+  },
+  "pricing": {
+    "model": "enum (cpm|cpc|flat)",
+    "rate": "number",
+    "total_spend": "number"
+  },
+  "status": "enum (draft|active|paused|completed)",
+  "created_at": "string",
+  "updated_at": "string"
+}
+</code></pre></p><p><h3>4.8 Analytics Event (Phase 2+)</h3></p><p><pre><code class="json">{
+  "event_type": "enum (page_view|article_click|coupon_download|coupon_redeem|affiliate_click|share)",
+  "article_id": "string?",
+  "category": "string?",
+  "referrer": "string?",
+  "user_country": "string (IP 기반)",
+  "user_lang": "string",
+  "device": "enum (mobile|tablet|desktop)",
+  "timestamp": "string (ISO 8601)"
+}
+</code></pre></p><p><hr></p><p><h2>5. Technical Architecture</h2></p><p><h3>5.1 시스템 아키텍처 개요</h3></p><p><pre><code class="">┌──────────────────────────────────────────────────────────────┐
+│                     DATA SOURCES (외부)                        │
+│                                                               │
+│  Google News RSS ─┐                                           │
+│  Naver News ──────┤                                           │
+│  Melon Charts ────┤                                           │
+│  Netflix Top 10 ──┼──→ [Content Pipeline]                     │
+│  Billboard KR ────┤       │                                   │
+│  Michelin Guide ──┤       ▼                                   │
+│  Instagram ───────┘   [data/*.json]                           │
+│                          │                                    │
+├──────────────────────────┼────────────────────────────────────┤
+│                     BUILD LAYER                               │
+│                          │                                    │
+│                    [Astro SSG]                                 │
+│                    astro build                                 │
+│                          │                                    │
+│                     [dist/]                                    │
+│                    정적 HTML                                    │
+│                          │                                    │
+├──────────────────────────┼────────────────────────────────────┤
+│                   HOSTING LAYER                               │
+│                          │                                    │
+│               [Cloudflare Pages]                              │
+│                    ├─ CDN 전역 배포                             │
+│                    ├─ SSL/TLS (자동)                           │
+│                    ├─ DDoS 방어                                │
+│                    └─ Edge Caching                             │
+│                          │                                    │
+│                  seoul.is (커스텀 도메인)                        │
+│                          │                                    │
+├──────────────────────────┼────────────────────────────────────┤
+│                   CLIENT LAYER                                │
+│                          │                                    │
+│                  [사용자 브라우저]                               │
+│                    ├─ 정적 HTML (빠른 로딩)                     │
+│                    ├─ Google AdSense (자동 광고)                │
+│                    ├─ GA4 (트래킹)                              │
+│                    └─ 언어 감지 (navigator.language)            │
+└──────────────────────────────────────────────────────────────┘
+</code></pre></p><p><h3>5.2 기술 스택</h3></p><p><tr><td>레이어</td><td>기술</td><td>선택 이유</td></tr></p><p><tr><td><strong>프레임워크</strong></td><td>Astro 6.x</td><td>SSG 최적화, 빠른 빌드, 제로 JS by default</td></tr>
+<tr><td><strong>스타일링</strong></td><td>CSS (커스텀 디자인 시스템)</td><td>외부 의존성 없음, 최소 번들</td></tr>
+<tr><td><strong>폰트</strong></td><td>Inter + Noto Sans KR/JP</td><td>다국어 지원, 웹 최적화</td></tr>
+<tr><td><strong>데이터</strong></td><td>JSON 파일 (data/*.json)</td><td>SSG에 최적, DB 불필요 (Phase 1)</td></tr>
+<tr><td><strong>콘텐츠 수집</strong></td><td>Node.js (fetch-content.cjs)</td><td>Google News RSS 파싱</td></tr>
+<tr><td><strong>AI Enrichment</strong></td><td>gsk search (Genspark CLI)</td><td>기사 요약 자동 생성</td></tr>
+<tr><td><strong>호스팅</strong></td><td>Cloudflare Pages</td><td>무료, 글로벌 CDN, 커스텀 도메인</td></tr>
+<tr><td><strong>DNS</strong></td><td>Cloudflare</td><td>도메인 관리, 캐싱, 보안</td></tr>
+<tr><td><strong>광고</strong></td><td>Google AdSense</td><td>자동 광고 게재</td></tr>
+<tr><td><strong>분석</strong></td><td>Google Analytics 4</td><td>트래픽 분석, 유저 행동</td></tr>
+<tr><td><strong>이미지</strong></td><td>Unsplash (큐레이션)</td><td>무료, 고품질, 카테고리별 매핑</td></tr></p><p><h3>5.3 Phase 2+ 기술 확장</h3></p><p><tr><td>기능</td><td>기술</td><td>용도</td></tr></p><p><tr><td><strong>DB</strong></td><td>Supabase (PostgreSQL)</td><td>쿠폰, 가맹점, 협찬, 분석 데이터</td></tr>
+<tr><td><strong>API</strong></td><td>Cloudflare Workers</td><td>서버리스 API (쿠폰 검증, QR 생성)</td></tr>
+<tr><td><strong>인증</strong></td><td>Supabase Auth</td><td>가맹점/관리자 로그인</td></tr>
+<tr><td><strong>번역</strong></td><td>DeepL API 또는 GPT</td><td>자동 다국어 번역</td></tr>
+<tr><td><strong>스케줄러</strong></td><td>Cloudflare Workers Cron</td><td>매일 콘텐츠 갱신 트리거</td></tr>
+<tr><td><strong>이미지 저장</strong></td><td>Cloudflare R2</td><td>커스텀 이미지 호스팅</td></tr>
+<tr><td><strong>QR 생성</strong></td><td>qrcode npm</td><td>쿠폰 QR 코드</td></tr>
+<tr><td><strong>이메일</strong></td><td>Resend 또는 Mailgun</td><td>뉴스레터, 리포트 발송</td></tr></p><p><h3>5.4 API 연동 포인트</h3></p><p><tr><td>API</td><td>용도</td><td>인증 방식</td><td>Phase</td></tr></p><p><tr><td>Google News RSS</td><td>기사 수집</td><td>없음 (공개 RSS)</td><td>1</td></tr>
+<tr><td>Unsplash</td><td>이미지</td><td>없음 (Source URL)</td><td>1</td></tr>
+<tr><td>Genspark (gsk CLI)</td><td>AI 요약</td><td>API Key (pre-configured)</td><td>1</td></tr>
+<tr><td>Google AdSense</td><td>광고</td><td>Publisher ID</td><td>2</td></tr>
+<tr><td>Google Analytics 4</td><td>분석</td><td>Measurement ID</td><td>2</td></tr>
+<tr><td>Booking.com Affiliate</td><td>호텔 제휴</td><td>Affiliate ID</td><td>2</td></tr>
+<tr><td>Klook Affiliate</td><td>투어 제휴</td><td>Affiliate ID</td><td>2</td></tr>
+<tr><td>Agoda Affiliate</td><td>숙박 제휴</td><td>Affiliate ID</td><td>2</td></tr>
+<tr><td>DeepL / GPT</td><td>번역</td><td>API Key</td><td>2</td></tr>
+<tr><td>Supabase</td><td>DB/Auth</td><td>Project Key</td><td>3</td></tr>
+<tr><td>Cloudflare R2</td><td>이미지 저장</td><td>Account Token</td><td>3</td></tr>
+<tr><td>Resend / Mailgun</td><td>이메일</td><td>API Key</td><td>3</td></tr></p><p><h3>5.5 자동화 / Cron 연동 포인트</h3></p><p><pre><code class="">┌─────────────────────────────────────────────────┐
+│  DAILY CRON (매일 06:00 KST)                     │
+│                                                  │
+│  1. node scripts/fetch-content.cjs               │
+│     → Google News RSS 수집                        │
+│     → data/*.json 업데이트                         │
+│                                                  │
+│  2. bash scripts/enrich-articles.sh              │
+│     → gsk search로 AI 요약 생성                    │
+│     → slug 자동 부여                               │
+│                                                  │
+│  3. astro build                                  │
+│     → dist/ 정적 파일 생성                          │
+│                                                  │
+│  4. wrangler pages deploy dist/                  │
+│     → Cloudflare Pages 배포                        │
+│                                                  │
+│  (또는 GitHub push → Pages 자동 빌드)               │
+└─────────────────────────────────────────────────┘
+</code></pre></p><p><h3>5.6 n8n 연동 포인트 (선택 사항)</h3></p><p>n8n을 사용할 경우 아래 워크플로우 자동화 가능:</p><p><tr><td>워크플로우</td><td>트리거</td><td>액션</td></tr></p><p><tr><td>콘텐츠 갱신</td><td>Schedule (매일 06:00)</td><td>SSH → 서버에서 fetch + build + deploy</td></tr>
+<tr><td>협찬 스케줄</td><td>Schedule (매시간)</td><td>Supabase Query → 만료된 협찬 비활성화</td></tr>
+<tr><td>주간 리포트</td><td>Schedule (매주 월요일)</td><td>GA4 API → 리포트 생성 → 이메일 발송</td></tr>
+<tr><td>신규 가맹점 알림</td><td>Webhook (Supabase)</td><td>신규 등록 → Telegram 알림</td></tr>
+<tr><td>쿠폰 만료 알림</td><td>Schedule (매일)</td><td>만료 D-3 가맹점에게 이메일 알림</td></tr>
+<tr><td>SNS 자동 포스팅</td><td>Webhook (새 기사 발행)</td><td>인스타/텔레그램에 자동 포스팅</td></tr></p><p><hr></p><p><h2>6. Content Pipeline</h2></p><p><h3>6.1 데이터 수집 흐름</h3></p><p><pre><code class="">[Sources]                [Fetcher]              [Enricher]           [Builder]
+                                                                     
+Google News    ──RSS──→  fetch-content.cjs  ──→  enrich-articles.sh ──→ astro build
+(6 categories)           │                      │                     │
+                         ├ RSS XML 파싱          ├ gsk search          ├ SSG 빌드
+                         ├ 12개/카테고리 추출      ├ AI 요약 생성         ├ dist/ 출력
+                         ├ Unsplash 이미지 매핑   ├ slug 생성            └ Cloudflare
+                         └ data/<em>.json 저장      └ data/</em>.json 업데이트     배포
+</code></pre></p><p><h3>6.2 RSS 소스 (현재)</h3></p><p><tr><td>카테고리</td><td>RSS 쿼리</td><td>최대 수</td></tr></p><p><tr><td>K-POP</td><td><code>kpop korea music chart 2026</code></td><td>12</td></tr>
+<tr><td>K-DRAMA</td><td><code>korean drama kdrama netflix 2026</code></td><td>12</td></tr>
+<tr><td>FOOD</td><td><code>seoul restaurant michelin korean food best</code></td><td>12</td></tr>
+<tr><td>HOT PLACES</td><td><code>seoul cafe bar hotplace trending travel</code></td><td>12</td></tr>
+<tr><td>RANKING</td><td><code>korea chart top ranking box office kpop</code></td><td>12</td></tr>
+<tr><td>LIFESTYLE</td><td><code>korea beauty fashion lifestyle seoul trend</code></td><td>12</td></tr>
+<tr><td>K-PROPERTY</td><td>(별도 하드코딩/수동)</td><td>7</td></tr></p><p><h3>6.3 이미지 전략</h3></p><p><strong>Phase 1 (현재):</strong> 카테고리별 Unsplash 큐레이션 이미지 (12장씩, 순환)
+<li>무료, API 키 불필요</li>
+<li>장점: 안정적, 고품질</li>
+<li>단점: 기사와 정확히 매칭되지 않음</li></p><p><strong>Phase 2 (계획):</strong>
+<li>기사 원문에서 OG 이미지 자동 추출</li>
+<li>없을 경우 Unsplash 폴백</li>
+<li>Cloudflare R2에 캐시 저장</li></p><p><hr></p><p><h2>7. Internationalization (i18n)</h2></p><p><h3>7.1 지원 언어</h3></p><p><tr><td>코드</td><td>언어</td><td>국기</td><td>라우트</td><td>우선순위</td></tr></p><p><tr><td>en</td><td>English</td><td>🇺🇸</td><td><code>/</code> (기본)</td><td>P0</td></tr>
+<tr><td>ko</td><td>한국어</td><td>🇰🇷</td><td><code>/ko</code></td><td>P1</td></tr>
+<tr><td>ja</td><td>日本語</td><td>🇯🇵</td><td><code>/ja</code></td><td>P1</td></tr>
+<tr><td>zh-cn</td><td>简体中文</td><td>🇨🇳</td><td><code>/zh-cn</code></td><td>P1</td></tr>
+<tr><td>zh-tw</td><td>繁體中文</td><td>🇹🇼</td><td><code>/zh-tw</code></td><td>P1</td></tr>
+<tr><td>vi</td><td>Tiếng Việt</td><td>🇻🇳</td><td><code>/vi</code></td><td>P2</td></tr>
+<tr><td>id</td><td>Bahasa Indonesia</td><td>🇮🇩</td><td><code>/id</code></td><td>P2</td></tr>
+<tr><td>th</td><td>ภาษาไทย</td><td>🇹🇭</td><td><code>/th</code></td><td>P2</td></tr></p><p><h3>7.2 구현 방식</h3></p><p>1. <strong>언어 감지</strong>: <code>navigator.language</code> + Cloudflare <code>CF-IPCountry</code> 헤더
+2. <strong>라우팅</strong>: Astro 정적 경로 (<code>/ja/</code>, <code>/ko/</code>, <code>/zh-cn/</code> 등)
+3. <strong>번역</strong>: 기사 제목/요약 → DeepL API 또는 GPT 자동 번역 (빌드 타임)
+4. <strong>UI 텍스트</strong>: JSON 번역 파일 (<code>i18n/en.json</code>, <code>i18n/ko.json</code>, ...)
+5. <strong>hreflang</strong>: <code><link rel="alternate"></code> 태그 (이미 구현됨)
+6. <strong>언어 전환</strong>: 헤더 드롭다운 (이미 UI 구현됨, 실제 라우팅 미연결)</p><p><hr></p><p><h2>8. Revenue Model</h2></p><p><h3>8.1 수익 구조 (4단계)</h3></p><p><pre><code class="">                          ┌──────────────────┐
+                          │   REVENUE MIX    │
+                          └──────┬───────────┘
+           ┌─────────────────────┼─────────────────────┐
+           ▼                     ▼                      ▼
+    ┌──────────────┐   ┌─────────────────┐   ┌────────────────┐
+    │ 1. AdSense   │   │ 2. Affiliate    │   │ 3. Direct Ads  │
+    │ (자동 광고)   │   │ (여행 제휴)      │   │ (협찬 콘텐츠)   │
+    │              │   │                 │   │                │
+    │ CPM 기반     │   │ CPA/CPC 기반     │   │ 정액/CPM/CPC   │
+    │ $2~5 RPM    │   │ 3~8% 커미션      │   │ 월 50~500만원   │
+    └──────────────┘   └─────────────────┘   └────────────────┘
+                                                      │
+                                               ┌──────┴───────┐
+                                               ▼              ▼
+                                        ┌────────────┐ ┌────────────┐
+                                        │ 4. 쿠폰    │ │ 5. 데이터  │
+                                        │ B2B 과금   │ │ (미래)     │
+                                        │            │ │            │
+                                        │ 가맹점     │ │ 트렌드     │
+                                        │ 월정액     │ │ 리포트     │
+                                        └────────────┘ └────────────┘
+</code></pre></p><p><h3>8.2 수익 상세</h3></p><p><h4>R1. Google AdSense (자동 광고)</h4>
+<li><strong>모델</strong>: CPM/CPC (Google이 자동 최적화)</li>
+<li><strong>예상 RPM</strong>: $2~5 (글로벌 트래픽)</li>
+<li><strong>광고 위치</strong>: 메인 리더보드, 카테고리 사이, 아티클 내 3곳</li>
+<li><strong>예상 수익</strong>: 월 10만 PV 기준 $200~500/월</li></p><p><h4>R2. 여행/호텔 어필리에이트</h4>
+<li><strong>파트너</strong>: Booking.com, Agoda, Klook, KKday, Trip.com</li>
+<li><strong>모델</strong>: CPA (예약 완료 시 커미션 3~8%)</li>
+<li><strong>노출 위치</strong>: 메인 Travel CTA 섹션, 아티클 내 관련 배너</li>
+<li><strong>예상 수익</strong>: 월 50~200건 전환 시 $500~2,000/월</li></p><p><h4>R3. 직접 광고 (협찬 콘텐츠)</h4>
+<li><strong>모델</strong>: 정액 (월 패키지) 또는 CPM/CPC</li>
+<li><strong>가격</strong>:</li>
+  - 배너 광고: 50~200만원/월
+  - 협찬 기사 (1건): 30~100만원
+  - 카테고리 스폰서십: 300~500만원/월
+<li><strong>대상</strong>: 한국 관광청, 항공사, 호텔, 식당, K-뷰티 브랜드</li>
+<li><strong>기능</strong>: 관리자 패널에서 CRUD, 스케줄링, 성과 리포트</li></p><p><h4>R4. 쿠폰 플랫폼 (B2B)</h4>
+<li><strong>모델</strong>: 가맹점 월정액</li>
+  - Free: 쿠폰 3개, 기본 대시보드
+  - Basic (10만원/월): 쿠폰 무제한, 상세 분석
+  - Premium (30만원/월): 우선 노출, 프로모션 지원
+<li><strong>수수료</strong>: 쿠폰 사용 건당 500~1,000원 (또는 월정액에 포함)</li>
+<li><strong>전략</strong>: 초기 무료 → 트래픽 확보 후 유료 전환</li></p><p><h3>8.3 수익 예측 (12개월)</h3></p><p><tr><td>월</td><td>PV</td><td>AdSense</td><td>Affiliate</td><td>Direct</td><td>Coupon</td><td>합계</td></tr></p><p><tr><td>1~3</td><td>10K</td><td>$50</td><td>$0</td><td>$0</td><td>$0</td><td>$50</td></tr>
+<tr><td>4~6</td><td>50K</td><td>$200</td><td>$300</td><td>$500</td><td>$0</td><td>$1,000</td></tr>
+<tr><td>7~9</td><td>200K</td><td>$800</td><td>$1,000</td><td>$2,000</td><td>$500</td><td>$4,300</td></tr>
+<tr><td>10~12</td><td>500K</td><td>$2,000</td><td>$3,000</td><td>$5,000</td><td>$2,000</td><td>$12,000</td></tr></p><p><strong>연간 합계 예상: $50,000~70,000 (약 6,500만~9,000만원)</strong></p><p><hr></p><p><h2>9. SEO Strategy</h2></p><p><h3>9.1 On-Page SEO</h3></p><p><tr><td>항목</td><td>구현</td><td>상태</td></tr></p><p><tr><td>Title 태그</td><td>페이지별 고유 타이틀</td><td>✅</td></tr>
+<tr><td>Meta Description</td><td>페이지별 고유 설명</td><td>✅</td></tr>
+<tr><td>OG Tags</td><td>og:title, og:description, og:image</td><td>✅</td></tr>
+<tr><td>Twitter Card</td><td>summary_large_image</td><td>✅</td></tr>
+<tr><td>hreflang</td><td>8개 언어 alternate 태그</td><td>✅</td></tr>
+<tr><td>canonical</td><td>페이지별 canonical URL</td><td>✅</td></tr>
+<tr><td>JSON-LD</td><td>WebSite, Article 스키마</td><td>✅ (기본)</td></tr>
+<tr><td>Sitemap</td><td>sitemap.xml 자동 생성</td><td>❌ 미구현</td></tr>
+<tr><td>Robots.txt</td><td>크롤러 가이드</td><td>❌ 미구현</td></tr>
+<tr><td>Semantic HTML</td><td>header, main, article, section</td><td>✅</td></tr>
+<tr><td>이미지 alt</td><td>기사 제목 기반 자동</td><td>✅</td></tr>
+<tr><td>모바일 최적화</td><td>반응형 + 모바일 퍼스트</td><td>✅</td></tr>
+<tr><td>페이지 속도</td><td>SSG, 최소 JS, CDN</td><td>✅</td></tr></p><p><h3>9.2 키워드 전략</h3></p><p><strong>Primary Keywords:</strong>
+<li>Seoul guide, Korea travel, K-POP news, K-Drama 2026</li>
+<li>Michelin Seoul, Seoul restaurants, Seoul hot places</li>
+<li>Korean beauty, K-beauty, Seoul fashion</li>
+<li>Seoul real estate, Korea property</li></p><p><strong>Long-tail Keywords:</strong>
+<li>"best restaurants in Seoul 2026"</li>
+<li>"top K-dramas on Netflix this month"</li>
+<li>"BTS comeback news"</li>
+<li>"Seoul Gangnam apartment prices"</li>
+<li>"things to do in Seoul"</li></p><p><hr></p><p><h2>10. Deployment & Infrastructure</h2></p><p><h3>10.1 현재 인프라</h3></p><p><pre><code class="">DNS: seoul.is → Cloudflare → gensparksite.com (이전 버전)
+</code></pre></p><p><h3>10.2 목표 인프라</h3></p><p><pre><code class="">DNS: seoul.is → Cloudflare Pages (Astro 빌드)</p><p>GitHub Repo
+  └─ push to main
+       └─ Cloudflare Pages 자동 빌드
+            ├─ npm run fetch (콘텐츠 수집)
+            ├─ npm run build (Astro SSG)
+            └─ dist/ → CDN 배포 (글로벌)
+</code></pre></p><p><h3>10.3 배포 단계</h3></p><p>1. <strong>GitHub 리포지토리 생성</strong> (<code>seoul-is</code>)
+2. <strong>Cloudflare Pages 프로젝트 생성</strong>
+   - Framework: Astro
+   - Build command: <code>npm run build</code>
+   - Output directory: <code>dist</code>
+3. <strong>커스텀 도메인 연결</strong>
+   - Cloudflare DNS에서 <code>seoul.is</code> → Pages 프로젝트
+4. <strong>환경 변수 설정</strong>
+   - <code>NODE_VERSION</code>: 22
+5. <strong>자동 배포</strong>
+   - main 브랜치 push 시 자동 빌드/배포</p><p><h3>10.4 일일 콘텐츠 갱신 (자동화)</h3></p><p><strong>Option A: GitHub Actions</strong>
+<pre><code class="yaml">name: Daily Content Update
+on:
+  schedule:
+    - cron: '0 21 <em> </em> *'  # 매일 06:00 KST (21:00 UTC)
+  workflow_dispatch:</p><p>jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run fetch
+      - run: npm run build
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: daily content update"
+</code></pre></p><p><strong>Option B: Cloudflare Workers Cron</strong>
+<li>Workers에서 fetch 스크립트 실행 → Pages 빌드 트리거</li></p><p><hr></p><p><h2>11. Current Implementation Status</h2></p><p><h3>11.1 파일 구조</h3></p><p><pre><code class="">seoul-is/
+├── astro.config.mjs          # Astro 설정 (site: seoul.is, output: static)
+├── package.json               # 의존성 (astro ^6.1.5)
+├── data/                      # 콘텐츠 데이터 (JSON)
+│   ├── kpop.json              # K-POP 기사 12개
+│   ├── kdrama.json            # K-DRAMA 기사 12개
+│   ├── food.json              # FOOD 기사 12개
+│   ├── places.json            # HOT PLACES 기사 3개
+│   ├── ranking.json           # RANKING 기사 12개
+│   ├── lifestyle.json         # LIFESTYLE 기사 12개
+│   ├── kproperty.json         # K-PROPERTY 기사 7개 (하드코딩)
+│   ├── featured.json          # 에디터 픽 (비어있음)
+│   └── meta.json              # 최종 업데이트 시간
+├── scripts/
+│   ├── fetch-content.cjs      # RSS 콘텐츠 수집기
+│   └── enrich-articles.sh     # AI 요약 생성기
+├── src/
+│   ├── styles/
+│   │   └── global.css         # 디자인 시스템 (토큰, 리셋, 유틸리티)
+│   ├── lib/
+│   │   ├── categories.js      # 카테고리 정의 + 언어 목록
+│   │   └── content.js         # 데이터 로딩 유틸리티
+│   ├── layouts/
+│   │   └── Base.astro         # HTML 레이아웃 (메타, 폰트, favicon)
+│   ├── components/
+│   │   ├── Header.astro       # 헤더 (로고, 네비, 언어 선택, 모바일 카테고리 바)
+│   │   ├── Footer.astro       # 푸터 (4컬럼 그리드, 링크)
+│   │   ├── CategorySection.astro  # 카테고리 매거진 그리드
+│   │   └── ContentCard.astro  # 기사 카드 (large/small/hero)
+│   └── pages/
+│       ├── index.astro        # 메인 페이지
+│       └── article/
+│           └── [slug].astro   # 아티클 상세 페이지
+└── dist/                      # 빌드 출력 (정적 HTML)
+</code></pre></p><p><h3>11.2 알려진 이슈</h3></p><p><tr><td>#</td><td>이슈</td><td>심각도</td><td>설명</td></tr></p><p><tr><td>I01</td><td>slug 미생성</td><td>High</td><td>새로 fetch한 데이터에 slug가 없어 아티클 페이지 미생성</td></tr>
+<tr><td>I02</td><td>kproperty RSS 없음</td><td>Medium</td><td>kproperty는 하드코딩 데이터, RSS 자동 수집 미구현</td></tr>
+<tr><td>I03</td><td>places 데이터 부족</td><td>Medium</td><td>HOT PLACES RSS 쿼리가 3건만 반환</td></tr>
+<tr><td>I04</td><td>카테고리 페이지 없음</td><td>Medium</td><td><code>/category/{id}</code> 라우트 미구현 (View All 링크 깨짐)</td></tr>
+<tr><td>I05</td><td>다국어 미연결</td><td>Low</td><td>언어 선택 UI는 있으나 실제 라우팅 없음</td></tr>
+<tr><td>I06</td><td>Google News URL</td><td>Low</td><td>RSS URL이 Google 리다이렉트 URL (원문 URL 아님)</td></tr></p><p><hr></p><p><h2>12. Roadmap</h2></p><p><h3>Phase 1: MVP 완성 및 배포 (1주)</h3></p><p><li>slug 생성 로직 수정 (fetch 스크립트)</li>
+<li>kproperty RSS 자동 수집 추가</li>
+<li>places RSS 쿼리 개선</li>
+<li>카테고리 페이지 (<code>/category/[id].astro</code>) 구현</li>
+<li>sitemap.xml, robots.txt 추가</li>
+<li>Cloudflare Pages 배포</li>
+<li>커스텀 도메인 연결 (seoul.is)</li>
+<li>Google Analytics 4 설치</li>
+<li>Google AdSense 신청</li></p><p><h3>Phase 2: 수익화 & SEO (2~4주)</h3></p><p><li>AdSense 코드 삽입 및 최적화</li>
+<li>어필리에이트 링크 실제 ID 연결 (Booking, Klook, Agoda)</li>
+<li>GA4 이벤트 트래킹 설정</li>
+<li>일일 자동 갱신 크론 (GitHub Actions)</li>
+<li>다국어 라우팅 구현 (최소 영어/한국어/일본어)</li>
+<li>JSON-LD Article 스키마 상세화</li>
+<li>OG 이미지 동적 생성</li>
+<li>인스타그램 / 텔레그램 자동 포스팅</li></p><p><h3>Phase 3: 플랫폼 확장 (1~2개월)</h3></p><p><li>Supabase 연동 (DB, Auth)</li>
+<li>관리자 패널 (협찬 콘텐츠 CRUD)</li>
+<li>협찬 콘텐츠 스케줄링 & 리포트</li>
+<li>쿠폰 시스템 MVP</li>
+<li>가맹점 대시보드</li>
+<li>뉴스레터 구독</li>
+<li>검색 기능</li>
+<li>PWA 지원</li></p><p><h3>Phase 4: 스케일업 (3개월+)</h3></p><p><li>전체 8개 언어 번역</li>
+<li>기사 원문 OG 이미지 자동 추출</li>
+<li>AI 개인화 추천</li>
+<li>커뮤니티 기능 (댓글, 좋아요)</li>
+<li>트렌드 데이터 리포트 (B2B 판매)</li>
+<li>모바일 앱 (React Native 또는 PWA)</li></p><p><hr></p><p><h2>Appendix</h2></p><p><h3>A. 디자인 토큰</h3></p><p><pre><code class="css">--bg: #050505;
+--surface: #111111;
+--card: #0f0f0f;
+--primary: #FF2D55;
+--kpop: #FF2D55;
+--kdrama: #5856D6;
+--food: #FF9500;
+--places: #30D158;
+--ranking: #FFD60A;
+--lifestyle: #BF5AF2;
+--kproperty: #0A84FF;
+--text: #ffffff;
+--text-secondary: #999999;
+--radius-sm: 8px;
+--radius-md: 12px;
+--radius-lg: 16px;
+--radius-xl: 24px;
+--max-width: 1280px;
+</code></pre></p><p><h3>B. 관련 계정</h3></p><p><tr><td>서비스</td><td>계정</td><td>용도</td></tr></p><p><tr><td>Gmail</td><td>seoulis.info@gmail.com</td><td>메인 이메일</td></tr>
+<tr><td>Cloudflare</td><td>seoulis.info@gmail.com</td><td>DNS, Pages 호스팅</td></tr>
+<tr><td>Google AdSense</td><td>(연동 대기)</td><td>광고 수익</td></tr>
+<tr><td>Google Analytics</td><td>(설치 대기)</td><td>트래픹 분석</td></tr>
+<tr><td>Instagram</td><td>@seoulis_media</td><td>SNS 마케팅</td></tr>
+<tr><td>Telegram</td><td>@SeoulPrimeClub_Chat</td><td>커뮤니티</td></tr>
+<tr><td>Twitter</td><td>@SeoulIs_Media</td><td>SNS 마케팅</td></tr></p><p><h3>C. 경쟁 분석</h3></p><p><tr><td>서비스</td><td>차별점</td></tr></p><p><tr><td>Allkpop</td><td>K-POP 전문, 다른 카테고리 없음</td></tr>
+<tr><td>Soompi</td><td>엔터 중심, 여행/부동산 없음</td></tr>
+<tr><td>Korea JoongAng Daily</td><td>뉴스 중심, 큐레이션 아님</td></tr>
+<tr><td>Visit Seoul</td><td>관광청 공식, 업데이트 느림</td></tr>
+<tr><td><strong>seoul.is</strong></td><td><strong>7개 카테고리 통합, 자동 큐레이션, 다국어, 쿠폰</strong></td></tr></p><p><hr></p><p><em>이 문서는 다른 AI 또는 개발팀이 seoul.is 플랫폼을 구축하는 데 필요한 모든 기술적 요구사항을 포함합니다.</em>
+<em>최종 업데이트: 2026-04-14</em>
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+---
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  // 등록된 쿠폰 목록 (업체 계약 시 여기에 추가)
+  const coupons = [
+    {
+      code: "GANGNAM10",
+      business: "Gangnam Skin Clinic",
+      category: "Medical & Beauty",
+      emoji: "🏥",
+      offer: "10% Off for International Visitors",
+      detail: "Show this coupon at reception. Valid for first-time visitors. Includes free skin consultation.",
+      address: "Gangnam-gu, Seoul",
+      valid: "Valid until Dec 31, 2026",
+      color: "#BF5AF2",
+      sponsored: true,
+    },
+    {
+      code: "HONGDAECAFE",
+      business: "Anthracite Coffee Hongdae",
+      category: "Cafe",
+      emoji: "☕",
+      offer: "Free Cookie with Any Drink",
+      detail: "Show this coupon when ordering. One per customer. Valid all day.",
+      address: "Hongdae, Seoul",
+      valid: "Valid until Dec 31, 2026",
+      color: "#FF9500",
+      sponsored: true,
+    },
+    {
+      code: "MYEONGDONG15",
+      business: "Olive Young Myeongdong",
+      category: "Shopping",
+      emoji: "🛍️",
+      offer: "Extra 5% Off (on top of sale prices)",
+      detail: "Show this page at checkout. Valid on all skincare and cosmetics.",
+      address: "Myeongdong, Seoul",
+      valid: "Valid until Dec 31, 2026",
+      color: "#30D158",
+      sponsored: true,
+    },
+    {
+      code: "SEOULPASS",
+      business: "Seoul City Pass Holder",
+      category: "General",
+      emoji: "🎫",
+      offer: "Seoul City Pass — All Coupons",
+      detail: "You have access to all 50+ coupons in your Seoul City Pass PDF.",
+      address: "Valid citywide",
+      valid: "Valid until Dec 31, 2026",
+      color: "#FFD60A",
+      sponsored: false,
+    },
+  ];
+  return coupons.map(c => ({ params: { code: c.code }, props: { coupon: c } }));
+}
+
+const { coupon } = Astro.props;
+---
+
+<Base title={`${coupon.offer} — ${coupon.business} | seoul.is`} description={`Exclusive coupon for international visitors: ${coupon.offer} at ${coupon.business}`}>
+  <div class="coupon-page">
+    <div class="coupon-wrap">
+      <!-- HEADER -->
+      <div class="coupon-header">
+        <a href="/" class="coupon-logo">🇰🇷 seoul.is</a>
+        <div class="coupon-verified">✓ Verified Coupon</div>
+      </div>
+
+      <!-- MAIN COUPON CARD -->
+      <div class="coupon-card" style={`border-color:${coupon.color}44`}>
+        <div class="coupon-top" style={`background:linear-gradient(135deg,${coupon.color}22,transparent)`}>
+          <div class="coupon-emoji">{coupon.emoji}</div>
+          <div class="coupon-cat" style={`color:${coupon.color}`}>{coupon.category}</div>
+          <div class="coupon-biz">{coupon.business}</div>
+          <div class="coupon-offer" style={`color:${coupon.color}`}>{coupon.offer}</div>
+        </div>
+
+        <div class="coupon-divider">
+          <div class="coupon-notch left"></div>
+          <div class="coupon-dots"></div>
+          <div class="coupon-notch right"></div>
+        </div>
+
+        <div class="coupon-bottom">
+          <div class="coupon-detail">{coupon.detail}</div>
+          <div class="coupon-meta">
+            <div class="coupon-addr">📍 {coupon.address}</div>
+            <div class="coupon-valid">⏱ {coupon.valid}</div>
+          </div>
+          <div class="coupon-code-wrap">
+            <div class="coupon-code-label">Coupon Code</div>
+            <div class="coupon-code">{coupon.code}</div>
+          </div>
+          <div class="coupon-instruction">📱 Show this page at the counter</div>
+        </div>
+      </div>
+
+      <!-- SHARE -->
+      <div class="coupon-share">
+        <p>Share this coupon with your travel buddy</p>
+        <button class="share-btn" onclick={`navigator.clipboard.writeText('https://seoul.is/coupon/${coupon.code}'); this.textContent='✓ Copied!'; setTimeout(()=>this.textContent='Copy Link',2000)`}>
+          Copy Link
+        </button>
+      </div>
+
+      <!-- MORE COUPONS -->
+      <div class="more-wrap">
+        <a href="/city-pass" class="more-cta">
+          <span>🎟️</span>
+          <div>
+            <div class="more-title">Get 50+ More Coupons</div>
+            <div class="more-sub">Seoul City Pass — $29 · Instant download</div>
+          </div>
+          <span class="more-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+.coupon-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px var(--page-pad);
+  background: radial-gradient(ellipse at top, #0a0010, #050505);
+}
+.coupon-wrap { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 20px; }
+
+.coupon-header { display: flex; justify-content: space-between; align-items: center; }
+.coupon-logo { text-decoration: none; font-size: 16px; font-weight: 800; color: var(--text); }
+.coupon-verified { font-size: 12px; color: #30D158; font-weight: 700; }
+
+.coupon-card {
+  border-radius: 20px;
+  border: 1px solid;
+  overflow: hidden;
+  background: var(--card);
+}
+.coupon-top { padding: 32px 28px 24px; text-align: center; }
+.coupon-emoji { font-size: 3.5rem; margin-bottom: 8px; }
+.coupon-cat { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.coupon-biz { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 10px; }
+.coupon-offer { font-size: 1.5rem; font-weight: 900; line-height: 1.2; }
+
+.coupon-divider {
+  position: relative;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,0.1) 0px, rgba(255,255,255,0.1) 8px, transparent 8px, transparent 16px);
+  margin: 0 -1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.coupon-notch {
+  width: 20px;
+  height: 20px;
+  background: #050505;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin: 0 -10px;
+}
+
+.coupon-bottom { padding: 24px 28px; display: flex; flex-direction: column; gap: 14px; }
+.coupon-detail { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+.coupon-meta { display: flex; flex-direction: column; gap: 6px; }
+.coupon-addr, .coupon-valid { font-size: 12px; color: var(--text-muted); }
+.coupon-code-wrap { text-align: center; padding: 14px; background: rgba(255,255,255,0.04); border-radius: 12px; }
+.coupon-code-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.coupon-code { font-size: 1.4rem; font-weight: 900; color: var(--text); letter-spacing: 2px; font-family: monospace; }
+.coupon-instruction { text-align: center; font-size: 13px; color: var(--text-muted); }
+
+.coupon-share { text-align: center; }
+.coupon-share p { font-size: 13px; color: var(--text-muted); margin-bottom: 10px; }
+.share-btn {
+  padding: 10px 24px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.share-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+.more-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: rgba(255,214,10,0.06);
+  border: 1px solid rgba(255,214,10,0.2);
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 1.5rem;
+}
+.more-cta:hover { border-color: rgba(255,214,10,0.5); }
+.more-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.more-sub { font-size: 12px; color: var(--text-muted); }
+.more-arrow { margin-left: auto; color: #FFD60A; font-size: 1.2rem; }
+</style>

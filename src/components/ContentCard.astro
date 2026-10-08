@@ -1,0 +1,277 @@
+---
+/**
+ * ContentCard — Magazine-style article card
+ *
+ * Props:
+ *   item     — article data object { title, url, image, source, category, date, sponsored }
+ *   size     — 'large' | 'small' | 'hero'  (default: 'small')
+ */
+
+const { item, size = 'small' } = Astro.props;
+
+const categoryColors = {
+  kpop: '#FF2D55',
+  kdrama: '#5856D6',
+  food: '#FF9500',
+  places: '#30D158',
+  travel: '#0A84FF',
+  ranking: '#FFD60A',
+  lifestyle: '#BF5AF2',
+  kproperty: '#0A84FF',
+};
+
+const categoryGradients = {
+  kpop: 'linear-gradient(135deg, #FF2D55, #FF6B8A)',
+  kdrama: 'linear-gradient(135deg, #5856D6, #7A78E8)',
+  food: 'linear-gradient(135deg, #FF9500, #FFB84D)',
+  places: 'linear-gradient(135deg, #30D158, #5EE07A)',
+  travel: 'linear-gradient(135deg, #0A84FF, #4DA6FF)',
+  ranking: 'linear-gradient(135deg, #FFD60A, #FFE44D)',
+  lifestyle: 'linear-gradient(135deg, #BF5AF2, #D48DF7)',
+  kproperty: 'linear-gradient(135deg, #0A84FF, #4DA6FF)',
+};
+
+const emojis = { kpop: '🎵', kdrama: '🎬', food: '🍜', places: '📍', travel: '✈️', ranking: '🏆', lifestyle: '✨', kproperty: '🏠' };
+
+const catColor = categoryColors[item.category] || '#FF2D55';
+const catGradient = categoryGradients[item.category] || categoryGradients.kpop;
+
+const dateStr = item.date
+  ? new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  : '';
+
+// Clean HTML entities from title
+const cleanTitle = item.title?.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+
+// Link to internal article page if slug exists, otherwise external
+const href = item.slug ? `/article/${item.slug}` : item.url;
+const isExternal = !item.slug;
+---
+
+<a href={href}
+   target={isExternal ? "_blank" : undefined}
+   rel={isExternal ? "noopener noreferrer" : undefined}
+   class:list={['card', `card--${size}`]}
+   style={`--cat-color: ${catColor};`}>
+
+  <!-- Image container -->
+  <div class="card-image">
+    {item.image ? (
+      <img
+        src={item.image}
+        alt={cleanTitle}
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <div class="card-placeholder" style={`background: ${catGradient};`}>
+        <span class="card-placeholder-emoji">{emojis[item.category] || '📰'}</span>
+      </div>
+    )}
+
+    <!-- Gradient overlay for text readability -->
+    <div class="card-gradient"></div>
+
+    <!-- Source badge (top-left) -->
+    <span class="card-source">{item.source}</span>
+
+    <!-- Sponsored indicator -->
+    {item.sponsored && <span class="card-sponsored">AD</span>}
+
+    <!-- Title overlay (on image) -->
+    <div class="card-overlay">
+      <h3 class:list={['card-title', size === 'small' ? 'line-clamp-2' : 'line-clamp-3']}>
+        {cleanTitle}
+      </h3>
+      {size !== 'small' && dateStr && (
+        <span class="card-date">{dateStr}</span>
+      )}
+    </div>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    transition: all var(--transition-mid);
+    position: relative;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    border-color: color-mix(in srgb, var(--cat-color) 40%, transparent);
+    transform: translateY(-3px) scale(1.005);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 0 1px color-mix(in srgb, var(--cat-color) 20%, transparent);
+  }
+
+  /* ─── Image ─── */
+  .card-image {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .card--small .card-image {
+    height: 200px;
+  }
+  .card--large .card-image {
+    height: 320px;
+  }
+  .card--hero .card-image {
+    height: 420px;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .card:hover .card-image img {
+    transform: scale(1.06);
+  }
+
+  .card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-placeholder-emoji {
+    font-size: 56px;
+    opacity: 0.3;
+  }
+
+  /* ─── Gradient overlay ─── */
+  .card-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.5) 40%,
+      rgba(0, 0, 0, 0.1) 70%,
+      transparent 100%
+    );
+    transition: opacity var(--transition-mid);
+  }
+
+  .card:hover .card-gradient {
+    opacity: 0.85;
+  }
+
+  /* ─── Source badge ─── */
+  .card-source {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.3px;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* ─── Sponsored ─── */
+  .card-sponsored {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: var(--primary);
+    font-size: 9px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+    z-index: 2;
+  }
+
+  /* ─── Text overlay ─── */
+  .card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 16px 16px;
+    z-index: 2;
+  }
+
+  .card--large .card-overlay,
+  .card--hero .card-overlay {
+    padding: 28px 24px 20px;
+  }
+
+  .card-title {
+    font-weight: 700;
+    line-height: 1.3;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: color var(--transition-fast);
+  }
+
+  .card--small .card-title {
+    font-size: 14px;
+  }
+
+  .card--large .card-title {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.25;
+  }
+
+  .card--hero .card-title {
+    font-size: 28px;
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: -0.5px;
+  }
+
+  .card:hover .card-title {
+    color: color-mix(in srgb, var(--cat-color) 50%, white);
+  }
+
+  .card-date {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.3px;
+  }
+
+  /* ─── Responsive ─── */
+  @media (min-width: 768px) {
+    .card--small .card-image { height: 220px; }
+    .card--large .card-image { height: 380px; }
+    .card--hero .card-image { height: 480px; }
+
+    .card--large .card-title { font-size: 24px; }
+    .card--hero .card-title { font-size: 36px; }
+  }
+
+  @media (min-width: 1024px) {
+    .card--hero .card-image { height: 520px; }
+    .card--hero .card-title {
+      font-size: 42px;
+      letter-spacing: -1px;
+    }
+    .card--hero .card-overlay {
+      padding: 40px 36px 28px;
+    }
+  }
+</style>

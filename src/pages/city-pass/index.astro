@@ -1,0 +1,217 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const stripeLink = "https://buy.stripe.com/8x2bJ13aL50i3ZafCdf3a03";
+
+const includes = [
+  { emoji: "🗺️", title: "Top 10 Must-Visit Places", desc: "Curated spots with maps, hours, and tips" },
+  { emoji: "🎟️", title: "50+ Discount Coupons", desc: "Restaurants, cafes, clinics, tours, shopping" },
+  { emoji: "🚇", title: "Subway Guide", desc: "Key lines and stations explained simply" },
+  { emoji: "🗣️", title: "Essential Korean Phrases", desc: "20 phrases that actually matter" },
+  { emoji: "🏥", title: "Medical Tourism Tips", desc: "Clinics, dental, skincare — how to book" },
+  { emoji: "📞", title: "Emergency Contacts", desc: "Tourist police, hospitals, embassies" },
+];
+
+const coupons = [
+  { category: "🍽️ Restaurants", count: 10, example: "10–20% off at Seoul's best Korean BBQ spots" },
+  { category: "☕ Cafes", count: 10, example: "Free drink or dessert at top Seongsu cafes" },
+  { category: "🛍️ Shopping", count: 10, example: "VAT refund guide + store exclusive deals" },
+  { category: "🎭 Tours & Activities", count: 10, example: "Discounts on DMZ tours, Han River cruise, K-POP shows" },
+  { category: "💆 Medical & Beauty", count: 10, example: "Free skin consultation at Gangnam clinics" },
+];
+---
+
+<Base title="Seoul City Pass 2026 — $29 | seoul.is" description="The ultimate Seoul travel guide with 50+ discount coupons. Instant PDF download. $29.">
+
+  <div class="pass-page">
+    <!-- HERO -->
+    <div class="pass-hero">
+      <div class="pass-hero-inner">
+        <div class="pass-badge">📖 Digital Travel Guide</div>
+        <h1>Seoul City Pass <span class="year">2026</span></h1>
+        <p class="pass-sub">50+ discount coupons · Top 10 places · Subway guide · Korean phrases · Medical tourism tips</p>
+        <div class="pass-price-wrap">
+          <div class="pass-price">$29 <span class="pass-old">$59</span></div>
+          <div class="pass-label">One-time · Instant PDF download</div>
+        </div>
+        <a href={stripeLink} target="_blank" rel="noopener" class="pass-cta">Get Seoul City Pass →</a>
+        <div class="pass-trust">🔒 Secure payment via Stripe · PDF delivered instantly</div>
+      </div>
+      <div class="pass-mockup">
+        <div class="pass-cover">
+          <div class="cover-flag">🇰🇷</div>
+          <div class="cover-title">SEOUL<br/>CITY PASS</div>
+          <div class="cover-year">2026</div>
+          <div class="cover-sub">The International Visitor's Guide</div>
+          <div class="cover-tag">50+ Coupons Inside</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT'S INSIDE -->
+    <div class="section">
+      <div class="section-inner">
+        <h2 class="section-title">What's Inside</h2>
+        <div class="includes-grid">
+          {includes.map(i => (
+            <div class="include-card">
+              <span class="include-emoji">{i.emoji}</span>
+              <div>
+                <div class="include-title">{i.title}</div>
+                <div class="include-desc">{i.desc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- COUPON BREAKDOWN -->
+    <div class="section coupon-section">
+      <div class="section-inner">
+        <h2 class="section-title">50+ Discount Coupons</h2>
+        <p class="section-sub">Save money from day one. Every coupon is exclusive to Seoul City Pass holders.</p>
+        <div class="coupon-list">
+          {coupons.map(c => (
+            <div class="coupon-row">
+              <div class="coupon-cat">{c.category} <span class="coupon-count">×{c.count}</span></div>
+              <div class="coupon-example">{c.example}</div>
+            </div>
+          ))}
+        </div>
+        <div class="coupon-total">Total value: <strong>$200+</strong> in discounts</div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="section cta-section">
+      <div class="section-inner cta-inner">
+        <h2>Ready to Save on Your Seoul Trip?</h2>
+        <p>Download instantly. Use from day one of your trip.</p>
+        <div class="cta-price">$29 <span>one-time</span></div>
+        <a href={stripeLink} target="_blank" rel="noopener" class="pass-cta">Buy Seoul City Pass →</a>
+        <div class="pass-trust">🔒 Stripe · Instant download · 7-day refund guarantee</div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+.pass-page { min-height: 100vh; }
+
+.pass-hero {
+  background: linear-gradient(135deg, #0a0010 0%, #050505 70%);
+  padding: 64px 0 56px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 64px var(--page-pad) 56px;
+  align-items: center;
+}
+@media (min-width: 768px) { .pass-hero { grid-template-columns: 1fr 1fr; } }
+
+.pass-badge {
+  display: inline-block;
+  font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #FFD60A;
+  border: 1px solid rgba(255,214,10,0.3);
+  padding: 5px 14px; border-radius: 20px;
+  margin-bottom: 20px;
+}
+.pass-hero-inner h1 { font-size: clamp(2rem,5vw,3rem); font-weight: 900; margin-bottom: 12px; }
+.year { color: var(--primary); }
+.pass-sub { color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px; }
+.pass-price-wrap { margin-bottom: 24px; }
+.pass-price { font-size: 2.5rem; font-weight: 900; color: var(--text); }
+.pass-old { font-size: 1.2rem; color: var(--text-muted); text-decoration: line-through; margin-left: 8px; }
+.pass-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.pass-cta {
+  display: inline-block;
+  padding: 16px 36px;
+  background: #FFD60A;
+  color: #000;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 16px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  margin-bottom: 12px;
+}
+.pass-cta:hover { opacity: 0.9; }
+.pass-trust { font-size: 12px; color: var(--text-muted); }
+
+.pass-mockup { display: flex; justify-content: center; }
+.pass-cover {
+  width: 220px;
+  height: 300px;
+  background: linear-gradient(135deg, #FF2D55 0%, #BF5AF2 100%);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  box-shadow: 0 32px 80px rgba(255,45,85,0.4);
+  gap: 8px;
+}
+.cover-flag { font-size: 3rem; }
+.cover-title { font-size: 1.4rem; font-weight: 900; color: white; line-height: 1.2; }
+.cover-year { font-size: 1rem; color: rgba(255,255,255,0.7); }
+.cover-sub { font-size: 11px; color: rgba(255,255,255,0.6); }
+.cover-tag {
+  margin-top: 8px;
+  background: #FFD60A;
+  color: #000;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.section { padding: 64px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.section-inner { max-width: 900px; margin: 0 auto; padding: 0 var(--page-pad); }
+.section-title { font-size: 1.8rem; font-weight: 900; text-align: center; margin-bottom: 12px; }
+.section-sub { text-align: center; color: var(--text-secondary); margin-bottom: 36px; }
+
+.includes-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 640px) { .includes-grid { grid-template-columns: repeat(2, 1fr); } }
+.include-card {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 20px; background: var(--card);
+  border: 1px solid var(--card-border); border-radius: 14px;
+}
+.include-emoji { font-size: 2rem; flex-shrink: 0; }
+.include-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.include-desc { font-size: 13px; color: var(--text-secondary); }
+
+.coupon-section { background: rgba(255,214,10,0.02); }
+.coupon-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.coupon-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  background: var(--card); border: 1px solid var(--card-border);
+  border-radius: 12px; flex-wrap: wrap;
+}
+.coupon-cat { font-size: 14px; font-weight: 700; color: var(--text); min-width: 180px; }
+.coupon-count { color: #FFD60A; }
+.coupon-example { font-size: 13px; color: var(--text-secondary); }
+.coupon-total {
+  text-align: center; font-size: 16px; color: var(--text-secondary);
+  padding: 20px;
+  background: rgba(255,214,10,0.06);
+  border-radius: 12px;
+}
+.coupon-total strong { color: #FFD60A; font-size: 20px; }
+
+.cta-section { text-align: center; }
+.cta-inner { max-width: 480px; }
+.cta-section h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 12px; }
+.cta-section p { color: var(--text-secondary); margin-bottom: 20px; }
+.cta-price { font-size: 2.5rem; font-weight: 900; margin-bottom: 24px; }
+.cta-price span { font-size: 14px; color: var(--text-muted); font-weight: 400; }
+</style>

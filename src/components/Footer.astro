@@ -1,0 +1,251 @@
+---
+import { CATEGORIES, CAT_ORDER } from '../lib/categories.js';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="footer-inner">
+    <!-- Top section with gradient line -->
+    <div class="footer-divider"></div>
+
+    <div class="footer-grid">
+      <!-- Brand column -->
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <span class="footer-logo-text">seoul</span><span class="footer-logo-dot">.</span><span class="footer-logo-is">is</span>
+        </a>
+        <p class="footer-tagline">
+          Your daily-updated discovery hub for everything Seoul & Korea. Curated from 50+ premium sources, refreshed every day.
+        </p>
+        <div class="footer-badge">
+          <span class="footer-badge-dot"></span>
+          <span>Updated daily · Auto-aggregated</span>
+        </div>
+      </div>
+
+      <!-- Categories column -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Discover</h4>
+        <nav class="footer-links">
+          {CAT_ORDER.map(id => {
+            const c = CATEGORIES[id];
+            return (
+              <a href={`#${id}`} class="footer-link" style={`--link-color: ${c.color};`}>
+                <span class="footer-link-emoji">{c.emoji}</span>
+                {c.name}
+              </a>
+            );
+          })}
+        </nav>
+      </div>
+
+      <!-- Travel column -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Travel Seoul</h4>
+        <nav class="footer-links">
+          <a href="https://www.agoda.com/city/seoul-kr.html?cid=1973066" target="_blank" rel="noopener sponsored" class="footer-link">
+            <span class="footer-link-emoji">🏨</span>Hotels (Agoda)
+          </a>
+          <a href="https://www.klook.com/en-US/city/34-seoul-things-to-do/?aff_adid=1392094&aff_pid=131769" target="_blank" rel="noopener sponsored" class="footer-link">
+            <span class="footer-link-emoji">🎫</span>Tours & Activities
+          </a>
+          <a href="https://www.klook.com/en-US/activity/1481-dmz-tour-seoul/?aff_adid=1392094&aff_pid=131769" target="_blank" rel="noopener sponsored" class="footer-link">
+            <span class="footer-link-emoji">🪖</span>DMZ Tour
+          </a>
+          <a href="https://www.klook.com/en-US/activity/3945-han-river-cruise-seoul/?aff_adid=1392094&aff_pid=131769" target="_blank" rel="noopener sponsored" class="footer-link">
+            <span class="footer-link-emoji">🚢</span>Han River Cruise
+          </a>
+          <a href="https://www.klook.com/en-US/activity/1382-everland-ticket-seoul/?aff_adid=1392094&aff_pid=131769" target="_blank" rel="noopener sponsored" class="footer-link">
+            <span class="footer-link-emoji">🎡</span>Everland Tickets
+          </a>
+          <a href="https://airalo.tpo.li/rmpJe6nd" target="_blank" rel="noopener sponsored" class="footer-link">
+            <span class="footer-link-emoji">📱</span>eSIM for Korea
+          </a>
+        </nav>
+      </div>
+
+      <!-- Company column -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Company</h4>
+        <nav class="footer-links">
+          <a href="/about" class="footer-link">About</a>
+          <a href="/contact" class="footer-link">Contact</a>
+          <a href="/advertise" class="footer-link">Advertise</a>
+          <a href="/privacy" class="footer-link">Privacy Policy</a>
+          <a href="/terms" class="footer-link">Terms of Use</a>
+          <a href="https://t.me/SeoulPrimeClub_Chat" target="_blank" rel="noopener" class="footer-link" style="--link-color: #0088CC;">
+            <span class="footer-link-emoji">💬</span>Telegram
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <span class="footer-copyright">© {year} seoul.is — All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <span class="footer-made">Made with ❤️ for Korea lovers</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    margin-top: 80px;
+    position: relative;
+  }
+
+  .footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--page-pad);
+  }
+
+  .footer-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--primary) 20%,
+      #5856D6 40%,
+      #FF9500 60%,
+      #30D158 80%,
+      transparent 100%
+    );
+    opacity: 0.3;
+    margin-bottom: 48px;
+  }
+
+  /* ─── Grid ─── */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  /* ─── Brand ─── */
+  .footer-brand {
+    max-width: 380px;
+  }
+
+  .footer-logo {
+    display: inline-flex;
+    align-items: baseline;
+    transition: opacity var(--transition-fast);
+  }
+  .footer-logo:hover { opacity: 0.7; }
+
+  .footer-logo-text {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--text);
+  }
+  .footer-logo-dot {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--primary);
+  }
+  .footer-logo-is {
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    color: var(--primary);
+  }
+
+  .footer-tagline {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--text-muted);
+  }
+
+  .footer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+  }
+  .footer-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #30D158;
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  /* ─── Columns ─── */
+  .footer-col-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    transition: all var(--transition-fast);
+    padding: 2px 0;
+  }
+  .footer-link:hover {
+    color: var(--link-color, var(--text));
+    transform: translateX(3px);
+  }
+  .footer-link-emoji {
+    font-size: 14px;
+    width: 18px;
+    text-align: center;
+  }
+
+  /* ─── Bottom ─── */
+  .footer-bottom {
+    margin-top: 48px;
+    padding: 24px 0 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .footer-copyright {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.2px;
+  }
+
+  .footer-made {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 0.2px;
+  }
+
+  /* ─── Responsive ─── */
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+  }
+</style>

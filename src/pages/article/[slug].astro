@@ -1,0 +1,307 @@
+---
+import Base from '../../layouts/Base.astro';
+import { readFileSync, readdirSync } from 'fs';
+import { join } from 'path';
+
+export async function getStaticPaths() {
+  const articlesDir = join(process.cwd(), 'src/data/articles');
+  const files = readdirSync(articlesDir).filter(f => f.endsWith('.json'));
+  return files.map(file => ({
+    params: { slug: file.replace('.json', '') },
+  }));
+}
+
+const { slug } = Astro.params;
+const articlesDir = join(process.cwd(), 'src/data/articles');
+const article = JSON.parse(readFileSync(join(articlesDir, `${slug}.json`), 'utf-8'));
+
+const allFiles = readdirSync(articlesDir).filter(f => f.endsWith('.json'));
+const related = allFiles
+  .filter(f => f !== `${slug}.json`)
+  .slice(0, 5)
+  .map(f => JSON.parse(readFileSync(join(articlesDir, f), 'utf-8')));
+
+const categoryColors: Record<string, string> = {
+  food: '#FF9500', places: '#30D158', lifestyle: '#BF5AF2',
+  kpop: '#FF2D55', kdrama: '#5856D6', ranking: '#FFD60A',
+};
+const catColor = categoryColors[article.category] || '#FF2D55';
+---
+
+<Base title={`${article.title} — seoul.is`} description={article.description}>
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": article.description,
+    "datePublished": article.date,
+    "publisher": { "@type": "Organization", "name": "seoul.is", "url": "https://seoul.is" },
+    "image": article.heroImage,
+  })} />
+
+  <!-- HERO -->
+  <div class="art-hero" style={`background-image: url(${article.heroImage})`}>
+    <div class="art-hero-overlay">
+      <div class="art-hero-inner">
+        <nav class="breadcrumb">
+          <a href="/">Home</a><span>›</span>
+          <a href="/articles">Articles</a><span>›</span>
+          <span>{article.title}</span>
+        </nav>
+        <div class="art-emoji">{article.emoji}</div>
+        <div class="art-cat-tag" style={`background:${catColor}22;color:${catColor};border-color:${catColor}44`}>{article.category}</div>
+        <h1 class="art-title">{article.title}</h1>
+        <div class="art-meta">
+          <span>⏱ {article.readTime}</span>
+          <span>·</span>
+          <span>📅 {new Date(article.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="art-body">
+    <div class="art-layout">
+      <article class="art-content" set:html={article.content} />
+
+      <aside class="art-sidebar">
+        <div class="sidebar-card s-esim">
+          <div class="s-emoji">📱</div>
+          <h3>Korea eSIM</h3>
+          <p>Connected from day one. From $4 on Airalo.</p>
+          <a href="https://airalo.tpo.li/rmpJe6nd" target="_blank" rel="noopener sponsored" class="s-btn s-btn--green">Get eSIM →</a>
+        </div>
+        <div class="sidebar-card s-hotel">
+          <div class="s-emoji">🏨</div>
+          <h3>Seoul Hotels</h3>
+          <p>Best rates guaranteed on Agoda.</p>
+          <a href="https://www.agoda.com/city/seoul-kr.html?cid=1973066" target="_blank" rel="noopener sponsored" class="s-btn s-btn--blue">Find Hotels →</a>
+        </div>
+        <div class="sidebar-card s-flights">
+          <div class="s-emoji">✈️</div>
+          <h3>Flights to Seoul</h3>
+          <p>Compare hundreds of airlines instantly.</p>
+          <a href="https://aviasales.tpo.li/empItUCk" target="_blank" rel="noopener sponsored" class="s-btn s-btn--red">Search Flights →</a>
+        </div>
+        <div class="sidebar-card s-pickup">
+          <div class="s-emoji">🚗</div>
+          <h3>Airport Transfer</h3>
+          <p>Private car from Incheon. Fixed price.</p>
+          <a href="https://tpo.li/KvaMrbC9" target="_blank" rel="noopener sponsored" class="s-btn s-btn--orange">Book Transfer →</a>
+        </div>
+        <div class="sidebar-card s-insurance">
+          <div class="s-emoji">🛡️</div>
+          <h3>Travel Insurance</h3>
+          <p>Cover medical, cancellation & luggage.</p>
+          <a href="https://ektatraveling.tpo.li/nTbwSd7a" target="_blank" rel="noopener sponsored" class="s-btn s-btn--purple">Get Insured →</a>
+        </div>
+        {related.length > 0 && (
+          <div class="sidebar-related">
+            <h3 class="related-title">More Articles</h3>
+            {related.map(r => (
+              <a href={`/article/${r.slug}`} class="related-item">
+                <span>{r.emoji}</span>
+                <span>{r.title}</span>
+              </a>
+            ))}
+          </div>
+        )}
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+.art-hero {
+  position: relative;
+  height: 420px;
+  background-size: cover;
+  background-position: center;
+}
+.art-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5,5,5,0.97) 0%, rgba(5,5,5,0.5) 50%, rgba(5,5,5,0.2) 100%);
+  display: flex;
+  align-items: flex-end;
+}
+.art-hero-inner {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 var(--page-pad) 40px;
+}
+.breadcrumb {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.breadcrumb a { color: rgba(255,255,255,0.4); text-decoration: none; }
+.breadcrumb a:hover { color: var(--primary); }
+.art-emoji { font-size: 2.5rem; margin-bottom: 12px; }
+.art-cat-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid;
+  margin-bottom: 12px;
+}
+.art-title {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  color: white;
+  max-width: 700px;
+  margin-bottom: 14px;
+}
+.art-meta {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+}
+
+.art-body {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px var(--page-pad) 80px;
+}
+.art-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
+}
+@media (min-width: 1024px) {
+  .art-layout { grid-template-columns: 1fr 300px; }
+}
+
+.art-content {
+  min-width: 0;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+}
+.art-content :global(h2) {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 48px 0 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.art-content :global(h3) { font-size: 1.1rem; font-weight: 700; color: var(--text); margin: 28px 0 10px; }
+.art-content :global(p) { margin-bottom: 18px; }
+.art-content :global(ul), .art-content :global(ol) { padding-left: 24px; margin: 12px 0 20px; }
+.art-content :global(li) { margin-bottom: 8px; }
+.art-content :global(strong) { color: var(--text); }
+.art-content :global(.tip-box) {
+  margin: 28px 0;
+  padding: 18px 22px;
+  background: rgba(255,149,0,0.06);
+  border-left: 3px solid #FF9500;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.95rem;
+}
+.art-content :global(.affiliate-card) {
+  margin: 36px 0;
+  padding: 24px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.art-content :global(.aff-emoji) { font-size: 2rem; }
+.art-content :global(.affiliate-card h4) { font-size: 1rem; font-weight: 700; color: var(--text); margin: 0; }
+.art-content :global(.affiliate-card p) { margin: 0; font-size: 0.9rem; }
+.art-content :global(.aff-btn) {
+  display: inline-block;
+  padding: 11px 22px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  align-self: flex-start;
+  transition: opacity 0.2s;
+}
+.art-content :global(.aff-btn:hover) { opacity: 0.85; }
+
+/* SIDEBAR */
+.art-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 24px;
+  align-self: start;
+}
+.sidebar-card {
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.s-esim { background: rgba(48,209,88,0.06); border-color: rgba(48,209,88,0.2); }
+.s-hotel { background: rgba(10,132,255,0.06); border-color: rgba(10,132,255,0.2); }
+.s-flights { background: rgba(255,45,85,0.06); border-color: rgba(255,45,85,0.2); }
+.s-pickup { background: rgba(255,149,0,0.06); border-color: rgba(255,149,0,0.2); }
+.s-insurance { background: rgba(191,90,242,0.06); border-color: rgba(191,90,242,0.2); }
+.s-emoji { font-size: 1.8rem; margin-bottom: 8px; }
+.sidebar-card h3 { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.sidebar-card p { font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.5; }
+.s-btn {
+  display: block;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+.s-btn:hover { opacity: 0.85; }
+.s-btn--green { background: #30D158; color: #000; }
+.s-btn--blue { background: #0A84FF; color: #fff; }
+.s-btn--red { background: var(--primary); color: #fff; }
+.s-btn--orange { background: #FF9500; color: #000; }
+.s-btn--purple { background: #BF5AF2; color: #fff; }
+
+.sidebar-related {
+  padding: 20px;
+  background: var(--card);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+.related-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+.related-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  line-height: 1.4;
+}
+.related-item:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+</style>

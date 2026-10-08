@@ -1,0 +1,263 @@
+---
+import Base from '../layouts/Base.astro';
+
+const clinics = [
+  {
+    name: "Gangnam Severance Dermatology",
+    specialty: "Skin & Laser",
+    emoji: "✨",
+    treatments: ["Laser whitening", "Acne scar removal", "Anti-aging", "Botox & filler"],
+    priceFrom: "$80",
+    location: "Gangnam",
+    color: "#BF5AF2",
+    rating: 4.9,
+  },
+  {
+    name: "ID Hospital",
+    specialty: "Plastic Surgery",
+    emoji: "💎",
+    treatments: ["Rhinoplasty", "Double eyelid", "Face contouring", "Liposuction"],
+    priceFrom: "$500",
+    location: "Gangnam",
+    color: "#FF2D55",
+    rating: 4.8,
+  },
+  {
+    name: "Apgujeong Dental Clinic",
+    specialty: "Dental",
+    emoji: "🦷",
+    treatments: ["Teeth whitening", "Veneers", "Implants", "Invisalign"],
+    priceFrom: "$150",
+    location: "Apgujeong",
+    color: "#0A84FF",
+    rating: 4.9,
+  },
+  {
+    name: "WellBeing Korean Medicine",
+    specialty: "Traditional Medicine",
+    emoji: "🌿",
+    treatments: ["Acupuncture", "Herbal treatment", "Cupping", "Oriental massage"],
+    priceFrom: "$60",
+    location: "Insadong",
+    color: "#30D158",
+    rating: 4.7,
+  },
+];
+
+const steps = [
+  { step: "01", title: "Fill the form below", desc: "Tell us what treatment you need and your dates" },
+  { step: "02", title: "We match you", desc: "We find the best clinic for your budget and needs within 24h" },
+  { step: "03", title: "Book your appointment", desc: "We handle the reservation and send you all details" },
+  { step: "04", title: "Show up & get treated", desc: "Arrive at the clinic. English-speaking staff available" },
+];
+---
+
+<Base title="Medical Tourism Seoul 2026 — Book Clinics & Treatments | seoul.is" description="Book dermatology, plastic surgery, dental, and Korean traditional medicine in Seoul. English support. 30-50% cheaper than Singapore or Japan.">
+  <div class="med-page">
+    <!-- HERO -->
+    <div class="med-hero">
+      <div class="med-hero-inner">
+        <div class="med-badge">🏥 Medical Tourism</div>
+        <h1>World-Class Medical Care<br/><span class="highlight">at Seoul Prices</span></h1>
+        <p>Korean clinics offer the same quality as Singapore or Japan — at 30–50% lower cost. Book dermatology, plastic surgery, dental, and Korean traditional medicine with English support.</p>
+        <div class="hero-stats">
+          <div class="hstat"><strong>30–50%</strong><span>cheaper than SG/JP</span></div>
+          <div class="hstat"><strong>English</strong><span>staff available</span></div>
+          <div class="hstat"><strong>24h</strong><span>booking response</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section">
+      <div class="section-inner">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps-grid">
+          {steps.map(s => (
+            <div class="step-card">
+              <div class="step-num">{s.step}</div>
+              <div class="step-title">{s.title}</div>
+              <div class="step-desc">{s.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- CLINICS -->
+    <div class="section clinic-section">
+      <div class="section-inner">
+        <h2 class="section-title">Featured Clinics</h2>
+        <div class="clinic-grid">
+          {clinics.map(c => (
+            <div class="clinic-card" style={`border-color:${c.color}33`}>
+              <div class="clinic-top">
+                <span class="clinic-emoji">{c.emoji}</span>
+                <div class="clinic-badge" style={`background:${c.color}22;color:${c.color}`}>{c.specialty}</div>
+              </div>
+              <div class="clinic-name">{c.name}</div>
+              <div class="clinic-loc">📍 {c.location}</div>
+              <ul class="clinic-treats">
+                {c.treatments.map(t => <li>✓ {t}</li>)}
+              </ul>
+              <div class="clinic-footer">
+                <div class="clinic-price">From <strong style={`color:${c.color}`}>{c.priceFrom}</strong></div>
+                <div class="clinic-rating">⭐ {c.rating}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKING FORM -->
+    <div class="section form-section">
+      <div class="section-inner form-inner">
+        <h2 class="section-title">Book a Consultation</h2>
+        <p class="section-sub">Free matching service. We'll reply within 24 hours.</p>
+        <form class="booking-form" action="https://formspree.io/f/seoulis" method="POST">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Your Name *</label>
+              <input type="text" name="name" placeholder="Your full name" required />
+            </div>
+            <div class="form-field">
+              <label>Email *</label>
+              <input type="email" name="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Treatment Type *</label>
+              <select name="treatment" required>
+                <option value="">Select treatment...</option>
+                <option>Dermatology / Skin care</option>
+                <option>Plastic Surgery</option>
+                <option>Dental</option>
+                <option>Korean Traditional Medicine</option>
+                <option>Hair transplant</option>
+                <option>Weight management</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Budget (USD)</label>
+              <select name="budget">
+                <option value="">Select budget...</option>
+                <option>Under $200</option>
+                <option>$200 – $500</option>
+                <option>$500 – $1,000</option>
+                <option>$1,000 – $3,000</option>
+                <option>$3,000+</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Arrival Date</label>
+              <input type="date" name="arrival" />
+            </div>
+            <div class="form-field">
+              <label>Departure Date</label>
+              <input type="date" name="departure" />
+            </div>
+          </div>
+          <div class="form-field form-field--full">
+            <label>Additional Notes</label>
+            <textarea name="notes" placeholder="Any specific requirements, medical history, or questions..." rows="4"></textarea>
+          </div>
+          <input type="hidden" name="_subject" value="New Medical Tourism Inquiry — seoul.is" />
+          <button type="submit" class="form-submit">Send Inquiry →</button>
+          <p class="form-note">Free service · No commitment · Reply within 24h</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+.med-page { min-height: 100vh; }
+
+.med-hero {
+  background: linear-gradient(135deg, #00050a 0%, #050505 70%);
+  padding: 72px 0 56px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.med-hero-inner { max-width: 720px; margin: 0 auto; padding: 0 var(--page-pad); text-align: center; }
+.med-badge {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #BF5AF2; border: 1px solid rgba(191,90,242,0.3);
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 24px;
+}
+.med-hero h1 { font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 900; line-height: 1.2; margin-bottom: 16px; }
+.highlight { color: #BF5AF2; }
+.med-hero p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 32px; }
+.hero-stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+.hstat { text-align: center; }
+.hstat strong { display: block; font-size: 1.5rem; font-weight: 900; color: #BF5AF2; }
+.hstat span { font-size: 12px; color: var(--text-muted); }
+
+.section { padding: 64px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.section-inner { max-width: 1100px; margin: 0 auto; padding: 0 var(--page-pad); }
+.section-title { font-size: 1.8rem; font-weight: 900; text-align: center; margin-bottom: 12px; }
+.section-sub { text-align: center; color: var(--text-secondary); margin-bottom: 36px; }
+
+.steps-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+@media (min-width: 768px) { .steps-grid { grid-template-columns: repeat(4,1fr); } }
+.step-card { padding: 24px; background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; }
+.step-num { font-size: 2rem; font-weight: 900; color: #BF5AF2; margin-bottom: 10px; }
+.step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.step-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.clinic-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 640px) { .clinic-grid { grid-template-columns: repeat(2,1fr); } }
+.clinic-card { padding: 24px; background: var(--card); border: 1px solid; border-radius: 16px; display: flex; flex-direction: column; gap: 10px; }
+.clinic-top { display: flex; align-items: center; justify-content: space-between; }
+.clinic-emoji { font-size: 2rem; }
+.clinic-badge { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+.clinic-name { font-size: 16px; font-weight: 800; color: var(--text); }
+.clinic-loc { font-size: 12px; color: var(--text-muted); }
+.clinic-treats { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+.clinic-treats li { font-size: 13px; color: var(--text-secondary); }
+.clinic-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
+.clinic-price { font-size: 14px; color: var(--text-secondary); }
+.clinic-rating { font-size: 13px; color: var(--text-muted); }
+
+.form-section { background: rgba(191,90,242,0.02); }
+.form-inner { max-width: 680px; }
+.booking-form { display: flex; flex-direction: column; gap: 16px; }
+.form-row { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 640px) { .form-row { grid-template-columns: 1fr 1fr; } }
+.form-field { display: flex; flex-direction: column; gap: 6px; }
+.form-field--full { grid-column: 1/-1; }
+.form-field label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; }
+.form-field input, .form-field select, .form-field textarea {
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: #BF5AF2; }
+.form-field select option { background: #111; }
+.form-field textarea { resize: vertical; }
+.form-submit {
+  padding: 16px;
+  background: #BF5AF2;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.2s;
+}
+.form-submit:hover { opacity: 0.85; }
+.form-note { text-align: center; font-size: 12px; color: var(--text-muted); }
+</style>

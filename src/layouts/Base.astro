@@ -1,0 +1,83 @@
+---
+import '../styles/global.css';
+import BottomNav from '../components/BottomNav.astro';
+
+const {
+  title = 'seoul.is — Discover Seoul & Korea',
+  description = 'Your premium daily guide to K-POP, K-DRAMA, food, hot places & lifestyle in Seoul, Korea. Curated from 50+ top sources.',
+  image = 'https://seoul.is/og-image.jpg'
+} = Astro.props;
+const ogImage = image.startsWith('http') ? image : `https://seoul.is${image}`;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <meta name="keywords" content="Seoul, Korea, K-POP, BTS, K-DRAMA, Korean food, Michelin Seoul, hot places, travel Korea, Korean culture" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content="https://seoul.is" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1376" />
+  <meta property="og:image:height" content="768" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:site_name" content="seoul.is" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Airalo Verification -->
+  <meta name='impact-site-verification' value='b3f926e5-2e88-4026-a180-19062aa8ad4b'>
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@seoulis_media" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#050505" />
+  <meta name="color-scheme" content="dark" />
+
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="en" href="https://seoul.is" />
+  <link rel="alternate" hreflang="ko" href="https://seoul.is/ko" />
+  <link rel="alternate" hreflang="ja" href="https://seoul.is/ja" />
+  <link rel="alternate" hreflang="zh-Hans" href="https://seoul.is/zh-cn" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://seoul.is/zh-tw" />
+  <link rel="alternate" hreflang="vi" href="https://seoul.is/vi" />
+  <link rel="alternate" hreflang="id" href="https://seoul.is/id" />
+  <link rel="alternate" hreflang="th" href="https://seoul.is/th" />
+  <link rel="canonical" href="https://seoul.is" />
+
+  <title>{title}</title>
+
+  <!-- Preconnect for fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇰🇷</text></svg>" />
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2963461538724103" crossorigin="anonymous"></script>
+
+  <!-- Travelpayouts (marker: 767524) -->
+  <script data-cfasync="false" data-no-defer="1">
+    (function () {
+      var script = document.createElement("script");
+      script.async = 1;
+      script.src = 'https://emrldtp.com/NzY3NTI0.js?t=767524';
+      document.head.appendChild(script);
+    })();
+  </script>
+</head>
+<body>
+  <slot />
+  <BottomNav />
+</body>
+</html>
