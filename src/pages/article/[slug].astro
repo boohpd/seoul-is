@@ -51,6 +51,9 @@ const catColor = categoryColors[article.category] || '#FF2D55';
         <div class="art-emoji">{article.emoji}</div>
         <div class="art-cat-tag" style={`background:${catColor}22;color:${catColor};border-color:${catColor}44`}>{article.category}</div>
         <h1 class="art-title">{article.title}</h1>
+        <div class="art-byline">
+          By <strong>Seoul.is Editorial Team</strong> · {new Date(article.date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})}
+        </div>
         <div class="art-meta">
           <span>⏱ {article.readTime}</span>
           <span>·</span>
@@ -162,6 +165,16 @@ const catColor = categoryColors[article.category] || '#FF2D55';
   color: white;
   max-width: 700px;
   margin-bottom: 14px;
+}
+.art-byline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 10px;
+  font-style: italic;
+}
+.art-byline strong {
+  color: rgba(255,255,255,0.75);
+  font-style: normal;
 }
 .art-meta {
   display: flex;
