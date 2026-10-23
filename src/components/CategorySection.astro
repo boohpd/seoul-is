@@ -1,252 +1,192 @@
 ---
 /**
- * CategorySection — Magazine grid layout for a category
- *
- * Layout: 1 large card (left, ~60%) + 2 stacked small cards (right, ~40%) on desktop
- * Mobile: horizontal scroll cards
+ * CategorySection — Editorial list style
  */
 
-import ContentCard from './ContentCard.astro';
 import { CATEGORIES } from '../lib/categories.js';
 
 const { categoryId, items = [] } = Astro.props;
 const cat = CATEGORIES[categoryId];
 if (!cat || items.length === 0) return;
 
-const mainItem = items[0];
-const sideItems = items.slice(1, 3);
-const extraItems = items.slice(3, 7);
+const displayItems = items.slice(0, 6);
 ---
 
 <section id={categoryId} class="cat-section">
-  <!-- Section header -->
+  <!-- Section header: gold left-border + Playfair heading -->
   <div class="cat-header">
     <div class="cat-header-left">
-      <div class="cat-accent" style={`--accent: ${cat.color};`}>
-        <span class="cat-emoji">{cat.emoji}</span>
-      </div>
-      <div class="cat-info">
-        <h2 class="cat-name" style={`color: ${cat.color};`}>{cat.name}</h2>
-        <p class="cat-desc">{cat.desc}</p>
-      </div>
+      <h2 class="cat-name">{cat.name}</h2>
+      {cat.desc && <p class="cat-desc">{cat.desc}</p>}
     </div>
-    <a href={`/category/${categoryId}`} class="view-all-btn" style={`--accent: ${cat.color};`}>
-      View All
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <a href={`/category/${categoryId}`} class="view-all-btn">
+      View All →
     </a>
   </div>
 
-  <!-- Desktop: Magazine grid -->
-  <div class="magazine-grid">
-    <!-- Large feature card -->
-    <div class="magazine-main">
-      <ContentCard item={mainItem} size="large" />
-    </div>
-
-    <!-- Side stack: 2 small cards -->
-    {sideItems.length > 0 && (
-      <div class="magazine-side">
-        {sideItems.map(item => (
-          <ContentCard item={item} size="small" />
-        ))}
-      </div>
-    )}
-  </div>
-
-  <!-- Mobile: Horizontal scroll row -->
-  <div class="mobile-scroll scrollbar-hide">
-    {items.slice(0, 6).map(item => (
-      <div class="mobile-scroll-item">
-        <ContentCard item={item} size="small" />
-      </div>
-    ))}
-  </div>
-
-  <!-- Extra row (desktop only) -->
-  {extraItems.length > 0 && (
-    <div class="extra-grid">
-      {extraItems.map(item => (
-        <ContentCard item={item} size="small" />
-      ))}
-    </div>
-  )}
-
-  <!-- Sources line -->
-  <div class="sources-line">
-    <span class="sources-label">Sources</span>
-    {cat.sources.map(s => (
-      <span class="source-tag">{s}</span>
+  <!-- Editorial list: title + category + date, dividers -->
+  <div class="editorial-list">
+    {displayItems.map((item, i) => (
+      <a href={`/article/${item.slug}`} class="editorial-item">
+        <div class="editorial-item-left">
+          <span class="editorial-item-num">{String(i + 1).padStart(2, '0')}</span>
+          <div class="editorial-item-text">
+            <span class="editorial-item-cat">{item.category || cat.name}</span>
+            <h3 class="editorial-item-title">{item.title}</h3>
+          </div>
+        </div>
+        <div class="editorial-item-meta">
+          {item.date && (
+            <span class="editorial-item-date">
+              {new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+            </span>
+          )}
+          <span class="editorial-item-arrow">→</span>
+        </div>
+      </a>
     ))}
   </div>
 </section>
 
 <style>
   .cat-section {
-    scroll-margin-top: 110px;
+    scroll-margin-top: 80px;
   }
 
   /* ─── Section Header ─── */
   .cat-header {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 32px;
+    padding-left: 16px;
+    border-left: 2px solid var(--color-gold);
     gap: 16px;
   }
 
   .cat-header-left {
     display: flex;
-    align-items: center;
-    gap: 14px;
+    flex-direction: column;
+    gap: 4px;
   }
-
-  .cat-accent {
-    width: 48px;
-    height: 48px;
-    border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--accent) 12%, transparent);
-    border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .cat-emoji { font-size: 22px; }
 
   .cat-name {
-    font-size: 20px;
-    font-weight: 800;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 700;
+    color: #ffffff;
     letter-spacing: -0.3px;
     line-height: 1.2;
   }
+
   .cat-desc {
+    font-family: 'Inter', sans-serif;
     font-size: 12px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    letter-spacing: 0.1px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.2px;
   }
 
   .view-all-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all var(--transition-fast);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--color-gold);
     flex-shrink: 0;
-    letter-spacing: 0.2px;
+    transition: opacity var(--transition-fast);
   }
-  .view-all-btn:hover {
-    color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 8%, transparent);
-    border-color: color-mix(in srgb, var(--accent) 25%, transparent);
-  }
-  .view-all-btn svg {
-    transition: transform var(--transition-fast);
-  }
-  .view-all-btn:hover svg {
-    transform: translateX(2px);
-  }
+  .view-all-btn:hover { opacity: 0.65; }
 
-  /* ─── Magazine Grid (Desktop) ─── */
-  .magazine-grid {
-    display: none;
-    gap: 16px;
-  }
-
-  .magazine-main {
-    min-width: 0;
-  }
-
-  .magazine-side {
+  /* ─── Editorial list ─── */
+  .editorial-list {
     display: flex;
     flex-direction: column;
+  }
+
+  .editorial-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+  }
+  .editorial-item:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
+  .editorial-item:hover { padding-left: 8px; }
+  .editorial-item:hover .editorial-item-title { color: rgba(255,255,255,0.9); }
+  .editorial-item:hover .editorial-item-arrow { color: var(--color-gold); transform: translateX(4px); }
+
+  .editorial-item-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    flex: 1;
     min-width: 0;
   }
 
-  /* ─── Mobile Scroll ─── */
-  .mobile-scroll {
+  .editorial-item-num {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.15);
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    padding-top: 2px;
+    min-width: 24px;
+  }
+
+  .editorial-item-text {
     display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 8px;
-    scroll-snap-type: x mandatory;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
   }
 
-  .mobile-scroll-item {
-    flex: 0 0 280px;
-    scroll-snap-align: start;
-  }
-
-  /* ─── Extra Grid ─── */
-  .extra-grid {
-    display: none;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-top: 16px;
-  }
-
-  /* ─── Sources ─── */
-  .sources-line {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 20px;
-    flex-wrap: wrap;
-  }
-  .sources-label {
+  .editorial-item-cat {
+    font-family: 'Inter', sans-serif;
     font-size: 10px;
     font-weight: 600;
-    color: var(--text-dim);
+    letter-spacing: 1.5px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-right: 2px;
-  }
-  .source-tag {
-    padding: 3px 10px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--text-muted);
-    letter-spacing: 0.2px;
+    color: var(--color-gold);
   }
 
-  /* ─── Responsive ─── */
-  @media (min-width: 768px) {
-    .cat-name { font-size: 24px; }
-
-    .mobile-scroll { display: none; }
-
-    .magazine-grid {
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-    }
-
-    .extra-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .editorial-item-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(15px, 2vw, 19px);
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.3;
+    transition: color var(--transition-fast);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
-  @media (min-width: 1024px) {
-    .magazine-grid {
-      grid-template-columns: 3fr 2fr;
-      gap: 20px;
-    }
+  .editorial-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
 
-    .extra-grid {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
+  .editorial-item-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+
+  .editorial-item-arrow {
+    font-size: 14px;
+    color: rgba(255,255,255,0.15);
+    transition: all var(--transition-fast);
   }
 </style>

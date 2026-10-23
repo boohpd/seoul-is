@@ -5,7 +5,7 @@
   <div class="header-inner">
     <!-- Logo -->
     <a href="/" class="logo" aria-label="seoul.is home">
-      <span class="logo-text">seoul</span><span class="logo-dot">.</span><span class="logo-is">is</span>
+      <span class="logo-text">seoul<span class="logo-dot">.</span>is</span>
     </a>
 
     <!-- Desktop Nav -->
@@ -13,13 +13,13 @@
       <a href="/" class="nav-link">Home</a>
       <a href="/articles" class="nav-link">Articles</a>
       <a href="/guide" class="nav-link">Guide</a>
-      <a href="/spot" class="nav-link">SPOT</a>
+      <a href="/spot" class="nav-link">Spot</a>
       <a href="/membership" class="nav-link">Membership</a>
     </nav>
 
-    <!-- Right side: CTA + Hamburger -->
+    <!-- Right side -->
     <div class="header-actions">
-      <a href="/membership" class="cta-btn">Join Seoul Prime Club</a>
+      <a href="/membership" class="join-link">Join</a>
       <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -32,14 +32,13 @@
       <a href="/" class="mobile-link">Home</a>
       <a href="/articles" class="mobile-link">Articles</a>
       <a href="/guide" class="mobile-link">Guide</a>
-      <a href="/spot" class="mobile-link">SPOT</a>
+      <a href="/spot" class="mobile-link">Spot</a>
       <a href="/membership" class="mobile-link">Membership</a>
-      <a href="/membership" class="mobile-cta">Join Seoul Prime Club</a>
+      <a href="/membership" class="mobile-join">Join →</a>
     </nav>
   </div>
 </header>
 
-<!-- Spacer to prevent content from hiding behind sticky header -->
 <div class="header-spacer"></div>
 
 <style>
@@ -49,17 +48,17 @@
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(13, 27, 42, 0.92);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+    background: rgba(13, 27, 42, 0.88);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
   }
 
   .header-inner {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 var(--page-pad);
-    height: 60px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -68,29 +67,21 @@
 
   /* Logo */
   .logo {
-    display: flex;
-    align-items: baseline;
-    gap: 0;
     flex-shrink: 0;
     transition: opacity var(--transition-fast);
   }
-  .logo:hover { opacity: 0.8; }
+  .logo:hover { opacity: 0.75; }
 
   .logo-text {
-    font-size: 26px;
-    font-weight: 900;
-    letter-spacing: -1px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    font-weight: 600;
     color: var(--text);
+    letter-spacing: -0.5px;
   }
+
   .logo-dot {
-    font-size: 26px;
-    font-weight: 900;
-    color: var(--color-gold);
-  }
-  .logo-is {
-    font-size: 26px;
-    font-weight: 900;
-    letter-spacing: -1px;
     color: var(--color-gold);
   }
 
@@ -98,52 +89,41 @@
   .nav-desktop {
     display: none;
     align-items: center;
-    gap: 4px;
+    gap: 32px;
     flex: 1;
     justify-content: center;
   }
 
   .nav-link {
-    padding: 6px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    color: rgba(255, 255, 255, 0.65);
-    border-radius: 6px;
-    transition: all var(--transition-fast);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color var(--transition-fast);
   }
-
-  .nav-link:hover {
-    color: var(--color-gold);
-    background: rgba(201, 168, 76, 0.08);
-  }
+  .nav-link:hover { color: rgba(255, 255, 255, 0.9); }
 
   /* Header actions */
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
     flex-shrink: 0;
   }
 
-  /* CTA Button */
-  .cta-btn {
+  .join-link {
     display: none;
-    padding: 8px 20px;
-    background: var(--color-gold);
-    color: #0D1B2A;
-    font-size: 13px;
-    font-weight: 700;
-    border-radius: 8px;
-    letter-spacing: 0.2px;
-    transition: all var(--transition-fast);
-    white-space: nowrap;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    transition: opacity var(--transition-fast);
   }
-  .cta-btn:hover {
-    background: #d9b85c;
-    box-shadow: 0 4px 16px rgba(201, 168, 76, 0.35);
-    transform: translateY(-1px);
-  }
+  .join-link:hover { opacity: 0.7; }
 
   /* Hamburger */
   .hamburger {
@@ -152,95 +132,75 @@
     justify-content: center;
     align-items: center;
     gap: 5px;
-    width: 36px;
-    height: 36px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
     padding: 0;
-    transition: all var(--transition-fast);
+    transition: opacity var(--transition-fast);
   }
-  .hamburger:hover {
-    background: rgba(201, 168, 76, 0.1);
-    border-color: rgba(201, 168, 76, 0.3);
-  }
+  .hamburger:hover { opacity: 0.7; }
   .hamburger span {
     display: block;
-    width: 16px;
-    height: 1.5px;
-    background: rgba(255, 255, 255, 0.7);
+    width: 18px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.6);
     border-radius: 1px;
     transition: all var(--transition-fast);
   }
-  .hamburger[aria-expanded="true"] span:nth-child(1) {
-    transform: translateY(6.5px) rotate(45deg);
-  }
-  .hamburger[aria-expanded="true"] span:nth-child(2) {
-    opacity: 0;
-  }
-  .hamburger[aria-expanded="true"] span:nth-child(3) {
-    transform: translateY(-6.5px) rotate(-45deg);
-  }
+  .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
   /* Mobile menu */
   .mobile-menu {
     display: none;
-    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    border-top: 1px solid rgba(201, 168, 76, 0.08);
     background: rgba(13, 27, 42, 0.98);
   }
-  .mobile-menu.open {
-    display: block;
-  }
+  .mobile-menu.open { display: block; }
 
   .mobile-nav {
     display: flex;
     flex-direction: column;
-    padding: 12px var(--page-pad) 20px;
-    gap: 2px;
+    padding: 16px var(--page-pad) 24px;
+    gap: 4px;
   }
 
   .mobile-link {
-    padding: 12px 16px;
-    font-size: 15px;
+    padding: 12px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: color var(--transition-fast);
+  }
+  .mobile-link:hover { color: rgba(255,255,255,0.9); }
+
+  .mobile-join {
+    margin-top: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.7);
-    border-radius: 8px;
-    transition: all var(--transition-fast);
-  }
-  .mobile-link:hover {
+    letter-spacing: 1px;
     color: var(--color-gold);
-    background: rgba(201, 168, 76, 0.08);
+    text-align: left;
   }
 
-  .mobile-cta {
-    margin-top: 12px;
-    padding: 14px 20px;
-    background: var(--color-gold);
-    color: #0D1B2A;
-    font-size: 15px;
-    font-weight: 700;
-    border-radius: 10px;
-    text-align: center;
-    transition: all var(--transition-fast);
-  }
-  .mobile-cta:hover {
-    background: #d9b85c;
-  }
+  .header-spacer { height: 56px; }
 
-  /* Spacer */
-  .header-spacer {
-    height: 60px;
-  }
-
-  /* ─── Responsive ─── */
   @media (min-width: 768px) {
-    .cta-btn { display: inline-flex; }
+    .join-link { display: inline-flex; }
     .hamburger { display: none; }
   }
 
   @media (min-width: 1024px) {
     .nav-desktop { display: flex; }
-    .logo-text, .logo-dot, .logo-is { font-size: 28px; }
+    .header-inner { height: 60px; }
+    .header-spacer { height: 60px; }
   }
 </style>
 
