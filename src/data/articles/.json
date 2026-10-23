@@ -1,0 +1,37 @@
+{
+  "body": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
+    "status": "404"
+  },
+  "headers": {
+    "access-control-allow-origin": "*",
+    "access-control-expose-headers": "ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Used, X-RateLimit-Resource, X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval, X-GitHub-Media-Type, X-GitHub-SSO, X-GitHub-Request-Id, Deprecation, Sunset, Warning",
+    "content-length": "127",
+    "content-security-policy": "default-src 'none'",
+    "content-type": "application/json; charset=utf-8",
+    "date": "Fri, 23 Oct 2026 10:00:12 GMT",
+    "github-authentication-token-expiration": "2026-11-20 13:56:06 UTC",
+    "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+    "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+    "vary": "Accept-Encoding, Accept, X-Requested-With",
+    "x-accepted-oauth-scopes": "repo",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "deny",
+    "x-github-api-version-selected": "2022-11-28",
+    "x-github-media-type": "github.v3; format=json",
+    "x-oauth-scopes": "repo",
+    "x-xss-protection": "0",
+    "server": "github.com",
+    "x-ratelimit-limit": "5000",
+    "x-ratelimit-remaining": "4999",
+    "x-ratelimit-reset": "1792753212",
+    "x-ratelimit-used": "1",
+    "x-ratelimit-resource": "core",
+    "x-github-request-id": "3781:29DF86:4B1679:6F0730:6ADB302C",
+    "x-github-edge-region": "swedencentral",
+    "connection": "close"
+  },
+  "statusCode": 404,
+  "statusMessage": "Not Found"
+}
