@@ -7,14 +7,19 @@
 
 /* ─── Design Tokens ─── */
 :root {
+  /* SEOULIS Brand Colors */
+  --color-bg: #0D1B2A;
+  --color-gold: #C9A84C;
+  --color-dark2: #142940;
+
   /* Core palette */
-  --bg: #050505;
-  --surface: #111111;
-  --card: #0f0f0f;
-  --card-border: #1a1a1a;
-  --card-border-hover: #2a2a2a;
-  --primary: #FF2D55;
-  --primary-glow: rgba(255, 45, 85, 0.15);
+  --bg: #0D1B2A;
+  --surface: #142940;
+  --card: #0f1e30;
+  --card-border: #1a3048;
+  --card-border-hover: #C9A84C;
+  --primary: #C9A84C;
+  --primary-glow: rgba(201, 168, 76, 0.15);
 
   /* Category colors */
   --kpop: #FF2D55;
@@ -205,6 +210,40 @@ button {
 .delay-4 { animation-delay: 0.4s; }
 .delay-5 { animation-delay: 0.5s; }
 .delay-6 { animation-delay: 0.6s; }
+
+/* ─── Ticker animation ─── */
+@keyframes ticker-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 20s linear infinite;
+}
+.ticker-track:hover { animation-play-state: paused; }
+
+/* ─── Premium card hover ─── */
+.card-hover-gold {
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+.card-hover-gold:hover {
+  border-color: var(--color-gold) !important;
+  box-shadow: 0 0 0 1px var(--color-gold), 0 8px 32px rgba(201, 168, 76, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ─── Seoul Prime Club recommended badge ─── */
+.badge-recommended {
+  background: var(--color-gold);
+  color: #0D1B2A;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
 
 /* ─── Selection ─── */
 ::selection {
