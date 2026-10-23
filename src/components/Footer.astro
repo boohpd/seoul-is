@@ -1,139 +1,55 @@
 ---
-const year = new Date().getFullYear();
 ---
-
-<footer class="footer">
+<footer class="site-footer">
   <div class="footer-inner">
-    <div class="footer-rule"></div>
-
-    <div class="footer-top">
-      <a href="/" class="footer-logo" aria-label="seoul.is home">
-        <span class="footer-logo-text">seoul<span class="footer-logo-dot">.</span>is</span>
-      </a>
-
-      <nav class="footer-nav">
-        <a href="/articles" class="footer-link">Articles</a>
-        <a href="/guide" class="footer-link">Guide</a>
-        <a href="/spot" class="footer-link">Spot</a>
-        <a href="/membership" class="footer-link">Membership</a>
-        <a href="/about" class="footer-link">About</a>
-        <a href="/contact" class="footer-link">Contact</a>
-      </nav>
-    </div>
-
-    <div class="footer-bottom">
-      <span class="footer-copyright">© {year} SEOULIS. All rights reserved.</span>
-      <div class="footer-bottom-links">
-        <a href="/privacy" class="footer-bottom-link">Privacy</a>
-        <span class="footer-sep">·</span>
-        <a href="/terms" class="footer-bottom-link">Terms</a>
+    <div class="footer-brand">
+      <a href="/" class="logo">seoul<span class="gold-dot">.</span>is</a>
+      <p class="tagline">Your ultimate guide to Seoul & Korean culture</p>
+      <div class="socials">
+        <a href="https://instagram.com" target="_blank" rel="noopener">📸 Instagram</a>
+        <a href="https://twitter.com" target="_blank" rel="noopener">🐦 Twitter</a>
+        <a href="https://t.me" target="_blank" rel="noopener">✈️ Telegram</a>
       </div>
     </div>
+    <div class="footer-flags">
+      <span title="English">🇺🇸</span>
+      <span title="Korean">🇰🇷</span>
+      <span title="Japanese">🇯🇵</span>
+      <span title="Chinese">🇨🇳</span>
+      <span title="Vietnamese">🇻🇳</span>
+      <span title="Thai">🇹🇭</span>
+      <span title="Indonesian">🇮🇩</span>
+    </div>
+    <p class="copyright">© 2026 SEOULIS · Seoul, Korea</p>
   </div>
 </footer>
 
 <style>
-  .footer {
-    margin-top: 80px;
-    background: var(--color-bg);
-  }
-
-  .footer-inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 var(--page-pad);
-  }
-
-  .footer-rule {
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, var(--color-gold) 30%, rgba(201,168,76,0.3) 70%, transparent 100%);
-    margin-bottom: 56px;
-  }
-
-  .footer-top {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: flex-start;
-    margin-bottom: 48px;
-  }
-
-  .footer-logo {
-    transition: opacity var(--transition-fast);
-  }
-  .footer-logo:hover { opacity: 0.7; }
-
-  .footer-logo-text {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.5px;
-  }
-
-  .footer-logo-dot {
-    color: var(--color-gold);
-  }
-
-  .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px 32px;
-  }
-
-  .footer-link {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    transition: color var(--transition-fast);
-  }
-  .footer-link:hover { color: rgba(255,255,255,0.7); }
-
-  .footer-bottom {
-    padding: 24px 0 40px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .footer-copyright {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    color: rgba(255,255,255,0.2);
-    letter-spacing: 0.3px;
-  }
-
-  .footer-bottom-links {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .footer-bottom-link {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    color: rgba(255,255,255,0.2);
-    transition: color var(--transition-fast);
-  }
-  .footer-bottom-link:hover { color: var(--color-gold); }
-
-  .footer-sep {
-    font-size: 11px;
-    color: rgba(255,255,255,0.1);
-  }
-
-  @media (min-width: 768px) {
-    .footer-top {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 1.5rem;
+  margin-top: 4rem;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--white);
+}
+.gold-dot { color: var(--gold); }
+.tagline { color: var(--gray); font-size: 0.85rem; margin-top: 0.25rem; }
+.socials { display: flex; gap: 1.25rem; margin-top: 0.75rem; }
+.socials a { color: var(--gray); font-size: 0.85rem; transition: color 0.2s; }
+.socials a:hover { color: var(--gold); }
+.footer-flags { font-size: 1.4rem; letter-spacing: 0.15em; }
+.copyright { color: var(--gray); font-size: 0.8rem; }
 </style>

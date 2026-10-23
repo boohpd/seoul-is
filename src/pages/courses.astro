@@ -1,0 +1,185 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const neighborhoods = [
+  {
+    name: 'Hongdae',
+    tagline: 'Art, indie music, street culture & nonstop energy',
+    img: 'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=800&q=80',
+    vibes: ['Nightlife', 'Art', 'Youth', 'Music', 'Street Food'],
+    bestTime: 'Fri–Sun evenings',
+    mustDo: [
+      'Catch a busking performance at Hongdae Free Market',
+      'Explore indie art galleries and murals',
+      'Hit the clubs on Club Street (Playground)',
+      'Shop vintage at Used Book & Record stores',
+      'Eat tteokbokki at 24h pojangmacha stalls',
+    ]
+  },
+  {
+    name: 'Gangnam',
+    tagline: 'Luxury shopping, K-pop agencies & Seoul nightlife royalty',
+    img: 'https://images.unsplash.com/photo-1601621915196-2621bfb0cd6e?w=800&q=80',
+    vibes: ['Luxury', 'K-pop', 'Nightlife', 'Fashion', 'Fine Dining'],
+    bestTime: 'Weekends year-round',
+    mustDo: [
+      'Visit SM Town COEX Artium for K-pop experience',
+      'Stroll Garosu-gil tree-lined café street',
+      'Explore the underground COEX Mall & Aquarium',
+      'Dine at one of Gangnam\'s Michelin-starred restaurants',
+      'Club hopping on Gangnam\'s luxury club strip',
+    ]
+  },
+  {
+    name: 'Insadong',
+    tagline: 'Traditional Korea — tea, crafts, history and calm',
+    img: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80',
+    vibes: ['Culture', 'History', 'Tea', 'Crafts', 'Calm'],
+    bestTime: 'Weekday mornings',
+    mustDo: [
+      'Browse traditional Korean craft and antique shops',
+      'Try traditional tea at a historic teahouse',
+      'Explore Ssamziegil shopping courtyard',
+      'Visit Jogyesa Temple (Buddhist, free entry)',
+      'Eat hotteok (sweet pancake) at street stalls',
+    ]
+  },
+  {
+    name: 'Myeongdong',
+    tagline: 'K-beauty capital, street food paradise, shopping central',
+    img: 'https://images.unsplash.com/photo-1601621915196-2621bfb0cd6e?w=800&q=80',
+    vibes: ['Shopping', 'K-Beauty', 'Street Food', 'Cosmetics', 'Lively'],
+    bestTime: 'Evenings when street food stalls open',
+    mustDo: [
+      'Try every street food (tornado potato, egg bread, tteokbokki)',
+      'Sample K-beauty at Innisfree, Etude, Olive Young',
+      'Visit Myeongdong Cathedral',
+      'Tax refund shopping at major department stores',
+      'Explore Namdaemun Market nearby for wholesale deals',
+    ]
+  },
+  {
+    name: 'Itaewon',
+    tagline: 'Global Seoul — international food, queer-friendly, diverse vibes',
+    img: 'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=800&q=80',
+    vibes: ['International', 'Diverse', 'Bars', 'World Food', 'LGBTQ+'],
+    bestTime: 'Friday & Saturday nights',
+    mustDo: [
+      'Eat your way through the global restaurant strip',
+      'Explore경리단길 (Gyeongnidan-gil) for indie spots',
+      'Visit N Seoul Tower via cable car from Namsan',
+      'Discover hidden cocktail bars on Hooker Hill',
+      'Shop import goods and vintage at antique alley',
+    ]
+  },
+  {
+    name: 'Seongsu',
+    tagline: 'Seoul\'s Brooklyn — trendy cafés, pop-ups & creative studios',
+    img: 'https://images.unsplash.com/photo-1601621915196-2621bfb0cd6e?w=800&q=80',
+    vibes: ['Trendy', 'Creative', 'Cafés', 'Pop-ups', 'Design'],
+    bestTime: 'Weekend afternoons',
+    mustDo: [
+      'Café hop along the famous Seongsu-dong coffee row',
+      'Visit a rotating pop-up brand activation',
+      'Explore the old factory district turned creative space',
+      'Browse concept stores from Korean indie designers',
+      'Cross to forest park and Han River for sunset views',
+    ]
+  },
+];
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Must-Do Courses — seoul.is</title>
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <Header />
+
+  <div class="page-hero">
+    <h1 class="display">🗺 Must-Do Courses</h1>
+    <p>Six iconic Seoul neighborhoods — where to go, what to do, and how to vibe.</p>
+  </div>
+
+  <div class="section">
+    <div class="neighborhoods">
+      {neighborhoods.map(n => (
+        <div class="nbhd-card">
+          <div class="nbhd-img-wrap">
+            <img src={n.img} alt={n.name} loading="lazy" />
+            <div class="nbhd-img-overlay">
+              <h2 class="nbhd-name display">{n.name}</h2>
+            </div>
+          </div>
+          <div class="nbhd-body">
+            <p class="nbhd-tagline">{n.tagline}</p>
+            <div class="vibe-tags">
+              {n.vibes.map(v => <span class="vibe-tag">{v}</span>)}
+            </div>
+            <p class="best-time">🕐 Best time: <strong>{n.bestTime}</strong></p>
+            <h3 class="must-do-title">Must-Do</h3>
+            <ul class="must-do-list">
+              {n.mustDo.map(m => <li>{m}</li>)}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <Footer />
+
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, var(--card-bg), var(--bg));
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 0.75rem; }
+    .page-hero p { color: var(--gray); }
+    .neighborhoods { display: flex; flex-direction: column; gap: 2rem; max-width: 900px; margin: 0 auto; }
+    .nbhd-card {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 0;
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    @media (max-width: 700px) { .nbhd-card { grid-template-columns: 1fr; } }
+    .nbhd-img-wrap { position: relative; min-height: 240px; }
+    .nbhd-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .nbhd-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+      display: flex;
+      align-items: flex-end;
+      padding: 1.25rem;
+    }
+    .nbhd-name { font-size: 1.8rem; color: var(--white); }
+    .nbhd-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .nbhd-tagline { color: var(--gray); font-size: 0.9rem; line-height: 1.5; }
+    .vibe-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .vibe-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+    }
+    .best-time { font-size: 0.85rem; color: var(--gray); }
+    .best-time strong { color: var(--white); }
+    .must-do-title { font-size: 0.9rem; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--font-body); }
+    .must-do-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+    .must-do-list li { font-size: 0.875rem; color: rgba(255,255,255,0.8); padding-left: 1.2em; position: relative; }
+    .must-do-list li::before { content: '→'; position: absolute; left: 0; color: var(--gold); }
+  </style>
+</body>
+</html>

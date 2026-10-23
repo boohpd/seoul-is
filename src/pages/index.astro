@@ -1,804 +1,455 @@
 ---
-import Base from '../layouts/Base.astro';
+import { getFeatured } from '../lib/content.js';
 import Header from '../components/Header.astro';
-import CategorySection from '../components/CategorySection.astro';
 import Footer from '../components/Footer.astro';
-import { getAllContent, getFeatured, getMeta } from '../lib/content.js';
-import { CATEGORIES, CAT_ORDER } from '../lib/categories.js';
 
-const content = getAllContent();
-const meta = getMeta();
 const featuredArticles = getFeatured().slice(0, 6);
 
-const heroArticle = featuredArticles[0];
-const gridArticles = featuredArticles.slice(1, 5);
+const categoryColors = {
+  kpop: 'pill-kpop',
+  kdrama: 'pill-kdrama',
+  food: 'pill-food',
+  places: 'pill-places',
+  travel: 'pill-travel',
+};
+
+const weatherData = [
+  { city: 'Seoul', temp: '15°C', icon: '🌤', condition: 'Partly Cloudy', outfit: 'Light jacket + layer recommended', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80' },
+  { city: 'Busan', temp: '18°C', icon: '☀️', condition: 'Sunny', outfit: 'T-shirt weather, bring sunscreen', img: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80' },
+  { city: 'Jeju', temp: '12°C', icon: '🌧', condition: 'Showers', outfit: 'Waterproof jacket essential', img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80' },
+];
+
+const essentials = [
+  { emoji: '💳', title: 'T-Money Card' },
+  { emoji: '📱', title: 'Pocket WiFi / eSIM' },
+  { emoji: '🏥', title: 'Travel Insurance' },
+  { emoji: '💊', title: 'Basic Meds' },
+  { emoji: '👟', title: 'Comfortable Shoes' },
+  { emoji: '🌂', title: 'Compact Umbrella' },
+  { emoji: '🔌', title: 'Universal Adapter' },
+  { emoji: '💰', title: 'Korean Won Cash' },
+];
+
+const courses = [
+  { name: 'Hongdae', tagline: 'Art, music & street vibes', img: 'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=600&q=80' },
+  { name: 'Gangnam', tagline: 'Luxury, K-pop & nightlife', img: 'https://images.unsplash.com/photo-1601621915196-2621bfb0cd6e?w=600&q=80' },
+  { name: 'Insadong', tagline: 'Culture, tea & tradition', img: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80' },
+  { name: 'Jeju Island', tagline: 'Nature, beaches & volcanic wonder', img: 'https://images.unsplash.com/photo-1548196589-7b30f92b8454?w=600&q=80' },
+];
+
+const events = [
+  { title: 'Seoul Lantern Festival', days: 12, date: 'Nov 2', location: 'Cheonggyecheon Stream', img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80' },
+  { title: 'K-Pop World Festival', days: 28, date: 'Nov 18', location: 'Olympic Park, Seoul', img: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80' },
+  { title: 'Busan International Film Festival', days: 45, date: 'Dec 5', location: 'Haeundae, Busan', img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80' },
+];
 ---
 
-<Base>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seoul.is — Seoul Is Where You Belong</title>
+  <meta name="description" content="Your ultimate guide to Seoul — K-pop, food, travel, culture and everything in between." />
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
   <Header />
 
-  <main class="main-content">
+  <!-- LIVE Banner -->
+  <div class="live-banner">
+    <span class="live-dot"></span>
+    <span class="live-label">LIVE</span>
+    <div class="ticker-wrap">
+      <span class="ticker-text">BTS announces surprise comeback · Gangnam café goes viral · Cherry blossoms peak alert · NewJeans tops global charts · Myeongdong street food festival this weekend · Seoul Fashion Week kicks off ·</span>
+    </div>
+  </div>
 
-    <!-- ═══ HERO ═══ -->
-    <section class="hero">
-      <div class="hero-bg">
-        <img
-          src="https://images.unsplash.com/photo-1538485399081-7191377e8241?w=1600&q=80"
-          alt="Seoul night skyline"
-          class="hero-img"
-          loading="eager"
-        />
-        <div class="hero-overlay"></div>
+  <!-- HERO -->
+  <section class="hero">
+    <img class="hero-bg" src="https://images.unsplash.com/photo-1538485399081-7191377e8241?w=1600&q=80" alt="Seoul skyline" loading="eager" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-headline display">Seoul Is Where<br/>You Belong</h1>
+      <div class="hero-langs">
+        <span>서울에 어서 오세요</span>
+        <span>ソウルへようこそ</span>
+        <span>首尔欢迎您</span>
+        <span>Chào mừng đến Seoul</span>
+        <span>ยินดีต้อนรับสู่โซล</span>
+        <span>Selamat datang di Seoul</span>
       </div>
-      <div class="hero-content animate-fade-in-up">
-        <div class="hero-eyebrow">ISSUE NO.1 · OCTOBER 2026</div>
-        <h1 class="hero-title">Seoul Is Where<br/>You Belong</h1>
-        <p class="hero-sub">Your daily guide to K-culture, curated from 50+ sources in 8 languages</p>
-        <a href="/articles" class="hero-cta">Read Today's Edition →</a>
-      </div>
-      <div class="hero-scroll-indicator">
-        <div class="scroll-line"></div>
-      </div>
-    </section>
-
-    <!-- ═══ LIVE TICKER ═══ -->
-    <div class="ticker-wrapper">
-      <div class="ticker-inner">
-        <div class="ticker-track">
-          <span class="ticker-text">✦ K-POP &nbsp;·&nbsp; K-DRAMA &nbsp;·&nbsp; FOOD &nbsp;·&nbsp; HOT PLACES &nbsp;·&nbsp; LIFESTYLE &nbsp;·&nbsp; TRAVEL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="ticker-text">✦ K-POP &nbsp;·&nbsp; K-DRAMA &nbsp;·&nbsp; FOOD &nbsp;·&nbsp; HOT PLACES &nbsp;·&nbsp; LIFESTYLE &nbsp;·&nbsp; TRAVEL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="ticker-text">✦ K-POP &nbsp;·&nbsp; K-DRAMA &nbsp;·&nbsp; FOOD &nbsp;·&nbsp; HOT PLACES &nbsp;·&nbsp; LIFESTYLE &nbsp;·&nbsp; TRAVEL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span class="ticker-text">✦ K-POP &nbsp;·&nbsp; K-DRAMA &nbsp;·&nbsp; FOOD &nbsp;·&nbsp; HOT PLACES &nbsp;·&nbsp; LIFESTYLE &nbsp;·&nbsp; TRAVEL &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        </div>
+      <div class="hero-ctas">
+        <a href="/courses" class="btn btn-gold">Explore Seoul →</a>
+        <a href="#weather" class="btn btn-outline">🌤 Today's Weather</a>
       </div>
     </div>
+  </section>
 
-    <!-- ═══ FEATURED ARTICLES ═══ -->
-    {featuredArticles.length > 0 && (
-      <section class="featured-section animate-fade-in delay-2">
-        <div class="editorial-header">
-          <h2 class="editorial-title">Featured Articles</h2>
-          <a href="/articles" class="editorial-link">View All →</a>
-        </div>
-
-        {/* Lead article — full width */}
-        {heroArticle && (
-          <a href={`/article/${heroArticle.slug}`} class="lead-card card-hover-gold">
-            {heroArticle?.heroImage && (
-              <div class="lead-card-img">
-                <img src={heroArticle.heroImage} alt={heroArticle?.title || ''} loading="lazy" />
-              </div>
-            )}
-            <div class="lead-card-body">
-              <span class="editorial-cat">{heroArticle?.category}</span>
-              <h2 class="lead-card-title">{heroArticle?.title}</h2>
-              {heroArticle.description && (
-                <p class="lead-card-desc">{heroArticle.description}</p>
-              )}
+  <!-- WEATHER -->
+  <section class="section" id="weather">
+    <h2 class="section-title">🌤 Today's <span>Weather</span> & What to Wear</h2>
+    <div class="weather-grid">
+      {weatherData.map(w => (
+        <div class="weather-card">
+          <img src={w.img} alt={w.city} loading="lazy" />
+          <div class="weather-body">
+            <div class="weather-top">
+              <span class="weather-city">{w.city}</span>
+              <span class="weather-temp">{w.icon} {w.temp}</span>
             </div>
-          </a>
-        )}
-
-        {/* 2×2 grid */}
-        {gridArticles.length > 0 && (
-          <div class="grid-articles">
-            {gridArticles.map(article => (
-              <a href={`/article/${article.slug}`} class="grid-card card-hover-gold">
-                {article?.heroImage && (
-                  <div class="grid-card-img">
-                    <img src={article.heroImage} alt={article?.title || ''} loading="lazy" />
-                  </div>
-                )}
-                <div class="grid-card-body">
-                  <span class="editorial-cat">{article?.category}</span>
-                  <h3 class="grid-card-title">{article?.title}</h3>
-                </div>
-              </a>
-            ))}
+            <p class="weather-condition">{w.condition}</p>
+            <p class="weather-outfit">👗 {w.outfit}</p>
           </div>
-        )}
-      </section>
-    )}
-
-    <!-- ═══ CATEGORY SECTIONS ═══ -->
-    <div class="sections-wrapper">
-      {CAT_ORDER.map((catId) => (
-        <div class="section-block">
-          <CategorySection categoryId={catId} items={content[catId] || []} />
         </div>
       ))}
     </div>
+  </section>
 
-    <!-- ═══ SPOT BANNER ═══ -->
-    <section class="spot-banner animate-fade-in">
-      <div class="spot-bg">
-        <img
-          src="https://images.unsplash.com/photo-1601621915196-2621bfb0cd6e?w=1400&q=80"
-          alt="Seoul city"
-          class="spot-img"
-          loading="lazy"
-        />
-        <div class="spot-overlay"></div>
-      </div>
-      <div class="spot-content">
-        <div class="spot-eyebrow">SEOULIS SPOT</div>
-        <h2 class="spot-title">Transform Your Café<br/>Into a SEOULIS SPOT</h2>
-        <p class="spot-desc">Get featured in Seoul's most curated editorial platform. Connect with K-culture lovers worldwide.</p>
-        <a href="/spot" class="spot-cta">Apply Now →</a>
-      </div>
-    </section>
+  <!-- CONTENT GRID -->
+  <section class="section reveal">
+    <h2 class="section-title">📲 <span>Latest</span> from Seoul</h2>
+    <div class="card-grid">
+      {featuredArticles.map(article => (
+        <a href={article?.url ?? '#'} class="content-card">
+          <div class="card-img-wrap">
+            <img
+              src={article?.heroImage ?? `https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=80`}
+              alt={article?.title ?? ''}
+              loading="lazy"
+              onerror="this.src='https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=80'"
+            />
+            <span class={`pill ${categoryColors[article?.category] ?? 'pill-places'}`}>{(article?.category ?? 'Seoul').toUpperCase()}</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">{article?.title}</h3>
+            <span class="card-meta">{article?.readTime ?? '5 min read'}</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
 
-    <!-- ═══ MEMBERSHIP ═══ -->
-    <section class="membership-section animate-fade-in">
-      <div class="editorial-header editorial-header--center">
-        <h2 class="editorial-title">Seoul Prime Club</h2>
-        <p class="membership-subtitle">Choose your level of access to the Seoul you've always wanted</p>
-      </div>
-      <div class="tier-grid">
-        <!-- FREE -->
-        <div class="tier-card">
-          <div class="tier-name">FREE</div>
-          <div class="tier-price">₩0<span class="tier-period">/month</span></div>
-          <ul class="tier-features">
-            <li>Daily K-culture news</li>
-            <li>Articles in 8 languages</li>
-            <li>Basic neighborhood guides</li>
-            <li>Community access</li>
-          </ul>
-          <a href="/membership" class="tier-btn tier-btn--outline">Get Started</a>
+  <!-- ESSENTIALS STRIP -->
+  <section class="section reveal">
+    <h2 class="section-title">🧳 Korea <span>Essentials</span> for First-Timers</h2>
+    <div class="scroll-strip essentials-strip">
+      {essentials.map(e => (
+        <a href="/essentials" class="essential-card">
+          <span class="essential-emoji">{e.emoji}</span>
+          <span class="essential-title">{e.title}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section class="section reveal">
+    <h2 class="section-title">🗺 Must-Do <span>Courses</span></h2>
+    <div class="courses-grid">
+      {courses.map(c => (
+        <a href="/courses" class="course-card">
+          <img src={c.img} alt={c.name} loading="lazy" />
+          <div class="course-overlay">
+            <h3 class="course-name">{c.name}</h3>
+            <p class="course-tagline">{c.tagline}</p>
+            <span class="course-cta">Explore →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- CAFÉ BANNER -->
+  <section class="cafe-banner reveal">
+    <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=1400&q=80" alt="SEOULIS Café" loading="lazy" />
+    <div class="cafe-overlay">
+      <h2 class="cafe-title display">SEOULIS CAFÉ</h2>
+      <p class="cafe-sub">Coming to Hongdae 2027</p>
+      <p class="cafe-desc">K-culture • Specialty Coffee • Editorial Space</p>
+      <a href="/spot/seoulis-cafe" class="btn btn-gold">Join Waitlist →</a>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="section reveal">
+    <h2 class="section-title">📅 Upcoming <span>Events</span></h2>
+    <div class="events-grid">
+      {events.map(ev => (
+        <div class="event-card">
+          <div class="event-img-wrap">
+            <img src={ev.img} alt={ev.title} loading="lazy" />
+            <span class="badge-dday">D-{ev.days}</span>
+          </div>
+          <div class="event-body">
+            <p class="event-date">{ev.date}</p>
+            <h3 class="event-title">{ev.title}</h3>
+            <p class="event-location">📍 {ev.location}</p>
+            <a href="/events" class="btn btn-outline" style="margin-top:0.75rem;font-size:0.8rem;">Get Info →</a>
+          </div>
         </div>
+      ))}
+    </div>
+  </section>
 
-        <!-- SEOUL PASS (featured) -->
-        <div class="tier-card tier-card--featured">
-          <div class="badge-recommended">Recommended</div>
-          <div class="tier-name">SEOUL PASS</div>
-          <div class="tier-price">₩9,900<span class="tier-period">/month</span></div>
-          <ul class="tier-features">
-            <li>Everything in Free</li>
-            <li>Exclusive SPOT discounts</li>
-            <li>Priority article access</li>
-            <li>Monthly Seoul insider briefing</li>
-            <li>Ad-free experience</li>
-          </ul>
-          <a href="/membership" class="tier-btn tier-btn--gold">Join Now</a>
-        </div>
+  <!-- LANGUAGE SWITCHER (floating) -->
+  <div class="lang-float">
+    {['EN','KO','JA','ZH','VI','TH','ID'].map(l => (
+      <button class={`lang-float-btn ${l === 'EN' ? 'active' : ''}`} data-lang={l}>{l}</button>
+    ))}
+  </div>
 
-        <!-- SEOUL PRIME -->
-        <div class="tier-card">
-          <div class="tier-name">SEOUL PRIME</div>
-          <div class="tier-price">₩29,900<span class="tier-period">/month</span></div>
-          <ul class="tier-features">
-            <li>Everything in Seoul Pass</li>
-            <li>Private Telegram community</li>
-            <li>VIP SPOT reservations</li>
-            <li>1-on-1 Seoul concierge</li>
-            <li>Exclusive events & meetups</li>
-          </ul>
-          <a href="/membership" class="tier-btn tier-btn--outline">Join Now</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══ NEWSLETTER ═══ -->
-    <section class="newsletter-section animate-fade-in">
-      <h2 class="newsletter-title">Get Seoul's Best Weekly</h2>
-      <p class="newsletter-sub">Curated K-culture highlights, delivered every Monday morning.</p>
-      <form class="newsletter-form" action="mailto:hello@seoul.is" method="get">
-        <input type="email" name="subject" placeholder="Your email address" class="newsletter-input" required />
-        <button type="submit" class="newsletter-btn">Subscribe →</button>
-      </form>
-    </section>
-
-    <!-- ═══ LAST UPDATED ═══ -->
-    {meta.lastUpdated && (
-      <div class="last-updated">
-        <span class="last-updated-dot"></span>
-        Last updated: {new Date(meta.lastUpdated).toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })}
-      </div>
-    )}
-
-  </main>
+  <div id="lang-toast"></div>
 
   <Footer />
-</Base>
 
-<style>
-  .main-content {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 var(--page-pad);
-  }
-
-  /* ══════════════════ HERO ══════════════════ */
-  .hero {
-    position: relative;
-    margin: 0 calc(-1 * var(--page-pad));
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-  }
-
-  .hero-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(13,27,42,0.5) 0%, rgba(13,27,42,0.85) 60%, #0D1B2A 100%);
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 760px;
-    padding: 0 24px;
-  }
-
-  .hero-eyebrow {
-    display: inline-block;
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    margin-bottom: 28px;
-  }
-
-  .hero-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(48px, 9vw, 96px);
-    font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1.05;
-    color: #ffffff;
-    margin-bottom: 24px;
-  }
-
-  .hero-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: clamp(15px, 2vw, 18px);
-    font-weight: 300;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.7;
-    max-width: 520px;
-    margin: 0 auto 40px;
-  }
-
-  .hero-cta {
-    display: inline-flex;
-    align-items: center;
-    padding: 16px 36px;
-    background: var(--color-gold);
-    color: #0D1B2A;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    border-radius: 4px;
-    transition: all var(--transition-fast);
-  }
-  .hero-cta:hover {
-    background: #d9b85c;
-    box-shadow: 0 8px 28px rgba(201,168,76,0.45);
-    transform: translateY(-2px);
-  }
-
-  .hero-scroll-indicator {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 60px;
-    background: var(--color-gold);
-    animation: scrollLine 2s ease-in-out infinite;
-    transform-origin: top;
-  }
-
-  /* ══════════════════ TICKER ══════════════════ */
-  .ticker-wrapper {
-    margin: 0 calc(-1 * var(--page-pad));
-    overflow: hidden;
-    background: var(--color-dark2);
-    border-top: 1px solid rgba(201,168,76,0.15);
-    border-bottom: 1px solid rgba(201,168,76,0.15);
-    padding: 10px 0;
-  }
-
-  .ticker-inner {
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  .ticker-text {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--color-gold);
-  }
-
-  /* ══════════════════ EDITORIAL HEADERS ══════════════════ */
-  .editorial-header {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 40px;
-    padding-left: 16px;
-    border-left: 2px solid var(--color-gold);
-  }
-
-  .editorial-header--center {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border-left: none;
-    padding-left: 0;
-    gap: 10px;
-    margin-bottom: 48px;
-  }
-
-  .editorial-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(24px, 3vw, 36px);
-    font-weight: 700;
-    color: #ffffff;
-  }
-
-  .editorial-link {
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    transition: opacity var(--transition-fast);
-  }
-  .editorial-link:hover { opacity: 0.65; }
-
-  .editorial-cat {
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  /* ══════════════════ FEATURED ══════════════════ */
-  .featured-section {
-    margin: 80px 0;
-  }
-
-  /* Lead card */
-  .lead-card {
-    display: block;
-    overflow: hidden;
-    border-radius: var(--radius-lg);
-    margin-bottom: 20px;
-    text-decoration: none;
-    position: relative;
-  }
-
-  .lead-card-img {
-    width: 100%;
-    aspect-ratio: 16/7;
-    overflow: hidden;
-    background: #0f1e30;
-  }
-  .lead-card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s var(--ease-out);
-  }
-  .lead-card:hover .lead-card-img img {
-    transform: scale(1.03);
-  }
-
-  .lead-card-body {
-    padding: 28px 0 0;
-  }
-
-  .lead-card-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(26px, 4vw, 44px);
-    font-weight: 700;
-    color: #ffffff;
-    line-height: 1.2;
-    margin-bottom: 12px;
-  }
-
-  .lead-card-desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    color: rgba(255,255,255,0.5);
-    line-height: 1.7;
-    max-width: 640px;
-  }
-
-  /* Grid articles */
-  .grid-articles {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
-    margin-top: 20px;
-  }
-
-  .grid-card {
-    display: block;
-    text-decoration: none;
-    overflow: hidden;
-    border-radius: var(--radius-md);
-  }
-
-  .grid-card-img {
-    width: 100%;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-    background: #0f1e30;
-  }
-  .grid-card-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s var(--ease-out);
-  }
-  .grid-card:hover .grid-card-img img {
-    transform: scale(1.04);
-  }
-
-  .grid-card-body {
-    padding: 16px 0 0;
-  }
-
-  .grid-card-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(16px, 2vw, 22px);
-    font-weight: 600;
-    color: #ffffff;
-    line-height: 1.3;
-  }
-
-  /* ══════════════════ CATEGORY SECTIONS ══════════════════ */
-  .sections-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: var(--section-gap);
-    margin: 80px 0;
-  }
-
-  /* ══════════════════ SPOT BANNER ══════════════════ */
-  .spot-banner {
-    position: relative;
-    margin: 0 calc(-1 * var(--page-pad));
-    min-height: 560px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .spot-bg {
-    position: absolute;
-    inset: 0;
-  }
-
-  .spot-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  .spot-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(13,27,42,0.7) 0%, rgba(13,27,42,0.75) 100%);
-  }
-
-  .spot-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 80px 24px;
-    max-width: 680px;
-  }
-
-  .spot-eyebrow {
-    font-family: 'Inter', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    margin-bottom: 20px;
-  }
-
-  .spot-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(30px, 5vw, 52px);
-    font-weight: 700;
-    color: #ffffff;
-    line-height: 1.15;
-    margin-bottom: 20px;
-  }
-
-  .spot-desc {
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    font-weight: 300;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.7;
-    margin-bottom: 40px;
-  }
-
-  .spot-cta {
-    display: inline-flex;
-    align-items: center;
-    padding: 16px 40px;
-    background: var(--color-gold);
-    color: #0D1B2A;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    border-radius: 4px;
-    transition: all var(--transition-fast);
-  }
-  .spot-cta:hover {
-    background: #d9b85c;
-    box-shadow: 0 8px 28px rgba(201,168,76,0.4);
-    transform: translateY(-2px);
-  }
-
-  /* ══════════════════ MEMBERSHIP ══════════════════ */
-  .membership-section {
-    margin: 96px 0;
-  }
-
-  .membership-subtitle {
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    color: rgba(255,255,255,0.45);
-  }
-
-  .tier-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 48px;
-  }
-
-  .tier-card {
-    padding: 40px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    position: relative;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
-
-  .tier-card--featured {
-    border-top: 2px solid var(--color-gold);
-  }
-
-  .tier-name {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: var(--color-gold);
-  }
-
-  .tier-price {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 42px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: -1px;
-  }
-
-  .tier-period {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 0;
-  }
-
-  .tier-features {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 1;
-  }
-
-  .tier-features li {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(255,255,255,0.55);
-    padding-left: 16px;
-    position: relative;
-  }
-  .tier-features li::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    color: var(--color-gold);
-    font-size: 12px;
-  }
-
-  .tier-btn {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    padding: 14px 24px;
-    border-radius: 4px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    transition: all var(--transition-fast);
-    text-align: center;
-    width: 100%;
-  }
-
-  .tier-btn--gold {
-    background: var(--color-gold);
-    color: #0D1B2A;
-  }
-  .tier-btn--gold:hover {
-    background: #d9b85c;
-    box-shadow: 0 4px 16px rgba(201,168,76,0.35);
-    transform: translateY(-1px);
-  }
-
-  .tier-btn--outline {
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.6);
-  }
-  .tier-btn--outline:hover {
-    border-color: var(--color-gold);
-    color: var(--color-gold);
-    transform: translateY(-1px);
-  }
-
-  /* ══════════════════ NEWSLETTER ══════════════════ */
-  .newsletter-section {
-    margin: 0 0 96px;
-    padding: 64px 48px;
-    border-top: 1px solid rgba(201,168,76,0.2);
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-    text-align: center;
-  }
-
-  .newsletter-title {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(24px, 3vw, 36px);
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 12px;
-  }
-
-  .newsletter-sub {
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 32px;
-  }
-
-  .newsletter-form {
-    display: flex;
-    gap: 10px;
-    max-width: 480px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .newsletter-input {
-    flex: 1;
-    min-width: 240px;
-    padding: 14px 18px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 4px;
-    color: #ffffff;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: border-color var(--transition-fast);
-  }
-  .newsletter-input::placeholder { color: rgba(255,255,255,0.25); }
-  .newsletter-input:focus { border-color: var(--color-gold); }
-
-  .newsletter-btn {
-    padding: 14px 24px;
-    background: var(--color-gold);
-    color: #0D1B2A;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all var(--transition-fast);
-    white-space: nowrap;
-  }
-  .newsletter-btn:hover {
-    background: #d9b85c;
-    box-shadow: 0 4px 16px rgba(201,168,76,0.35);
-    transform: translateY(-1px);
-  }
-
-  /* ══════════════════ LAST UPDATED ══════════════════ */
-  .last-updated {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 24px;
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    color: rgba(255,255,255,0.18);
-    letter-spacing: 0.3px;
-  }
-  .last-updated-dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--color-gold);
-    animation: pulseGlow 2s ease-in-out infinite;
-  }
-
-  /* ══════════════════ RESPONSIVE ══════════════════ */
-  @media (min-width: 640px) {
-    .grid-articles {
-      grid-template-columns: repeat(2, 1fr);
+  <style>
+    /* Live Banner */
+    .live-banner {
+      background: linear-gradient(90deg, #1a0a10 0%, #1a0012 100%);
+      border-bottom: 1px solid var(--red);
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      overflow: hidden;
     }
-    .tier-grid {
-      grid-template-columns: repeat(2, 1fr);
+    .live-label {
+      color: var(--red);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
     }
-  }
 
-  @media (min-width: 1024px) {
-    .tier-grid {
+    /* Hero */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 560px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,27,42,0.97) 0%, rgba(13,27,42,0.4) 60%, transparent 100%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 3rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-headline {
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .hero-langs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+      margin-bottom: 1.75rem;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* Weather */
+    .weather-grid {
+      display: grid;
       grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
     }
-    .tier-card {
-      padding: 48px 36px;
+    @media (max-width: 700px) { .weather-grid { grid-template-columns: 1fr; } }
+    .weather-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
     }
-  }
-</style>
+    .weather-card img { width: 100%; height: 140px; object-fit: cover; }
+    .weather-body { padding: 1rem; }
+    .weather-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .weather-city { font-weight: 800; font-size: 1.1rem; }
+    .weather-temp { font-size: 1.1rem; color: var(--gold); }
+    .weather-condition { color: var(--gray); font-size: 0.85rem; margin-bottom: 0.4rem; }
+    .weather-outfit { font-size: 0.82rem; color: #aac; }
+
+    /* Content Cards */
+    .content-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform 0.25s, border-color 0.25s;
+      display: block;
+    }
+    .content-card:hover { transform: scale(1.02); border-color: var(--gold); }
+    .card-img-wrap { position: relative; aspect-ratio: 16/9; overflow: hidden; }
+    .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .content-card:hover .card-img-wrap img { transform: scale(1.05); }
+    .card-img-wrap .pill { position: absolute; top: 10px; left: 10px; }
+    .card-body { padding: 0.9rem 1rem; }
+    .card-title { font-size: 0.92rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.4rem; color: var(--white); font-family: var(--font-body); }
+    .card-meta { color: var(--gray); font-size: 0.78rem; }
+
+    /* Essentials */
+    .essentials-strip { padding-bottom: 0.5rem; }
+    .essential-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      min-width: 130px;
+      flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+    }
+    .essential-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+    .essential-emoji { font-size: 2rem; }
+    .essential-title { font-size: 0.8rem; font-weight: 600; color: var(--white); }
+
+    /* Courses */
+    .courses-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    @media (max-width: 900px) { .courses-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .courses-grid { grid-template-columns: 1fr; } }
+    .course-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      display: block;
+    }
+    .course-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .course-card:hover img { transform: scale(1.06); }
+    .course-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.25rem;
+    }
+    .course-name { font-size: 1.2rem; font-weight: 900; }
+    .course-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.75); margin: 0.2rem 0 0.6rem; }
+    .course-cta { color: var(--gold); font-size: 0.82rem; font-weight: 700; }
+
+    /* Café Banner */
+    .cafe-banner {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+      margin: 0 0 1rem;
+    }
+    .cafe-banner img { width: 100%; height: 100%; object-fit: cover; }
+    .cafe-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(13,27,42,0.9) 0%, rgba(13,27,42,0.4) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3rem;
+    }
+    .cafe-title { font-size: clamp(1.8rem, 4vw, 3rem); color: var(--gold); margin-bottom: 0.25rem; }
+    .cafe-sub { font-size: 1rem; color: var(--white); margin-bottom: 0.25rem; }
+    .cafe-desc { color: var(--gray); font-size: 0.9rem; margin-bottom: 1.25rem; }
+
+    /* Events */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    @media (max-width: 800px) { .events-grid { grid-template-columns: 1fr; } }
+    .event-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .event-img-wrap { position: relative; }
+    .event-img-wrap img { width: 100%; height: 180px; object-fit: cover; }
+    .event-img-wrap .badge-dday { position: absolute; top: 10px; right: 10px; }
+    .event-body { padding: 1rem 1.25rem 1.25rem; }
+    .event-date { color: var(--gold); font-size: 0.8rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .event-title { font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; font-family: var(--font-body); }
+    .event-location { color: var(--gray); font-size: 0.82rem; }
+
+    /* Lang Float */
+    .lang-float {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      z-index: 500;
+    }
+    .lang-float-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--gray);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+    .lang-float-btn.active, .lang-float-btn:hover {
+      background: var(--gold);
+      color: #000;
+      border-color: var(--gold);
+    }
+  </style>
+
+  <script>
+    // Scroll Reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => obs.observe(el));
+
+    // Lang float
+    function showToast(msg) {
+      let t = document.getElementById('lang-toast');
+      if (!t) { t = document.createElement('div'); t.id = 'lang-toast'; document.body.appendChild(t); }
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+    document.querySelectorAll('.lang-float-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-float-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const lang = btn.dataset.lang;
+        if (lang !== 'EN') showToast(`Coming soon in ${lang}!`);
+      });
+    });
+  </script>
+</body>
+</html>

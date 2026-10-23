@@ -1,215 +1,154 @@
 ---
 ---
-
-<header class="header">
+<header class="site-header" id="site-header">
   <div class="header-inner">
-    <!-- Logo -->
-    <a href="/" class="logo" aria-label="seoul.is home">
-      <span class="logo-text">seoul<span class="logo-dot">.</span>is</span>
+    <a href="/" class="logo">
+      seoul<span class="gold-dot">.</span>is
     </a>
-
-    <!-- Desktop Nav -->
-    <nav class="nav-desktop" aria-label="Main navigation">
-      <a href="/" class="nav-link">Home</a>
-      <a href="/articles" class="nav-link">Articles</a>
-      <a href="/guide" class="nav-link">Guide</a>
-      <a href="/spot" class="nav-link">Spot</a>
-      <a href="/membership" class="nav-link">Membership</a>
+    <nav class="nav-links" id="nav-links">
+      <a href="/">Home</a>
+      <a href="/live"><span class="live-dot" style="display:inline-block;width:7px;height:7px;"></span> Live</a>
+      <a href="/courses">Courses</a>
+      <a href="/essentials">Essentials</a>
+      <a href="/events">Events</a>
+      <a href="/spot/seoulis-cafe" class="nav-cafe">CAFÉ</a>
     </nav>
-
-    <!-- Right side -->
-    <div class="header-actions">
-      <a href="/membership" class="join-link">Join</a>
-      <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+    <div class="lang-pills">
+      <button class="lang-pill active" data-lang="EN">🇺🇸 EN</button>
+      <button class="lang-pill" data-lang="KO">🇰🇷</button>
+      <button class="lang-pill" data-lang="JA">🇯🇵</button>
+      <button class="lang-pill" data-lang="ZH">🇨🇳</button>
     </div>
-  </div>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobile-menu">
-    <nav class="mobile-nav">
-      <a href="/" class="mobile-link">Home</a>
-      <a href="/articles" class="mobile-link">Articles</a>
-      <a href="/guide" class="mobile-link">Guide</a>
-      <a href="/spot" class="mobile-link">Spot</a>
-      <a href="/membership" class="mobile-link">Membership</a>
-      <a href="/membership" class="mobile-join">Join →</a>
-    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </header>
 
-<div class="header-spacer"></div>
-
 <style>
-  .header {
-    position: fixed;
-    top: 0;
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(13,27,42,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  white-space: nowrap;
+}
+.gold-dot { color: var(--gold); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+.nav-links a {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gray);
+  transition: color 0.2s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-links a:hover { color: var(--white); }
+.nav-cafe {
+  background: var(--gold);
+  color: #000 !important;
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem !important;
+}
+.lang-pills {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.lang-pill {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--gray);
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  transition: all 0.2s;
+}
+.lang-pill.active, .lang-pill:hover {
+  background: var(--gold);
+  color: #000;
+  border-color: var(--gold);
+}
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 4px;
+  margin-left: auto;
+}
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
-    z-index: 100;
-    background: rgba(13, 27, 42, 0.88);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid rgba(201, 168, 76, 0.1);
-  }
-
-  .header-inner {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 var(--page-pad);
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-  }
-
-  /* Logo */
-  .logo {
-    flex-shrink: 0;
-    transition: opacity var(--transition-fast);
-  }
-  .logo:hover { opacity: 0.75; }
-
-  .logo-text {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: -0.5px;
-  }
-
-  .logo-dot {
-    color: var(--color-gold);
-  }
-
-  /* Desktop nav */
-  .nav-desktop {
-    display: none;
-    align-items: center;
-    gap: 32px;
-    flex: 1;
-    justify-content: center;
-  }
-
-  .nav-link {
-    font-family: 'Inter', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
-    transition: color var(--transition-fast);
-  }
-  .nav-link:hover { color: rgba(255, 255, 255, 0.9); }
-
-  /* Header actions */
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-shrink: 0;
-  }
-
-  .join-link {
-    display: none;
-    font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--color-gold);
-    transition: opacity var(--transition-fast);
-  }
-  .join-link:hover { opacity: 0.7; }
-
-  /* Hamburger */
-  .hamburger {
-    display: flex;
+    background: var(--bg);
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border: none;
-    padding: 0;
-    transition: opacity var(--transition-fast);
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
   }
-  .hamburger:hover { opacity: 0.7; }
-  .hamburger span {
-    display: block;
-    width: 18px;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 1px;
-    transition: all var(--transition-fast);
-  }
-  .hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-  .hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
-  .hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-  /* Mobile menu */
-  .mobile-menu {
-    display: none;
-    border-top: 1px solid rgba(201, 168, 76, 0.08);
-    background: rgba(13, 27, 42, 0.98);
-  }
-  .mobile-menu.open { display: block; }
-
-  .mobile-nav {
-    display: flex;
-    flex-direction: column;
-    padding: 16px var(--page-pad) 24px;
-    gap: 4px;
-  }
-
-  .mobile-link {
-    padding: 12px 0;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.55);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    transition: color var(--transition-fast);
-  }
-  .mobile-link:hover { color: rgba(255,255,255,0.9); }
-
-  .mobile-join {
-    margin-top: 16px;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: var(--color-gold);
-    text-align: left;
-  }
-
-  .header-spacer { height: 56px; }
-
-  @media (min-width: 768px) {
-    .join-link { display: inline-flex; }
-    .hamburger { display: none; }
-  }
-
-  @media (min-width: 1024px) {
-    .nav-desktop { display: flex; }
-    .header-inner { height: 60px; }
-    .header-spacer { height: 60px; }
-  }
+  .nav-links.open { display: flex; }
+  .hamburger { display: flex; }
+  .lang-pills { display: none; }
+}
 </style>
 
 <script>
-  const hamburgerBtn = document.getElementById('hamburger-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
+const ham = document.getElementById('hamburger');
+const nav = document.getElementById('nav-links');
+ham?.addEventListener('click', () => nav?.classList.toggle('open'));
 
-  hamburgerBtn?.addEventListener('click', () => {
-    const isOpen = mobileMenu?.classList.toggle('open');
-    hamburgerBtn.setAttribute('aria-expanded', String(isOpen));
+document.querySelectorAll('.lang-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const lang = btn.dataset.lang;
+    if (lang !== 'EN') showToast(`Coming soon in ${lang}!`);
   });
+});
+
+function showToast(msg) {
+  let t = document.getElementById('lang-toast');
+  if (!t) { t = document.createElement('div'); t.id = 'lang-toast'; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 </script>

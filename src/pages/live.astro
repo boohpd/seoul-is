@@ -1,0 +1,156 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const updates = [
+  { time: '20:00', headline: 'BTS surprise Instagram post goes viral — 10M likes in 1 hour', category: 'K-POP', pill: 'pill-kpop' },
+  { time: '19:00', headline: 'New Michelin-starred restaurant opens in Gangnam', category: 'FOOD', pill: 'pill-food' },
+  { time: '18:00', headline: 'Cherry blossom forecast: peak expected this weekend in Seoul', category: 'TRAVEL', pill: 'pill-travel' },
+  { time: '17:00', headline: 'NewJeans drops new track preview on Weverse', category: 'K-POP', pill: 'pill-kpop' },
+  { time: '16:00', headline: 'Seoul subway Line 9 delay — use buses or Line 2', category: 'TRAVEL', pill: 'pill-travel' },
+  { time: '15:00', headline: 'K-Drama "Seoul After Dark" tops Netflix global chart', category: 'K-DRAMA', pill: 'pill-kdrama' },
+  { time: '14:00', headline: 'Seongsu-dong pop-up by Gentle Monster draws massive crowd', category: 'PLACES', pill: 'pill-places' },
+  { time: '13:00', headline: 'BLACKPINK teases new project on social media', category: 'K-POP', pill: 'pill-kpop' },
+  { time: '12:00', headline: 'Itaewon Global Village Festival this weekend — free entry', category: 'PLACES', pill: 'pill-places' },
+  { time: '11:00', headline: 'Michelin Seoul 2026 guide drops 3 new stars in Mapo-gu', category: 'FOOD', pill: 'pill-food' },
+];
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LIVE — seoul.is</title>
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <Header />
+
+  <div class="live-header">
+    <div class="live-header-inner">
+      <span class="live-dot" style="width:14px;height:14px;"></span>
+      <h1 class="display">LIVE Seoul Updates</h1>
+      <p>Real-time news, alerts and what's happening right now in Seoul</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="timeline">
+      {updates.map(u => (
+        <div class="timeline-item">
+          <div class="timeline-time">{u.time}</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <p class="timeline-headline">{u.headline}</p>
+            <span class={`pill ${u.pill}`}>{u.category}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="live-actions">
+      <button class="btn btn-red" id="refresh-btn" onclick="handleRefresh()">↻ Refresh for latest</button>
+      <a href="#subscribe" class="btn btn-outline">🔔 Subscribe to Alerts</a>
+    </div>
+
+    <div class="subscribe-box" id="subscribe">
+      <h2 class="display">Get Seoul updates in your inbox</h2>
+      <p>Breaking news, events, and what's trending — delivered daily.</p>
+      <form class="subscribe-form" onsubmit="return false;">
+        <input type="email" placeholder="your@email.com" />
+        <button class="btn btn-gold" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <Footer />
+
+  <style>
+    .live-header {
+      background: linear-gradient(135deg, #1a0008, #0D1B2A);
+      border-bottom: 2px solid var(--red);
+      padding: 3rem 1.5rem;
+      text-align: center;
+    }
+    .live-header-inner { max-width: 700px; margin: 0 auto; }
+    .live-header h1 { font-size: clamp(2rem, 5vw, 3.5rem); color: var(--white); margin: 0.5rem 0; }
+    .live-header p { color: var(--gray); }
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 80px;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 80px 20px 1fr;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .timeline-time {
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-align: right;
+      padding-top: 2px;
+      flex-shrink: 0;
+    }
+    .timeline-dot {
+      width: 10px;
+      height: 10px;
+      background: var(--red);
+      border-radius: 50%;
+      margin: 4px auto 0;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+    .timeline-content { display: flex; flex-direction: column; gap: 0.4rem; }
+    .timeline-headline { font-size: 0.95rem; font-weight: 600; color: var(--white); line-height: 1.4; }
+    .live-actions { display: flex; gap: 1rem; justify-content: center; margin: 2rem 0; flex-wrap: wrap; }
+    .subscribe-box {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      text-align: center;
+    }
+    .subscribe-box h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .subscribe-box p { color: var(--gray); margin-bottom: 1.25rem; }
+    .subscribe-form { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+    .subscribe-form input {
+      padding: 0.65rem 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--white);
+      font-size: 0.9rem;
+      min-width: 220px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinning { display: inline-block; animation: spin 0.6s linear; }
+  </style>
+
+  <script>
+    function handleRefresh() {
+      const btn = document.getElementById('refresh-btn');
+      btn.classList.add('spinning');
+      setTimeout(() => btn.classList.remove('spinning'), 600);
+    }
+  </script>
+</body>
+</html>

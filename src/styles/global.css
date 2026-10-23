@@ -1,226 +1,175 @@
-/* ═══════════════════════════════════════════════════
-   seoul.is — Luxury Editorial Magazine Design System
-   ═══════════════════════════════════════════════════ */
+/* =============================================
+   SEOULIS v3 — Global Styles
+   ============================================= */
 
-/* ─── Fonts ─── */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
 
-/* ─── Design Tokens ─── */
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-  /* SEOULIS Brand Colors */
-  --color-bg: #0D1B2A;
-  --color-gold: #C9A84C;
-  --color-dark2: #142940;
-
-  /* Core palette */
   --bg: #0D1B2A;
-  --surface: #142940;
-  --card: #0f1e30;
-  --card-border: rgba(255,255,255,0.05);
-  --primary: #C9A84C;
-  --primary-glow: rgba(201, 168, 76, 0.12);
-
-  /* Category colors */
-  --kpop: #FF2D55;
-  --kdrama: #5856D6;
-  --food: #FF9500;
-  --places: #30D158;
-  --ranking: #FFD60A;
-  --lifestyle: #BF5AF2;
-  --kproperty: #0A84FF;
-
-  /* Text */
-  --text: #ffffff;
-  --text-secondary: #999999;
-  --text-muted: #555555;
-  --text-dim: #333333;
-
-  /* Spacing */
-  --page-pad: 16px;
-  --section-gap: 96px;
-  --max-width: 1280px;
-
-  /* Radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
-
-  /* Transitions */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-fast: 0.2s var(--ease-out);
-  --transition-mid: 0.35s var(--ease-out);
-  --transition-slow: 0.5s var(--ease-out);
+  --gold: #C9A84C;
+  --red: #FF2D55;
+  --white: #FFFFFF;
+  --gray: #8A9BB0;
+  --card-bg: #122236;
+  --border: rgba(201,168,76,0.2);
+  --font-body: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
 }
 
-@media (min-width: 768px) {
-  :root { --page-pad: 24px; }
-}
-@media (min-width: 1024px) {
-  :root { --page-pad: 48px; }
-}
-
-/* ─── Reset ─── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-}
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif;
-  font-weight: 400;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  color: var(--white);
+  font-family: var(--font-body);
   line-height: 1.6;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Playfair Display', Georgia, serif;
-  line-height: 1.2;
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; font-family: inherit; }
+
+/* ── Typography ── */
+.display { font-family: var(--font-display); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; }
+
+/* ── Live Dot ── */
+.live-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: var(--red);
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: pulse 1.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(255,45,85,0.7); }
+  50% { opacity: 0.8; transform: scale(1.15); box-shadow: 0 0 0 8px rgba(255,45,85,0); }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* ── Card Grid ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
 }
+@media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .card-grid { grid-template-columns: 1fr; } }
 
-img {
-  max-width: 100%;
-  display: block;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-/* ─── Scrollbar ─── */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #1a3048; border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: #2a4060; }
-
-/* ─── Utility classes ─── */
-.scrollbar-hide::-webkit-scrollbar { display: none; }
-.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-
-.line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-.line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-
-/* ─── Page wrapper ─── */
-.page-wrapper {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--page-pad);
-}
-
-/* ─── Animations ─── */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scrollLine {
-  0% { transform: scaleY(0); transform-origin: top; }
-  50% { transform: scaleY(1); transform-origin: top; }
-  50.01% { transform: scaleY(1); transform-origin: bottom; }
-  100% { transform: scaleY(0); transform-origin: bottom; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.9; }
-}
-
-@keyframes ticker-scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.7s var(--ease-out) both;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s var(--ease-out) both;
-}
-
-.delay-1 { animation-delay: 0.1s; }
-.delay-2 { animation-delay: 0.2s; }
-.delay-3 { animation-delay: 0.3s; }
-.delay-4 { animation-delay: 0.4s; }
-.delay-5 { animation-delay: 0.5s; }
-.delay-6 { animation-delay: 0.6s; }
-
-/* ─── Ticker ─── */
-.ticker-track {
+/* ── Scroll Strip ── */
+.scroll-strip {
   display: flex;
-  width: max-content;
-  animation: ticker-scroll 30s linear infinite;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) transparent;
 }
-.ticker-track:hover { animation-play-state: paused; }
+.scroll-strip::-webkit-scrollbar { height: 4px; }
+.scroll-strip::-webkit-scrollbar-track { background: transparent; }
+.scroll-strip::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
-/* ─── Card hover ─── */
-.card-hover-gold {
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
-}
-.card-hover-gold:hover {
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-  transform: translateY(-3px);
-}
-
-/* ─── Badge ─── */
-.badge-recommended {
-  background: var(--color-gold);
-  color: #0D1B2A;
-  font-size: 10px;
+/* ── D-day Badge ── */
+.badge-dday {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: 0.7rem;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+
+/* ── Category Pills ── */
+.pill {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   padding: 3px 10px;
-  border-radius: 20px;
-  font-family: 'Inter', sans-serif;
-}
-
-/* ─── Ad Slot ─── */
-.ad-slot {
-  background: var(--surface);
-  border: 1px dashed rgba(255,255,255,0.08);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-dim);
-  font-size: 11px;
-  font-weight: 500;
-  border-radius: var(--radius-md);
-  min-height: 90px;
+  border-radius: 999px;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-family: 'Inter', sans-serif;
 }
+.pill-kpop   { background: #FF2D55; color: #fff; }
+.pill-kdrama { background: #7C3AED; color: #fff; }
+.pill-food   { background: #F59E0B; color: #000; }
+.pill-places { background: #10B981; color: #fff; }
+.pill-travel { background: #3B82F6; color: #fff; }
+.pill-live   { background: #FF2D55; color: #fff; }
 
-/* ─── Selection ─── */
-::selection {
-  background: var(--primary);
-  color: white;
+/* ── Section ── */
+.section { padding: 3.5rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  color: var(--white);
+}
+.section-title span { color: var(--gold); }
+
+/* ── Button ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: all 0.2s;
+  border: none;
+}
+.btn-gold { background: var(--gold); color: #000; }
+.btn-gold:hover { background: #e0b85a; transform: translateY(-1px); }
+.btn-outline { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+.btn-outline:hover { background: var(--gold); color: #000; }
+.btn-red { background: var(--red); color: #fff; }
+.btn-red:hover { background: #ff4d6d; }
+
+/* ── Scroll Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* ── Toast ── */
+#lang-toast {
+  position: fixed;
+  bottom: 100px;
+  right: 1.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--gold);
+  color: var(--white);
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s;
+  pointer-events: none;
+}
+#lang-toast.show { opacity: 1; transform: translateY(0); }
+
+/* ── Ticker ── */
+@keyframes ticker {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+.ticker-wrap { overflow: hidden; flex: 1; }
+.ticker-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: ticker 25s linear infinite;
 }

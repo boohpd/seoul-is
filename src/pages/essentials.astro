@@ -1,0 +1,145 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+const categories = [
+  {
+    name: 'Before You Go',
+    emoji: '🌐',
+    items: [
+      { emoji: '🛂', title: 'Visa Check', desc: 'Check if your country qualifies for K-ETA or visa-free entry.', tip: 'Most Western countries get 90 days visa-free. Still register K-ETA online before flying.' },
+      { emoji: '📋', title: 'Travel Insurance', desc: 'Medical costs in Korea are low but emergencies happen. Get covered.', tip: 'World Nomads or AXA are popular. Make sure it covers COVID-related issues.' },
+      { emoji: '💱', title: 'Korean Won Cash', desc: 'Have at least ₩100,000 (~$75) cash for small vendors and markets.', tip: 'Exchange at airport bank counters or Myeongdong street exchange booths for best rates.' },
+      { emoji: '📱', title: 'Download Apps', desc: 'Kakao Maps, Naver Maps, Papago translator, KakaoTalk.', tip: 'Google Maps works but Kakao Maps is more accurate for Seoul transit.' },
+    ]
+  },
+  {
+    name: 'At The Airport',
+    emoji: '✈️',
+    items: [
+      { emoji: '🚌', title: 'Airport Express (AREX)', desc: 'Fastest way from Incheon to Seoul Station. 43 min direct.', tip: 'Buy T-Money card at the airport and load ₩30,000 to start.' },
+      { emoji: '💳', title: 'T-Money Card', desc: 'Rechargeable transit card for metro, bus, and even some taxis.', tip: 'Pick one up at any convenience store. They cost ₩3,000 and can be refunded at the end.' },
+      { emoji: '📡', title: 'Pocket WiFi / eSIM', desc: 'Rent WiFi egg at airport counters or buy a local SIM.', tip: 'KT, SK Telecom, and LG U+ sell tourist SIMs. 30-day data plan is ₩30,000–50,000.' },
+      { emoji: '🧾', title: 'Tax Refund Counter', desc: 'If you bought duty-free goods, claim refunds at Global Blue or similar.', tip: 'You need receipts. Refund kiosks are near Departure level exits.' },
+    ]
+  },
+  {
+    name: 'In Seoul',
+    emoji: '🏙️',
+    items: [
+      { emoji: '👟', title: 'Comfortable Shoes', desc: 'Seoul involves a lot of walking — palaces, markets, hills.', tip: 'Namsan Tower hike, Han River walks, Bukchon alleyways — your feet will thank you.' },
+      { emoji: '🌂', title: 'Compact Umbrella', desc: 'Seoul weather is unpredictable. Sudden rain is common.', tip: 'Convenience stores (GS25, CU) sell cheap umbrellas everywhere if you forget.' },
+      { emoji: '💊', title: 'Basic Meds', desc: "Korean pharmacies (약국) are everywhere. Still bring basics.", tip: 'Antacids, pain relievers, cold meds are all available without prescription.' },
+      { emoji: '🗣', title: 'Basic Korean Phrases', desc: '"감사합니다" (gamsahamnida) = thank you. Goes a long way.', tip: 'Locals appreciate any attempt at Korean. Google Translate camera mode is a lifesaver.' },
+    ]
+  },
+  {
+    name: 'Digital Essentials',
+    emoji: '💻',
+    items: [
+      { emoji: '🔌', title: 'Universal Adapter', desc: 'Korea uses Type C/F plugs (220V). Bring an adapter or buy locally.', tip: 'Most hotels have USB charging ports but you\'ll need adapters for outlets.' },
+      { emoji: '🏧', title: 'Foreign ATM Access', desc: '7-Eleven and Global ATMs accept Visa/Mastercard.', tip: 'Withdraw larger amounts at once to minimize fees. Post Office ATMs are reliable.' },
+      { emoji: '🚕', title: 'Kakao T App', desc: 'Korean equivalent of Uber. Works in English.', tip: 'Register your foreign card in-app. Taxi prices are very reasonable.' },
+      { emoji: '🗺', title: 'Offline Maps Download', desc: 'Download Seoul offline map in Naver Maps before arrival.', tip: 'Even with data, offline maps save you when you\'re underground in the metro.' },
+    ]
+  }
+];
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Korea Essentials — seoul.is</title>
+  <link rel="stylesheet" href="/styles/global.css" />
+</head>
+<body>
+  <Header />
+
+  <div class="page-hero">
+    <h1 class="display">🧳 Korea Essentials</h1>
+    <p>Everything a first-time visitor needs to know — before, during, and after arrival.</p>
+    <p class="checklist-hint">✅ Click items to check them off — progress saved locally.</p>
+  </div>
+
+  <div class="section">
+    {categories.map(cat => (
+      <div class="essentials-category">
+        <h2 class="cat-title display">{cat.emoji} {cat.name}</h2>
+        <div class="essentials-list">
+          {cat.items.map((item, i) => (
+            <div class="essential-item" data-key={`${cat.name}-${i}`} onclick="toggleCheck(this)">
+              <div class="item-check">☐</div>
+              <div class="item-body">
+                <div class="item-header">
+                  <span class="item-emoji">{item.emoji}</span>
+                  <h3 class="item-title">{item.title}</h3>
+                </div>
+                <p class="item-desc">{item.desc}</p>
+                <p class="item-tip">💡 Pro tip: {item.tip}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <Footer />
+
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, var(--card-bg), var(--bg));
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-hero h1 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 0.75rem; }
+    .page-hero p { color: var(--gray); max-width: 600px; margin: 0 auto 0.4rem; }
+    .checklist-hint { color: var(--gold) !important; font-size: 0.85rem; }
+    .essentials-category { margin-bottom: 3rem; }
+    .cat-title { font-size: 1.4rem; margin-bottom: 1.25rem; color: var(--gold); }
+    .essentials-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media (max-width: 700px) { .essentials-list { grid-template-columns: 1fr; } }
+    .essential-item {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      gap: 1rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .essential-item:hover { border-color: var(--gold); }
+    .essential-item.checked { border-color: #10B981; background: rgba(16,185,129,0.07); }
+    .item-check { font-size: 1.3rem; flex-shrink: 0; transition: all 0.2s; }
+    .essential-item.checked .item-check { color: #10B981; }
+    .item-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+    .item-emoji { font-size: 1.3rem; }
+    .item-title { font-weight: 700; font-size: 0.95rem; font-family: var(--font-body); }
+    .item-desc { color: var(--gray); font-size: 0.85rem; margin-bottom: 0.4rem; }
+    .item-tip { color: rgba(201,168,76,0.8); font-size: 0.8rem; font-style: italic; }
+  </style>
+
+  <script>
+    function toggleCheck(el) {
+      el.classList.toggle('checked');
+      const check = el.querySelector('.item-check');
+      check.textContent = el.classList.contains('checked') ? '✅' : '☐';
+      const key = el.dataset.key;
+      if (el.classList.contains('checked')) {
+        localStorage.setItem('ess-' + key, '1');
+      } else {
+        localStorage.removeItem('ess-' + key);
+      }
+    }
+    // Restore
+    document.querySelectorAll('.essential-item').forEach(el => {
+      if (localStorage.getItem('ess-' + el.dataset.key)) {
+        el.classList.add('checked');
+        el.querySelector('.item-check').textContent = '✅';
+      }
+    });
+  </script>
+</body>
+</html>
