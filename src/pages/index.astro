@@ -103,7 +103,8 @@ const courses = [
               <span class="weather-temp">{w.icon} {w.temp}</span>
             </div>
             <p class="weather-condition">{w.condition}</p>
-            <p class="weather-outfit">👗 {w.outfit}</p>
+            <p class="weather-outfit">{w.style || ('👗 ' + w.outfit)}</p>
+            <p class="weather-tip" style="font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:4px;">{w.outfit}</p>
           </div>
         </div>
       ))}
