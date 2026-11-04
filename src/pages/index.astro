@@ -3,7 +3,7 @@ import { getFeatured } from '../lib/content.js';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-const featuredArticles = getFeatured().slice(0, 6);
+const featuredArticles = getFeatured().slice(0, 12);
 
 const categoryColors = {
   kpop: 'pill-kpop',
@@ -159,14 +159,40 @@ const events = [
     </div>
   </section>
 
+  <!-- APP + PAY BANNER -->
+  <section class="section reveal" style="padding-top:0;">
+    <div class="platform-grid">
+      <!-- App -->
+      <div class="platform-card platform-app">
+        <div class="platform-badge">📱 Seoul.is App</div>
+        <h2 class="platform-title">Discover Seoul<br/>Like a Local</h2>
+        <p class="platform-desc">K-Local Ratio™ shows you which spots locals actually love vs. tourist traps. LinkDrop™ lets you share any spot instantly via NFC.</p>
+        <div class="platform-ctas">
+          <a href="#" class="btn btn-gold" style="font-size:0.85rem;padding:10px 20px;">🍎 App Store</a>
+          <a href="#" class="btn btn-outline" style="font-size:0.85rem;padding:10px 20px;">▶ Google Play</a>
+        </div>
+      </div>
+      <!-- Pay -->
+      <div class="platform-card platform-pay">
+        <div class="platform-badge">💳 Seoul.is Pay</div>
+        <h2 class="platform-title">Pay & Get Your<br/>Tax Back — Instantly</h2>
+        <p class="platform-desc">No more airport queues for tax refunds. Seoul.is Pay processes your VAT refund the moment you pay — right at the register.</p>
+        <div class="platform-stats">
+          <div class="pstat"><span class="pstat-num">40%→90%</span><span class="pstat-label">Tax refund rate</span></div>
+          <div class="pstat"><span class="pstat-num">₩0</span><span class="pstat-label">Setup fee</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CAFÉ BANNER -->
   <section class="cafe-banner reveal">
     <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=1400&q=80" alt="SEOULIS Café" loading="lazy" />
     <div class="cafe-overlay">
-      <h2 class="cafe-title display">SEOULIS CAFÉ</h2>
-      <p class="cafe-sub">Coming to Hongdae 2027</p>
-      <p class="cafe-desc">K-culture • Specialty Coffee • Editorial Space</p>
-      <a href="/spot/seoulis-cafe" class="btn btn-gold">Join Waitlist →</a>
+      <h2 class="cafe-title display">SEOULIS SPOT</h2>
+      <p class="cafe-sub">Opening in Hongdae 2027</p>
+      <p class="cafe-desc">AI Photo Booth · K-beauty · Community Board · Connect Lounge</p>
+      <a href="/spot" class="btn btn-gold">Learn More →</a>
     </div>
   </section>
 
@@ -188,6 +214,32 @@ const events = [
           </div>
         </div>
       ))}
+    </div>
+  </section>
+
+  <!-- MEMBERSHIP (subtle, bottom) -->
+  <section class="section reveal">
+    <div class="mem-teaser">
+      <div class="mem-teaser-left">
+        <div class="platform-badge" style="margin-bottom:12px;">✦ Seoul Prime Club</div>
+        <h2 style="font-size:1.6rem;font-weight:900;margin-bottom:10px;">Unlock the full Seoul experience</h2>
+        <p style="color:rgba(255,255,255,0.55);font-size:0.9rem;line-height:1.7;max-width:420px;">From free content to exclusive SPOT lounge access, NFC smart card, and curated insider guides. Start free, upgrade anytime.</p>
+      </div>
+      <div class="mem-tiers">
+        <div class="mem-tier">
+          <span class="mem-tier-name">Free</span>
+          <span class="mem-tier-price">₩0</span>
+        </div>
+        <div class="mem-tier">
+          <span class="mem-tier-name">Seoul Pass</span>
+          <span class="mem-tier-price">₩9,900<small>/mo</small></span>
+        </div>
+        <div class="mem-tier featured">
+          <span class="mem-tier-name">Seoul Prime ⭐</span>
+          <span class="mem-tier-price">₩29,900<small>/mo</small></span>
+        </div>
+        <a href="/membership" class="btn btn-gold" style="font-size:0.85rem;padding:10px 20px;white-space:nowrap;">View Plans →</a>
+      </div>
     </div>
   </section>
 
@@ -398,6 +450,67 @@ const events = [
     .event-date { color: var(--gold); font-size: 0.8rem; font-weight: 700; margin-bottom: 0.3rem; }
     .event-title { font-size: 1rem; font-weight: 800; margin-bottom: 0.3rem; font-family: var(--font-body); }
     .event-location { color: var(--gray); font-size: 0.82rem; }
+
+    /* Platform Grid */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    @media (max-width: 700px) { .platform-grid { grid-template-columns: 1fr; } }
+    .platform-card {
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid var(--border);
+    }
+    .platform-app { background: linear-gradient(135deg, rgba(13,27,42,0.9), rgba(30,50,80,0.6)); }
+    .platform-pay { background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(13,27,42,0.9)); }
+    .platform-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .platform-title { font-size: 1.5rem; font-weight: 900; line-height: 1.25; margin-bottom: 12px; }
+    .platform-desc { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.7; margin-bottom: 20px; }
+    .platform-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+    .platform-stats { display: flex; gap: 2rem; margin-top: 20px; }
+    .pstat { display: flex; flex-direction: column; }
+    .pstat-num { font-size: 1.4rem; font-weight: 900; color: var(--gold); }
+    .pstat-label { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+    /* Membership Teaser */
+    .mem-teaser {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .mem-teaser-left { flex: 1; min-width: 240px; }
+    .mem-tiers { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; flex-shrink: 0; }
+    .mem-tier {
+      display: flex; flex-direction: column;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 16px;
+      text-align: center;
+    }
+    .mem-tier.featured { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+    .mem-tier-name { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+    .mem-tier-price { font-size: 1rem; font-weight: 900; color: var(--white); }
+    .mem-tier.featured .mem-tier-price { color: var(--gold); }
+    .mem-tier-price small { font-size: 0.65rem; font-weight: 400; color: rgba(255,255,255,0.4); }
 
     /* Lang Float */
     .lang-float {
