@@ -2,6 +2,8 @@
 import { getFeatured } from '../lib/content.js';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const featuredArticles = getFeatured().slice(0, 12);
 
@@ -13,12 +15,19 @@ const categoryColors = {
   travel: 'pill-travel',
 };
 
-const weatherData = [
-  { city: 'Seoul', temp: '15°C', icon: '🌤', condition: 'Partly Cloudy', outfit: 'Light jacket + layer recommended', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&q=80' },
-  { city: 'Busan', temp: '18°C', icon: '☀️', condition: 'Sunny', outfit: 'T-shirt weather, bring sunscreen', img: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=80' },
-  { city: 'Jeju', temp: '12°C', icon: '🌧', condition: 'Showers', outfit: 'Waterproof jacket essential', img: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80' },
-];
+// JSON 파일에서 동적 데이터 로드 (n8n이 자동 업데이트)
+function loadJson(relPath, fallback) {
+  try {
+    const full = path.join(process.cwd(), 'src', 'data', relPath);
+    return JSON.parse(fs.readFileSync(full, 'utf-8'));
+  } catch { return fallback; }
+}
 
+const weatherData = loadJson('weather/current.json', []);
+const events = loadJson('events/upcoming.json', []);
+const tickerData = loadJson('ticker/live.json', { items: [] });
+
+// events는 이미 JSON에서 로드됨
 const essentials = [
   { emoji: '💳', title: 'T-Money Card' },
   { emoji: '📱', title: 'Pocket WiFi / eSIM' },
@@ -37,11 +46,7 @@ const courses = [
   { name: 'Jeju Island', tagline: 'Nature, beaches & volcanic wonder', img: 'https://images.unsplash.com/photo-1548196589-7b30f92b8454?w=600&q=80' },
 ];
 
-const events = [
-  { title: 'Seoul Lantern Festival', days: 12, date: 'Nov 2', location: 'Cheonggyecheon Stream', img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80' },
-  { title: 'K-Pop World Festival', days: 28, date: 'Nov 18', location: 'Olympic Park, Seoul', img: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80' },
-  { title: 'Busan International Film Festival', days: 45, date: 'Dec 5', location: 'Haeundae, Busan', img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80' },
-];
+
 ---
 
 <html lang="en">
@@ -60,7 +65,7 @@ const events = [
     <span class="live-dot"></span>
     <span class="live-label">LIVE</span>
     <div class="ticker-wrap">
-      <span class="ticker-text">BTS announces surprise comeback · Gangnam café goes viral · Cherry blossoms peak alert · NewJeans tops global charts · Myeongdong street food festival this weekend · Seoul Fashion Week kicks off ·</span>
+      <span class="ticker-text">{tickerData.items.join(' · ')} ·</span>
     </div>
   </div>
 

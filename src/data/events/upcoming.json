@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Seoul Lantern Festival",
+    "days": 12,
+    "date": "Nov 2",
+    "location": "Cheonggyecheon Stream",
+    "img": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80",
+    "url": "https://seoullantern.com",
+    "updatedAt": "2026-11-04T04:00:00.000Z"
+  },
+  {
+    "title": "K-Pop World Festival",
+    "days": 28,
+    "date": "Nov 18",
+    "location": "Olympic Park, Seoul",
+    "img": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80",
+    "url": "#",
+    "updatedAt": "2026-11-04T04:00:00.000Z"
+  },
+  {
+    "title": "Busan International Film Festival",
+    "days": 45,
+    "date": "Dec 5",
+    "location": "Haeundae, Busan",
+    "img": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80",
+    "url": "#",
+    "updatedAt": "2026-11-04T04:00:00.000Z"
+  }
+]
