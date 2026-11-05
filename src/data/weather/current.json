@@ -1,0 +1,29 @@
+[
+  {
+    "city": "Seoul",
+    "icon": "🌤",
+    "temp": "15°C",
+    "condition": "Partly Cloudy",
+    "outfit": "Light jacket recommended",
+    "style": "👗 Light jacket + jeans",
+    "updatedAt": "2026-11-05T07:00:00.000Z"
+  },
+  {
+    "city": "Busan",
+    "icon": "☀️",
+    "temp": "18°C",
+    "condition": "Sunny",
+    "outfit": "T-shirt weather, bring a layer",
+    "style": "👕 T-shirt + light cardigan",
+    "updatedAt": "2026-11-05T07:00:00.000Z"
+  },
+  {
+    "city": "Jeju",
+    "icon": "🌈",
+    "temp": "19°C",
+    "condition": "Clear",
+    "outfit": "Perfect outdoor weather",
+    "style": "🧥 Casual layers",
+    "updatedAt": "2026-11-05T07:00:00.000Z"
+  }
+]
