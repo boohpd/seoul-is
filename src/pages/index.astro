@@ -1,12 +1,13 @@
 ---
-import { getFeatured } from '../lib/content.js';
-import featuredRaw from '../data/featured.json';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import fs from 'node:fs';
-import path from 'node:path';
 
-const featuredArticles = (featuredRaw && featuredRaw.length > 0 ? featuredRaw : getFeatured()).slice(0, 12);
+const rawArticles = await Astro.glob('../data/articles/*.json');
+const featuredArticles = rawArticles
+  .map(m => m.default)
+  .filter(a => a && a.slug && a.heroImage)
+  .sort((a, b) => (b.publishedAt || b.date || '').localeCompare(a.publishedAt || a.date || ''))
+  .slice(0, 12);
 
 const categoryColors = {
   kpop: 'pill-kpop',
@@ -17,26 +18,21 @@ const categoryColors = {
 };
 
 // JSON 파일에서 동적 데이터 로드 (n8n이 자동 업데이트)
-function loadJson(relPath, fallback) {
-  try {
-    const full = path.join(process.cwd(), 'src', 'data', relPath);
-    const parsed = JSON.parse(fs.readFileSync(full, 'utf-8'));
-    // 빈 배열/객체면 fallback 사용
-    if (Array.isArray(parsed) && parsed.length === 0) return fallback;
-    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && Object.keys(parsed).length === 0) return fallback;
-    return parsed;
-  } catch { return fallback; }
-}
-
-const WEATHER_FALLBACK = [
+// Static data — Cloudflare Pages SSG 호환
+const weatherData = [
   { city: 'Seoul', icon: '🌤', temp: '13°C', condition: 'Partly Cloudy', outfit: 'Light jacket + scarf', style: '🧥 K-Style: Oversized blazer + trousers', img: 'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=80' },
   { city: 'Busan', icon: '☀️', temp: '17°C', condition: 'Sunny', outfit: 'T-shirt + cardigan', style: '👕 K-Style: Knit top + wide-leg pants', img: 'https://images.unsplash.com/photo-1535093787143-f854c8d5e416?w=600&q=80' },
   { city: 'Jeju', icon: '🌈', temp: '18°C', condition: 'Clear & breezy', outfit: 'Casual layers', style: '🌿 K-Style: Linen shirt + chinos', img: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600&q=80' },
 ];
-
-const weatherData = loadJson('weather/current.json', WEATHER_FALLBACK);
-const events = loadJson('events/upcoming.json', []);
-const tickerData = loadJson('ticker/live.json', { items: [] });
+const events = [
+  { title: 'Seoul Lantern Festival 2026', date: 'Nov 1–17, 2026', location: 'Cheonggyecheon Stream', img: 'https://images.unsplash.com/photo-1517154421773-0855edd6b4f3?w=600&q=80', url: 'https://www.seoullantern.com', emoji: '🏮' },
+  { title: 'K-Pop World Festival', date: 'Nov 8, 2026', location: 'Seoul Olympic Park', img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80', url: '#', emoji: '🎤' },
+  { title: 'Busan International Film Festival', date: 'Nov–Dec 2026', location: 'Busan Cinema Center', img: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&q=80', url: 'https://www.biff.kr', emoji: '🎬' },
+  { title: 'Seoul Fashion Week', date: 'Oct–Nov 2026', location: 'Dongdaemun DDP', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80', url: '#', emoji: '👗' },
+  { title: 'Gyeongbokgung Night Tour', date: 'Oct–Nov 2026', location: 'Gyeongbokgung Palace', img: 'https://images.unsplash.com/photo-1517154421773-0855edd6b4f3?w=600&q=80', url: 'https://www.royalpalace.go.kr', emoji: '🏯' },
+  { title: 'Korea Food & Travel Expo', date: 'Nov 14–17, 2026', location: 'COEX, Seoul', img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80', url: '#', emoji: '🍜' },
+];
+const tickerData = { items: ['🏮 Seoul Lantern Festival runs Nov 1–17 at Cheonggyecheon Stream','🎤 K-Pop World Festival headlines Seoul Olympic Park on Nov 8','👗 Seoul Fashion Week wraps up at DDP — highlights inside','🍜 Michelin Guide Seoul 2026 reveals new starred restaurants','🌟 BTS member Jin returns — solo concert dates confirmed','🎬 BIFF 2026 closes with record attendance of 220,000','🏃 Han River Park autumn picnic season peaks this weekend','✈️ Incheon Airport ranked #1 in Asia for 2026'] };
 
 // events는 이미 JSON에서 로드됨
 const essentials = [
