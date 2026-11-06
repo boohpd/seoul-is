@@ -22,5 +22,27 @@
     "https://thesoulofseoul.net/gangnam-seoul-guide/",
     "https://www.reddit.com/r/seoul/comments/13j65v6/gangnam_area/"
   ],
-  "url": "/article/gangnam-guide"
+  "url": "/article/gangnam-guide",
+  "translations": {
+    "KO": {
+      "title": "강남 가이드: 서울에서 가장 화려한 지역에서의 쇼핑, 밤문화 등",
+      "description": "서울에서 가장 화려한 지역에서 즐기는 쇼핑, 밤문화 등"
+    },
+    "JA": {
+      "title": "江南ガイド：ソウルで最も華やかな地区でのショッピング、ナイトライフなど",
+      "description": "ソウルで最も華やかな地区でのショッピング、ナイトライフなど"
+    },
+    "ZH": {
+      "title": "江南指南：首尔最繁华街区的购物、夜生活及其他",
+      "description": "首尔最繁华街区的购物、夜生活及其他"
+    },
+    "VI": {
+      "title": "Hướng dẫn về Gangnam: Mua sắm, cuộc sống về đêm và nhiều hoạt động khác tại khu vực sôi động nhất Seoul",
+      "description": "Mua sắm, cuộc sống về đêm và nhiều hoạt động khác tại khu vực sôi động nhất Seoul"
+    },
+    "ID": {
+      "title": "Panduan Gangnam: Belanja, Hiburan Malam, dan Lainnya di Kawasan Paling Mewah di Seoul",
+      "description": "Belanja, Hiburan Malam, dan Lainnya di Kawasan Paling Mewah di Seoul"
+    }
+  }
 }

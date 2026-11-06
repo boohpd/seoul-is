@@ -19,5 +19,27 @@
   "affiliateLinks": [],
   "generatedAt": "2026-09-30T19:30:54.479Z",
   "generatedFrom": [],
-  "url": "/article/incheon-airport-guide"
+  "url": "/article/incheon-airport-guide",
+  "translations": {
+    "KO": {
+      "title": "인천공항 안내: 경유, 환승 및 서울로 이동하는 방법",
+      "description": "경유, 환승 및 서울로 가는 방법"
+    },
+    "JA": {
+      "title": "仁川空港ガイド：乗り継ぎ、トランジット、ソウルへのアクセス",
+      "description": "乗り継ぎ、トランジット、そしてソウルへの行き方"
+    },
+    "ZH": {
+      "title": "仁川机场指南：中转、转机及前往首尔",
+      "description": "中转、转机及前往首尔"
+    },
+    "VI": {
+      "title": "Hướng dẫn về Sân bay Incheon: Chuyến bay quá cảnh, chuyển tiếp và cách di chuyển đến Seoul",
+      "description": "Chuyến bay quá cảnh, chuyển tiếp và cách di chuyển đến Seoul"
+    },
+    "ID": {
+      "title": "Panduan Bandara Incheon: Singgah, Transit, dan Cara Menuju Seoul",
+      "description": "Singgah, Transit, dan Cara Menuju Seoul"
+    }
+  }
 }

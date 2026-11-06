@@ -23,5 +23,27 @@
     "https://www.reddit.com/r/koreatravel/comments/1bygfm1/what_will_i_miss_in_bukchon_hanok_village/",
     "https://chrisandwrensworld.com/bukchon-hanok-village/"
   ],
-  "url": "/article/bukchon-hanok-village-guide"
+  "url": "/article/bukchon-hanok-village-guide",
+  "translations": {
+    "KO": {
+      "title": "북촌 한옥마을 가이드: 서울의 보물 같은 문화유산을 방문할 때 알아두면 좋은 팁",
+      "description": "서울의 보석 같은 문화유산을 방문할 때 유용한 팁"
+    },
+    "JA": {
+      "title": "北村韓屋村ガイド：ソウルの歴史的宝庫を訪れる際のヒント",
+      "description": "ソウルの隠れた名所を訪れる際のヒント"
+    },
+    "ZH": {
+      "title": "北村韩屋村指南：游览首尔这颗文化遗产明珠的贴士",
+      "description": "游览首尔这颗文化遗产瑰宝的贴士"
+    },
+    "VI": {
+      "title": "Hướng dẫn tham quan Làng Hanok Bukchon: Những lời khuyên hữu ích khi ghé thăm “viên ngọc di sản” của Seoul",
+      "description": "Một số lời khuyên khi tham quan viên ngọc di sản của Seoul"
+    },
+    "ID": {
+      "title": "Panduan Desa Hanok Bukchon: Tips untuk Mengunjungi Permata Warisan Budaya Seoul",
+      "description": "Tips untuk Mengunjungi Permata Warisan Budaya Seoul"
+    }
+  }
 }

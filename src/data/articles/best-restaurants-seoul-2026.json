@@ -23,5 +23,27 @@
     "https://www.merriam-webster.com/dictionary/best",
     "https://dictionary.cambridge.org/dictionary/english/best"
   ],
-  "url": "/article/best-restaurants-seoul-2026"
+  "url": "/article/best-restaurants-seoul-2026",
+  "translations": {
+    "KO": {
+      "title": "2026년 서울 최고의 레스토랑: 현지인처럼 식사할 수 있는 곳",
+      "description": "현지인처럼 식사할 수 있는 곳"
+    },
+    "JA": {
+      "title": "2026年ソウルのおすすめレストラン：地元の人みたいに食事を楽しめるお店",
+      "description": "地元の人みたいに食事ができる場所"
+    },
+    "ZH": {
+      "title": "2026年首尔最佳餐厅：像当地人一样用餐的好去处",
+      "description": "哪里能像当地人一样用餐"
+    },
+    "VI": {
+      "title": "Những nhà hàng tốt nhất tại Seoul năm 2026: Nơi để thưởng thức ẩm thực như người bản địa",
+      "description": "Nên ăn ở đâu để trải nghiệm ẩm thực như người địa phương"
+    },
+    "ID": {
+      "title": "Restoran Terbaik di Seoul 2026: Tempat Makan Seperti Orang Lokal",
+      "description": "Tempat Makan Seperti Orang Lokal"
+    }
+  }
 }

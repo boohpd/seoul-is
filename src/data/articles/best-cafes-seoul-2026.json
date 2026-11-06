@@ -23,5 +23,27 @@
     "https://www.livelikeitstheweekend.com/best-cafes-in-seoul/",
     "https://www.baristamagazine.com/5-cool-cafes-to-try-in-seoul/"
   ],
-  "url": "/article/best-cafes-seoul-2026"
+  "url": "/article/best-cafes-seoul-2026",
+  "translations": {
+    "KO": {
+      "title": "2026년 서울 최고의 카페: 스페셜티 커피와 독특한 명소",
+      "description": "스페셜티 커피 & 특별한 명소"
+    },
+    "JA": {
+      "title": "2026年 ソウルのおすすめカフェ：スペシャルティコーヒー＆ユニークなスポット",
+      "description": "スペシャルティコーヒーとユニークなスポット"
+    },
+    "ZH": {
+      "title": "2026年首尔最佳咖啡馆：精品咖啡与特色场所",
+      "description": "精品咖啡与特色去处"
+    },
+    "VI": {
+      "title": "Những quán cà phê hay nhất tại Seoul năm 2026: Cà phê đặc sản & những địa điểm độc đáo",
+      "description": "Cà phê đặc sản & Những địa điểm độc đáo"
+    },
+    "ID": {
+      "title": "Kafe Terbaik di Seoul 2026: Kopi Spesial & Tempat-Tempat Unik",
+      "description": "Kopi Spesial & Tempat-Tempat Unik"
+    }
+  }
 }

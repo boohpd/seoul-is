@@ -22,5 +22,27 @@
     "https://www.reddit.com/r/koreatravel/comments/1qh41ki/travel_guide_gyeongbokgung_palace/",
     "https://chloestravelogue.com/gyeongbokgung-palace-changing-of-guards-guide/"
   ],
-  "url": "/article/gyeongbokgung-palace-guide"
+  "url": "/article/gyeongbokgung-palace-guide",
+  "translations": {
+    "KO": {
+      "title": "경복궁 가이드: 서울을 대표하는 가장 상징적인 왕궁",
+      "description": "서울에서 가장 상징적인 왕실 유적지"
+    },
+    "JA": {
+      "title": "景福宮ガイド：ソウルを代表する王宮",
+      "description": "ソウルで最も象徴的な王室ゆかりの場所"
+    },
+    "ZH": {
+      "title": "景福宫指南：首尔最具代表性的皇家遗址",
+      "description": "首尔最具标志性的皇家遗址"
+    },
+    "VI": {
+      "title": "Hướng dẫn tham quan Cung điện Gyeongbokgung: Di tích hoàng gia mang tính biểu tượng nhất của Seoul",
+      "description": "Di tích hoàng gia mang tính biểu tượng nhất của Seoul"
+    },
+    "ID": {
+      "title": "Panduan Istana Gyeongbokgung: Situs Kerajaan Paling Ikonik di Seoul",
+      "description": "Situs Kerajaan Paling Ikonis di Seoul"
+    }
+  }
 }

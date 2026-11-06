@@ -21,5 +21,27 @@
     "https://photo-trips.com/best-things-to-do-in-hongdae-at-night-guide/",
     "https://seoulkoreaasia.com/13-best-things-to-do-in-hongdae-seoul/"
   ],
-  "url": "/article/hongdae-things-to-do"
+  "url": "/article/hongdae-things-to-do",
+  "translations": {
+    "KO": {
+      "title": "홍대 가이드: 서울의 젊은이들이 모이는 거리에서 즐기는 예술, 음악, 밤문화",
+      "description": "서울의 젊은이들이 모이는 거리에서 즐기는 예술, 음악, 나이트라이프"
+    },
+    "JA": {
+      "title": "弘大ガイド：ソウルの若者街で楽しむアート、音楽、ナイトライフ",
+      "description": "ソウルの若者街におけるアート、音楽、ナイトライフ"
+    },
+    "ZH": {
+      "title": "弘大指南：首尔青年区的艺术、音乐与夜生活",
+      "description": "首尔青年区的艺术、音乐与夜生活"
+    },
+    "VI": {
+      "title": "Hướng dẫn về Hongdae: Nghệ thuật, âm nhạc và cuộc sống về đêm tại khu phố trẻ của Seoul",
+      "description": "Nghệ thuật, Âm nhạc và Đời sống về đêm tại Khu phố Thanh niên Seoul"
+    },
+    "ID": {
+      "title": "Panduan Hongdae: Seni, Musik, dan Kehidupan Malam di Kawasan Kaum Muda Seoul",
+      "description": "Seni, Musik, dan Kehidupan Malam di Kawasan Kaum Muda Seoul"
+    }
+  }
 }
