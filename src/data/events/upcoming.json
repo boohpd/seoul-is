@@ -1,62 +1,56 @@
 [
   {
-    "title": "Seoul Lantern Festival",
-    "days": 12,
-    "date": "Nov 17",
-    "location": "Cheonggyecheon Stream",
-    "img": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80",
-    "url": "https://seoullantern.com",
+    "title": "Seoul Lantern Festival 2026",
+    "date": "Nov 1–17, 2026",
+    "location": "Cheonggyecheon Stream, Seoul",
     "category": "Culture",
-    "updatedAt": "2026-11-05T07:00:00.000Z"
+    "url": "https://www.seoullantern.com",
+    "img": "https://images.unsplash.com/photo-1517154421773-0855edd6b4f3?w=600&q=80",
+    "emoji": "🏮"
   },
   {
     "title": "K-Pop World Festival",
-    "days": 13,
-    "date": "Nov 18",
-    "location": "Olympic Park, Seoul",
-    "img": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80",
-    "url": "https://www.kpopworldfestival.com",
-    "category": "Music",
-    "updatedAt": "2026-11-05T07:00:00.000Z"
+    "date": "Nov 8, 2026",
+    "location": "Seoul Olympic Park",
+    "category": "K-Pop",
+    "url": "https://kpopworldfestival.com",
+    "img": "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80",
+    "emoji": "🎤"
   },
   {
     "title": "Busan International Film Festival",
-    "days": 30,
-    "date": "Dec 5",
-    "location": "Haeundae, Busan",
+    "date": "Oct 1–10, 2026",
+    "location": "Busan Cinema Center",
+    "category": "Film",
+    "url": "https://www.biff.kr",
     "img": "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&q=80",
-    "url": "https://www.biff.kr/eng/",
-    "category": "Culture",
-    "updatedAt": "2026-11-05T07:00:00.000Z"
+    "emoji": "🎬"
   },
   {
-    "title": "Seoul Food & Wine Festival",
-    "days": 3,
-    "date": "Nov 8",
-    "location": "DDP, Dongdaemun",
-    "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80",
-    "url": "https://www.ddp.or.kr",
-    "category": "Food",
-    "updatedAt": "2026-11-05T07:00:00.000Z"
-  },
-  {
-    "title": "Korea Sale Festa",
-    "days": 20,
-    "date": "Nov 25",
-    "location": "Myeongdong, Seoul",
+    "title": "Seoul Fashion Week",
+    "date": "Oct 14–19, 2026",
+    "location": "Dongdaemun DDP",
+    "category": "Fashion",
+    "url": "https://www.seoulfashionweek.org",
     "img": "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80",
-    "url": "https://www.koreasalefesta.kr",
-    "category": "Culture",
-    "updatedAt": "2026-11-05T07:00:00.000Z"
+    "emoji": "👗"
   },
   {
-    "title": "Seoul Jazz Festival",
-    "days": 28,
-    "date": "Dec 3",
-    "location": "Olympic Park, Seoul",
-    "img": "https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&q=80",
-    "url": "https://www.seoulsummerjazz.com",
-    "category": "Music",
-    "updatedAt": "2026-11-05T07:00:00.000Z"
+    "title": "Gyeongbokgung Night Tour",
+    "date": "Oct–Nov 2026",
+    "location": "Gyeongbokgung Palace, Seoul",
+    "category": "Culture",
+    "url": "https://www.royalpalace.go.kr",
+    "img": "https://images.unsplash.com/photo-1517154421773-0855edd6b4f3?w=600&q=80",
+    "emoji": "🏯"
+  },
+  {
+    "title": "Korea Food & Travel Expo",
+    "date": "Nov 14–17, 2026",
+    "location": "COEX, Seoul",
+    "category": "Food",
+    "url": "https://www.coex.co.kr",
+    "img": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80",
+    "emoji": "🍜"
   }
 ]
