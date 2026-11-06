@@ -1,0 +1,29 @@
+[
+  {
+    "city": "Seoul",
+    "icon": "🌤",
+    "temp": "13°C",
+    "condition": "Partly Cloudy",
+    "outfit": "Light jacket + scarf",
+    "style": "🧥 K-Style: Oversized blazer + trousers",
+    "img": "https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=80"
+  },
+  {
+    "city": "Busan",
+    "icon": "☀️",
+    "temp": "17°C",
+    "condition": "Sunny",
+    "outfit": "T-shirt + light cardigan",
+    "style": "👕 K-Style: Knit top + wide-leg pants",
+    "img": "https://images.unsplash.com/photo-1535093787143-f854c8d5e416?w=600&q=80"
+  },
+  {
+    "city": "Jeju",
+    "icon": "🌈",
+    "temp": "18°C",
+    "condition": "Clear & breezy",
+    "outfit": "Casual layers, light jacket",
+    "style": "🌿 K-Style: Linen shirt + chinos",
+    "img": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600&q=80"
+  }
+]

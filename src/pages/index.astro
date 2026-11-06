@@ -19,11 +19,21 @@ const categoryColors = {
 function loadJson(relPath, fallback) {
   try {
     const full = path.join(process.cwd(), 'src', 'data', relPath);
-    return JSON.parse(fs.readFileSync(full, 'utf-8'));
+    const parsed = JSON.parse(fs.readFileSync(full, 'utf-8'));
+    // 빈 배열/객체면 fallback 사용
+    if (Array.isArray(parsed) && parsed.length === 0) return fallback;
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && Object.keys(parsed).length === 0) return fallback;
+    return parsed;
   } catch { return fallback; }
 }
 
-const weatherData = loadJson('weather/current.json', []);
+const WEATHER_FALLBACK = [
+  { city: 'Seoul', icon: '🌤', temp: '13°C', condition: 'Partly Cloudy', outfit: 'Light jacket + scarf', style: '🧥 K-Style: Oversized blazer + trousers', img: 'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=600&q=80' },
+  { city: 'Busan', icon: '☀️', temp: '17°C', condition: 'Sunny', outfit: 'T-shirt + cardigan', style: '👕 K-Style: Knit top + wide-leg pants', img: 'https://images.unsplash.com/photo-1535093787143-f854c8d5e416?w=600&q=80' },
+  { city: 'Jeju', icon: '🌈', temp: '18°C', condition: 'Clear & breezy', outfit: 'Casual layers', style: '🌿 K-Style: Linen shirt + chinos', img: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600&q=80' },
+];
+
+const weatherData = loadJson('weather/current.json', WEATHER_FALLBACK);
 const events = loadJson('events/upcoming.json', []);
 const tickerData = loadJson('ticker/live.json', { items: [] });
 
