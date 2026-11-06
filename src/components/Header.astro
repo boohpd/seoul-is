@@ -133,6 +133,7 @@
 }
 </style>
 
+<script src="/i18n.js"></script>
 <script>
 const ham = document.getElementById('hamburger');
 const nav = document.getElementById('nav-links');
@@ -161,27 +162,5 @@ function applyLang(lang) {
   showToast('✓ ' + lang);
 }
 
-document.querySelectorAll('.lang-pill').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.lang-pill, .lang-float-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    applyLang(btn.dataset.lang);
-  });
-});
-
-document.querySelectorAll('.lang-float-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.lang-pill, .lang-float-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    applyLang(btn.dataset.lang);
-  });
-});
-
-function showToast(msg) {
-  let t = document.getElementById('lang-toast');
-  if (!t) { t = document.createElement('div'); t.id = 'lang-toast'; document.body.appendChild(t); }
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
+// Lang handled by /i18n.js
 </script>
