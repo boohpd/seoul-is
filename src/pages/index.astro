@@ -1,11 +1,12 @@
 ---
 import { getFeatured } from '../lib/content.js';
+import featuredRaw from '../data/featured.json';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const featuredArticles = getFeatured().slice(0, 12);
+const featuredArticles = (featuredRaw && featuredRaw.length > 0 ? featuredRaw : getFeatured()).slice(0, 12);
 
 const categoryColors = {
   kpop: 'pill-kpop',
@@ -697,15 +698,7 @@ const courses = [
       setTimeout(() => t.classList.remove('show'), 2000);
     }
 
-    document.querySelectorAll('.lang-float-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.lang-float-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const lang = btn.dataset.lang;
-        applyLang(lang);
-        showToast('✓ ' + lang);
-      });
-    });
+    // lang-float handled by Header.astro script
   </script>
 </body>
 </html>
