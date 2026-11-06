@@ -131,6 +131,11 @@
   .hamburger { display: flex; }
   .lang-pills { display: none; }
 }
+
+/* Hide Google Translate toolbar */
+.goog-te-banner-frame, .goog-te-gadget { display: none !important; }
+body { top: 0 !important; }
+.skiptranslate { display: none !important; }
 </style>
 
 <script>
@@ -227,9 +232,48 @@
 
   let currentLang = localStorage.getItem('seoulis_lang') || 'EN';
 
+  // Google Translate 언어코드 매핑
+  const GT_LANG = {
+    EN: null, KO: 'ko', JA: 'ja', ZH: 'zh-CN', VI: 'vi', TH: 'th', ID: 'id', AR: 'ar', MS: 'ms'
+  };
+
+  function triggerGoogleTranslate(lang) {
+    const gtLang = GT_LANG[lang];
+    if (!gtLang) {
+      // EN → 원래 언어로 복원
+      const bar = document.querySelector('.goog-te-banner-frame');
+      if (bar) {
+        const restoreBtn = bar.contentDocument?.querySelector('.goog-te-banner-frame')?.querySelector('[id="\:1.restore"]');
+      }
+      // 쿠키 삭제로 복원
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname;
+      location.reload();
+      return;
+    }
+    // Google Translate 쿠키 설정
+    const domain = location.hostname;
+    document.cookie = `googtrans=/en/${gtLang}; path=/`;
+    document.cookie = `googtrans=/en/${gtLang}; path=/; domain=${domain}`;
+    // select 엘리먼트로 언어 변경
+    const sel = document.querySelector('.goog-te-combo');
+    if (sel) {
+      sel.value = gtLang;
+      sel.dispatchEvent(new Event('change'));
+    } else {
+      // 위젯 아직 로드 안됐으면 잠시 후 재시도
+      setTimeout(() => {
+        const s = document.querySelector('.goog-te-combo');
+        if (s) { s.value = gtLang; s.dispatchEvent(new Event('change')); }
+        else { location.reload(); }
+      }, 800);
+    }
+  }
+
   function applyLang(lang) {
     currentLang = lang;
     localStorage.setItem('seoulis_lang', lang);
+    triggerGoogleTranslate(lang);
     const t = T[lang] || {};
 
     // 모든 텍스트 노드 번역
